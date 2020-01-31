@@ -1,0 +1,450 @@
+\documentclass{article}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{marginnote}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{csquotes}
+
+\MakeOuterQuote{"}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rfoot{Labalme \thepage}
+\rhead{(H) Linear Algebra}
+
+\reversemarginpar
+
+\begin{document}
+
+
+
+
+\lhead{Chapter 6: Eigenvalues}
+\section*{Introduction to Eigenvalues and Eigenvectors}
+\begin{itemize}
+    \item \marginnote{1/28:}[-8.5mm]$Ax=b=\lambda x$
+    \item $Ax=\lambda x$, $\lambda\in\mathbb{F}$, $x\in\mathbb{R}^n$
+    \item $\lambda$ is an eigenvalue. $\lambda x$ is an eigenvector.
+    \begin{equation*}
+        A=
+        \begin{bmatrix}
+            3 & 1\\
+            1 & 3\\
+        \end{bmatrix}
+    \end{equation*}
+    \item $
+        x =
+        \begin{bmatrix}
+            1\\
+            1\\
+        \end{bmatrix}
+    $ is an eigenvector of $A$ with corresponding eigenvalue of $4$.
+    \item $
+        \begin{bmatrix}
+            3 & 1\\
+            1 & 3\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            1\\
+            1\\
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            4\\
+            4\\
+        \end{bmatrix}
+        = 4
+        \begin{bmatrix}
+            1\\
+            1\\
+        \end{bmatrix}
+    $
+    \begin{center}
+        \begin{tikzpicture}
+            \draw (-2,0) -- (2,0);
+            \draw (0,-2) -- (0,2);
+            \draw [thick,->] (0,0) -- node[right]{$x$} (0.5,0.5);
+            \draw [thick,dashed,->] (0,0) -- node[right]{$Ax$} (2,2);
+        \end{tikzpicture}
+    \end{center}
+    \begin{align*}
+        Ax &= \lambda x\\
+        Ax-\lambda x &= 0\\
+        Ax-\lambda Ix &= 0\\
+        (A-\lambda I)x &= 0
+    \end{align*}
+    \item $(A-\lambda I)x=0 \Rightarrow x\in N(A-\lambda I)^[$\footnote{To have a null space, $A-\lambda I$ has free columns.}$^] \Rightarrow |A-\lambda I|=0$
+    \item $
+        \begin{bmatrix}
+            3 & 1\\
+            1 & 3\\
+        \end{bmatrix}
+        -
+        \begin{bmatrix}
+            \lambda & 0\\
+            0 & \lambda\\
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            3-\lambda & 1\\
+            1 & 3-\lambda\\
+        \end{bmatrix}
+    $
+    \item $
+        \begin{vmatrix}
+            3-\lambda & 1\\
+            1 & 3-\lambda\\
+        \end{vmatrix}
+        = 0
+    $
+    \begin{align*}
+        0 &= (3-\lambda)^2-1^2\\
+        &= 3^2-6\lambda+\lambda^2-1\\
+        &= \lambda^2-6\lambda+8\\
+        &= (\lambda-4)(\lambda-2)
+    \end{align*}
+    \item $\lambda=4,2$.
+    \item $\lambda^2-6\lambda+8$ is the \textbf{characteristic polynomial} of $A$.
+    \item $
+        A-2I =
+        \begin{bmatrix}
+            -1 & 1\\
+            1 & -1\\
+        \end{bmatrix}
+        ,\ 
+        x =
+        \begin{bmatrix}
+            1\\
+            -1\\
+        \end{bmatrix}
+        \in N(A-2I)
+    $.
+    \item $
+        A-4I =
+        \begin{bmatrix}
+            -1 & 1\\
+            1 & -1\\
+        \end{bmatrix}
+        ,\ 
+        x =
+        \begin{bmatrix}
+            1\\
+            1\\
+        \end{bmatrix}
+        \in N(A-4I)
+    $.
+    \item "Eigenspace" is not $\mathbb{R}^2$, but two lines in $\mathbb{R}^2$, specifically $y=\pm x$.
+    \begin{itemize}
+        \item $y=\pm x$ comes from $c_1\begin{bmatrix}1\\1\end{bmatrix}$ and $c_2\begin{bmatrix}1\\-1\end{bmatrix}$.
+    \end{itemize}
+
+    %%%%%%%%%%%%%%%%%%%%%%
+
+    \marginnote{1/29:}\begin{equation*}
+        A =
+        \begin{bmatrix}
+            2 & -2 & 3\\
+            0 & 3 & -2\\
+            0 & -1 & 2\\
+        \end{bmatrix}
+    \end{equation*}
+    \begin{align*}
+        P(\lambda) &= |A-\lambda I|\\
+        &=
+        \begin{vmatrix}
+            2-\lambda & -2 & 3\\
+            0 & 3-\lambda & -2\\
+            0 & -1 & 2-\lambda\\
+        \end{vmatrix}\\
+        &= -1
+        \begin{vmatrix}
+            2-\lambda & 3\\
+            0 & -2\\
+        \end{vmatrix}
+        (-1)^{3+2} + (2-\lambda)
+        \begin{vmatrix}
+            2-\lambda & -2\\
+            0 & 3-\lambda\\
+        \end{vmatrix}
+        (-1)^{3+3}\\
+        &= ((2-\lambda)(-2))+(2-\lambda)((2-\lambda)(3-\lambda))\\
+        &= -4+2\lambda+(2-\lambda)^2(3-\lambda)\\
+        &= -4+2\lambda+(4-4\lambda+\lambda^2)(3-\lambda)\\
+        &= -4+2\lambda+12-4\lambda-12\lambda+4\lambda^2+3\lambda^2-\lambda^3\\
+        &= -\lambda^3+7\lambda^2-14\lambda+8\\
+        &= -(\lambda-1)(\lambda-2)(\lambda-4)
+    \end{align*}
+    \begin{align*}
+        A-I &=
+        \begin{bmatrix}
+            1 & -2 & 3\\
+            0 & 2 & -2\\
+            0 & -1 & 1\\
+        \end{bmatrix}&
+        A-2I &=
+        \begin{bmatrix}
+            0 & -2 & 3\\
+            0 & 1 & -2\\
+            0 & -1 & 0\\
+        \end{bmatrix}&
+        A-4I &=
+        \begin{bmatrix}
+            -2 & -2 & 3\\
+            0 & -1 & -2\\
+            0 & -1 & -2\\
+        \end{bmatrix}&
+    \end{align*}
+    \item $P(\lambda)$ is positive when $n\in 2\mathbb{N}$, negative otherwise.
+    \begin{itemize}
+        \item Signs flip term to term (think about binomial expansion).
+    \end{itemize}
+    \item Coefficients of the $n-1$ degree term is the sum of the diagonal entries.
+    \item Coefficient of the $0^\text{th}$ degree term is $|A|$.
+    \begin{itemize}
+        \item $P_\lambda(0) = |A-0\cdot I| = |A|$.
+    \end{itemize}
+    \item Product of the eigenvalues is $|A|$.
+    \begin{itemize}
+        \item Think about expanding the factorization.
+    \end{itemize}
+    \item Eigenvalues of $U$ are the diagonal values.
+    \begin{itemize}
+        \item $\lambda_1\lambda_2\cdots\lambda_n=|A|$, which is the product of the diagonal entries.
+        \item $\lambda_1+\cdots+\lambda_n=\text{trace}(A)$, which is the sum of the diagonal entries.
+    \end{itemize}
+    \item $Ax=\lambda x$
+    \begin{itemize}
+        \item $A^2x=AAx=A\lambda x=\lambda Ax=\lambda\lambda x=\lambda^2x$
+    \end{itemize}
+\end{itemize}
+
+
+
+\section*{Similarity}
+\begin{itemize}
+    \item \marginnote{1/30:}$A\sim B$$^[$\footnote{$A$ "is similar to" $B$}$^]$ iff $\exists\ S:A=SBS^{-1},\ B=S^{-1}AS$.
+    \begin{enumerate}
+        \item If $A\sim B$, then $|A|=|B|$.
+        \begin{align*}
+            B &= S^{-1}AS\\
+            |B| &= |S^{-1}AS|\\
+            |B| &= |S^{-1}||A||S|\\
+            |B| &= \frac{1}{|S|}|A||S|\\
+            |B| &= |A|
+        \end{align*}
+        \item If $A\sim B$, then they share the same characteristic polynomial.
+        \begin{align*}
+            B &= S^{-1}AS\\
+            |B-\lambda I| &= |S^{-1}AS-\lambda I|\\
+            &= |S^{-1}AS-\lambda S^{-1}IS|\\
+            &= |S^{-1}S(A-\lambda I)|\\
+            &= |I(A-\lambda I)|\\
+            |B-\lambda I| &= |A-\lambda I|
+        \end{align*}
+        \begin{itemize}
+            \item If they have the same characteristic polynomial, $\therefore$ $A$ and $B$ have the same eigenvalues.
+        \end{itemize}
+    \end{enumerate}
+    \item What is the best possible $B$ if $A\sim B$?
+    \begin{itemize}
+        \item Sparse.
+        \item Diagonal.
+        \item $
+            A=[\text{ugly}]\quad\rightarrow\quad
+            B=\begin{bmatrix}
+                \lambda_1 &  & 0\\
+                 & \ddots & \\
+                0 &  & \lambda_n\\
+            \end{bmatrix}
+            =\Lambda
+        $
+    \end{itemize}
+    \item \textbf{Diagonalization}:
+    \begin{align*}
+        A &= S\Lambda S^{-1}\\
+        \Lambda &= SAS^{-1}
+    \end{align*}
+    \item $A=S\Lambda S^{-1}$
+    \begin{itemize}
+        \item $A^2 = AA = S\Lambda S^{-1}S\Lambda S^{-1} = S\Lambda\Lambda S^{-1} = S\Lambda^2 S^{-1}$
+        \item $A^k = S\Lambda^k S^{-1}$
+        \item $
+            A^k = S
+            \begin{bmatrix}
+                {\lambda_1}^k &  & 0\\
+                 & \ddots & \\
+                0 &  & {\lambda_n}^k\\
+            \end{bmatrix}
+            S^{-1}
+        $
+    \end{itemize}
+    \item Diagonalize the following matrix $A$.
+    \begin{equation*}
+        A =
+        \begin{bmatrix}
+            -1 & 0 & 1\\
+            3 & 0 & -3\\
+            1 & 0 & -1\\
+        \end{bmatrix}
+    \end{equation*}
+    \begin{itemize}
+        \item Find the characteristic polynomial.
+        \begin{align*}
+            |A-\lambda I| &=
+            \begin{vmatrix}
+                -1-\lambda & 0 & 1\\
+                3 & 0-\lambda & -3\\
+                1 & 0 & -1-\lambda\\
+            \end{vmatrix}\\
+            &= (-1-\lambda)((-\lambda)(-1-\lambda))+(-1)(-\lambda)\\
+            &= -\lambda(-1-\lambda)^2+\lambda\\
+            &= -\lambda(1+2\lambda+\lambda^2)+\lambda\\
+            &= -\lambda^3-2\lambda^2\\
+            &= -\lambda^2(\lambda+2)
+        \end{align*}
+        \item Find the eigenvalues: $\lambda_1=\lambda_2=0$, $\lambda_3=-2$
+        \item \textbf{Algebraic multiplicity} of $\lambda_1,\lambda_2$ is 2.
+        \item A.M. of $\lambda_3$ is 1.
+        \item $
+            A-0I =
+            \begin{bmatrix}
+                -1 & 0 & 1\\
+                3 & 0 & -3\\
+                1 & 0 & -1\\
+            \end{bmatrix}
+        $
+        \item $\text{rank}(A-0I)=1 \Rightarrow \dim(N(A-0I))=2$
+        \item The 2 directly above is the \textbf{geometric multiplicity}.
+        \item $A$ is diagonalizable iff A.M. of $\lambda_i=\text{G.M.}$
+        
+        %%%%%%%%%%%%%%%%%%%%%%%%%
+        
+        \item \marginnote{1/31:}Eigenvectors are $
+            x_1=
+            \begin{bmatrix}
+                1\\
+                0\\
+                1\\
+            \end{bmatrix}
+        $ and $
+            x_2=
+            \begin{bmatrix}
+                0\\
+                1\\
+                0\\
+            \end{bmatrix}
+        $.
+        \item $
+        A+2I =
+        \begin{bmatrix}
+            1 & 0 & 1\\
+            3 & 2 & -3\\
+            1 & 0 & 1\\
+        \end{bmatrix}
+    $
+        \item Eigenvector is $
+            x_3=
+            \begin{bmatrix}
+                1\\
+                -3\\
+                -1\\
+            \end{bmatrix}
+        $
+        \item Use an $S$ matrix of eigenvectors.
+        \item $
+            A = S\Lambda S^{-1} = \frac{1}{2}
+            \begin{bmatrix}
+                0 & 1 & 1\\
+                1 & 0 & -3\\
+                0 & 1 & -1\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                0 &  & \\
+                 & 0 & \\
+                 &  & -2\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                3 & 2 & -3\\
+                1 & 0 & 1\\
+                1 & 0 & -1\\
+            \end{bmatrix}
+        $
+        \item Note that $
+            A^{9752} = \frac{1}{2}
+            \begin{bmatrix}
+                0 & 1 & 1\\
+                1 & 0 & -3\\
+                0 & 1 & -1\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                0 &  & \\
+                 & 0 & \\
+                 &  & (-2)^{9752}\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                3 & 2 & -3\\
+                1 & 0 & 1\\
+                1 & 0 & -1\\
+            \end{bmatrix}
+        $
+    \end{itemize}
+    \item \textbf{Algebraic multiplicity}: The number of repeated roots to a polynomial. For all of the roots, it adds up to $n$ ($n$-square matrix). \emph{Also known as} \textbf{A.M.}
+    \item \textbf{Geometric multiplicity}: The number of eigenvectors produced from each root. For all of the roots, it may not add up to $n$ ($n$-square matrix). $\dim(N(A-\lambda I))$. \emph{Also known as} \textbf{G.M.}
+    \item A nondiagonalizable example:
+    \begin{equation*}
+        A =
+        \begin{bmatrix}
+            1 & 1 & 0\\
+            0 & 1 & 1\\
+            0 & 0 & 4\\
+        \end{bmatrix}
+    \end{equation*}
+    \begin{itemize}
+        \item $\lambda_1 = \lambda_2 = 1$ and $\lambda_3 = 4$.
+        \item $\lambda_1$ and $\lambda_2$ have $\text{A.M.}={\color{red}2}$.
+        \item $\lambda_3$ has $\text{A.M.}=1$.
+        \item $
+            A-I=
+            \begin{bmatrix}
+                0 & 1 & 0\\
+                0 & 0 & 1\\
+                0 & 0 & 3\\
+            \end{bmatrix}
+        $
+        \item $\text{rank}(A-I)=2\Rightarrow\dim(N(A-I))=1\Rightarrow\text{G.M.}={\color{red}1}$.
+        \item $
+            x_1=
+            \begin{bmatrix}
+                1\\
+                0\\
+                0\\
+            \end{bmatrix}
+        $
+        \item $
+            A-4I=
+            \begin{bmatrix}
+                -3 & 1 & 0\\
+                0 & -3 & 1\\
+                0 & 0 & 0\\
+            \end{bmatrix}
+        $
+        \item $
+            x_2=
+            \begin{bmatrix}
+                1\\
+                3\\
+                9\\
+            \end{bmatrix}
+        $
+        \item $S$ would be $3\times 2$ and, thus, not square, so $\nexists\ S^{-1}$$^[$\footnote{At a later date, we will look at an analogy of projections to diagonalization that finds the "best possible" diagonalization (which may not be perfectly diagonal).}$^]$.
+    \end{itemize}
+    \item \textbf{Canonical} (form): An accepted way of expressing something.
+\end{itemize}
+
+
+
+
+\end{document}
