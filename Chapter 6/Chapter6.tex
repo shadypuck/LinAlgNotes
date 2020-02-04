@@ -10,6 +10,8 @@
 
 \MakeOuterQuote{"}
 
+\newcommand{\T}{\text{T}}
+
 \pagestyle{fancy}
 \fancyhf{}
 \rfoot{Labalme \thepage}
@@ -596,6 +598,158 @@
             \text{PGH}\\
             \text{CLE}\\
         \end{bmatrix}
+    $
+\end{itemize}
+
+
+\subsection*{Explicit Formula for the Fibonacci Sequence}
+\begin{itemize}
+    \item \marginnote{2/4:}1, 1, 2, 3, 5, 8, \dots
+    \item Recursively defined formula: $F_n$$^[$\footnote{The $n$-th Fibonacci number.}$^]$$=F_{n-1}+F_{n-2}$.
+    \begin{align*}
+        F_n &= F_{n-1}+F_{n-2}\\
+        F_{n-1} &= F_{n-1}\\
+        \begin{bmatrix}
+            F_n\\
+            F_{n-1}\\
+        \end{bmatrix}
+        &=
+        \begin{bmatrix}
+            1 & 1\\
+            1 & 0\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            F_{n-1}\\
+            F_{n-2}\\
+        \end{bmatrix}
+    \end{align*}
+    \item $u_n = A^nu_0 = S\Lambda^nS^{-1}u_0$.
+    \begin{align*}
+        0 &= |A-\lambda I|\\
+        &=
+        \begin{vmatrix}
+            1-\lambda & 1\\
+            1 & -\lambda\\
+        \end{vmatrix}\\
+        &= -\lambda(1-\lambda)-1\\
+        &= \lambda^2-\lambda-1
+    \end{align*}
+    \item $\lambda = \frac{1\pm\sqrt{5}}{2}$$^[$\footnote{This is the Golden ratio!}$^]$.
+    \item $\lambda_1 = \frac{1+\sqrt{5}}{2}$.
+    \begin{align*}
+        N(A-\lambda_1I) &= N\left(
+        \begin{bmatrix}
+            1-\frac{1+\sqrt{5}}{2} & 1\\
+            1 & -\frac{1+\sqrt{5}}{2}\\
+        \end{bmatrix}
+        \right)\\
+        &= N\left(
+        \begin{bmatrix}
+            \frac{1-\sqrt{5}}{2} & 1\\
+            1 & \frac{-1-\sqrt{5}}{2}\\
+        \end{bmatrix}
+        \right)\\
+    \end{align*}
+    \item $
+        \begin{bmatrix}
+            \frac{1-\sqrt{5}}{2} & 1\\
+            1 & \frac{-1-\sqrt{5}}{2}\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            x_1\\
+            x_2\\
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            0\\
+            0\\
+        \end{bmatrix}
+    $
+    \item Let $x_2=1$.
+    \begin{align*}
+        \frac{1-\sqrt{5}}{2}x_1+1 &= 0\\
+        \frac{1-\sqrt{5}}{2}x_1 &= -\frac{2}{2}\\
+        x_1 &= \frac{-2}{1-\sqrt{5}}\times \frac{1+\sqrt{5}}{1+\sqrt{5}}\\
+        &= \frac{-2-2\sqrt{5}}{-4}\\
+        &= \frac{1+\sqrt{5}}{2}
+    \end{align*}
+    \item $
+        s_1 =
+        \begin{bmatrix}
+            \frac{1+\sqrt{5}}{2}\\
+            1\\
+        \end{bmatrix}
+    $, $
+        s_2 =
+        \begin{bmatrix}
+            \frac{1-\sqrt{5}}{2}\\
+            1\\
+        \end{bmatrix}
+    $.
+    \item $
+        \begin{bmatrix}
+            1 & 1\\
+            1 & 0\\
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            \frac{1+\sqrt{5}}{2} & \frac{1-\sqrt{5}}{2}\\
+            1 & 1\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            \frac{1+\sqrt{5}}{2} & 0\\
+            0 & \frac{1-\sqrt{5}}{2}\\
+        \end{bmatrix}
+        S^{-1}
+    $
+    \item $
+        S^{-1}
+        = \frac{1}{|S|}C_S^\T
+        = \frac{1}{\sqrt{5}}
+        \begin{bmatrix}
+            1 & \frac{-1+\sqrt{5}}{2}\\
+            -1 & \frac{1+\sqrt{5}}{2}\\
+        \end{bmatrix}
+    $
+    \item $u_k = A^ku_0 = S\Lambda^kS^{-1}u_0$.
+    \begin{align*}
+        S^{-1}u_0 &= \frac{1}{\sqrt{5}}
+        \begin{bmatrix}
+            1 & \frac{-1+\sqrt{5}}{2}\\
+            -1 & \frac{1+\sqrt{5}}{2}\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            1\\
+            1\\
+        \end{bmatrix}\\
+        &= \frac{1}{\sqrt{5}}
+        \begin{bmatrix}
+            \frac{1+\sqrt{5}}{2}\\
+            \frac{-1+\sqrt{5}}{2}\\
+        \end{bmatrix}\\
+        &=
+        \begin{bmatrix}
+            \frac{1+\sqrt{5}}{2\sqrt{5}}\\
+            \frac{-1+\sqrt{5}}{2\sqrt{5}}\\
+        \end{bmatrix}\\
+        &=
+        \begin{bmatrix}
+            \frac{5+\sqrt{5}}{10}\\
+            \frac{5-\sqrt{5}}{10}\\
+        \end{bmatrix}
+    \end{align*}
+    \item $
+        u_k =
+        \begin{bmatrix}
+            \frac{1+\sqrt{5}}{2}\\
+            1\\
+        \end{bmatrix}
+        \left( \frac{1+\sqrt{5}}{2} \right)^k\left( \frac{5+\sqrt{5}}{10} \right)+
+        \begin{bmatrix}
+            \frac{1-\sqrt{5}}{2}\\
+            1\\
+        \end{bmatrix}
+        \left( \frac{1-\sqrt{5}}{2} \right)^k\left( \frac{5-\sqrt{5}}{10} \right)
     $
 \end{itemize}
 
