@@ -11,6 +11,11 @@
 \MakeOuterQuote{"}
 
 \newcommand{\T}{\text{T}}
+\newcommand{\dy}{\text{d}y}
+\newcommand{\dx}{\text{d}x}
+\newcommand{\e}{\text{e}}
+
+\renewcommand{\labelitemiii}{\scriptsize$\blacksquare$}
 
 \pagestyle{fancy}
 \fancyhf{}
@@ -751,6 +756,252 @@
         \end{bmatrix}
         \left( \frac{1-\sqrt{5}}{2} \right)^k\left( \frac{5-\sqrt{5}}{10} \right)
     $
+\end{itemize}
+
+
+
+\section*{Systems of First-Order Ordinary Differential Equations}
+\begin{itemize}
+    \item \marginnote{2/11:}Let $f(x)=y$ and $a,c,K\in\mathbb{F}$.
+    \begin{align*}
+        \frac{\dy}{\dx} &= ay\\
+        \frac{1}{y}\frac{\dy}{\dx} &= a\\
+        \frac{1}{y}\frac{\dy}{\dx}\, \dx &= a\, \dx\\
+        \frac{1}{y}\, \dy &= a\, \dx\\
+        \int \frac{1}{y}\, \dy &= \int a\, \dx\\
+        \ln y &= ax+c\\
+        y &= \e^{ax+c}\\
+        &= \e^{ax}\text{e}^c\\
+        &= K\e^{ax}
+    \end{align*}
+    \item Let $\frac{\dy}{\dx}=y'$.
+    \begin{itemize}
+        \item $y_1' = a_{11}y_1+a_{12}y_2+\cdots+a_{1n}y_n$.
+        \item $y_2' = a_{21}y_1+a_{22}y_2+\cdots+a_{2n}y_n$.
+        \item $\vdots$
+        \item $y_n' = a_{n1}y_1+a_{n2}y_2+\cdots+a_{nn}y_n$.
+    \end{itemize}
+    \item This is a \textbf{square system} of equations.
+    \item Rewrite as $y' = Ay$.
+    \begin{equation*}
+        \begin{bmatrix}
+            y_1'\\
+            y_2'\\
+            \vdots\\
+            y_n'\\
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            a_{11} & a_{12} & \cdots & a_{1n}\\
+            a_{21} & a_{22} & \cdots & a_{2n}\\
+            \vdots &        & \ddots &       \\
+            a_{n1} & a_{n2} & \cdots & a_{nn}\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            y_1\\
+            y_2\\
+            \vdots\\
+            y_n\\
+        \end{bmatrix}
+    \end{equation*}
+    \item Solve the following system of differential equations.
+    \begin{align*}
+        y_1' &= 3y_1\\
+        y_2' &= -2y_2\\
+        y_3' &= 5y_3
+    \end{align*}
+    \begin{equation*}
+        \begin{bmatrix}
+            y_1'\\
+            y_2'\\
+            y_3'\\
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            3 & 0 & 0\\
+            0 & -2 & 0\\
+            0 & 0 & 5\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            y_1\\
+            y_2\\
+            y_3\\
+        \end{bmatrix}
+    \end{equation*}
+    \begin{itemize}
+        \item General Solution:
+    \end{itemize}
+    \begin{align*}
+        y_1 &= k_1\e^{3x}\\
+        y_2 &= k_2\e^{-2x}\\
+        y_3 &= k_3\e^{5x}
+    \end{align*}
+    \begin{itemize}
+        \item Particular Solution (where $y_1(0)=2$, $y_2(0)=-1$, and $y_3(0)=7$ are the initial conditions):
+    \end{itemize}
+    \begin{align*}
+        y_1 &= 2\e^{3x}\\
+        y_2 &= -\e^{-2x}\\
+        y_3 &= 7\e^{5x}
+    \end{align*}
+    \item Consider a different system. Remember throughout that we are solving for $y$.
+    \begin{align*}
+        y_1' &= y_1+y_2\\
+        y_2' &= 4y_1-2y_2
+    \end{align*}
+    \begin{itemize}
+        \item The previous system was so easy to solve because the matrix was diagonal. This one (as follows) will not be. Therefore, we should diagonalize it.
+    \end{itemize}
+    \begin{equation*}
+        \begin{bmatrix}
+            y_1'\\
+            y_2'\\
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            1 & 1\\
+            4 & -2\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            y_1\\
+            y_2\\
+        \end{bmatrix}
+    \end{equation*}
+    \begin{itemize}
+        \item Start with $y'=Ay$.
+        \item Substitute $y=Su$.
+        \begin{itemize}
+            \item Note that $y=Su\Rightarrow y'=Su'$$^[$\footnote{Think about differentiating both sides: $y\rightarrow y'$ is obvious, $S$ will be unchanged because it's just coefficients, and the functions of $u$ will be differentiated.}$^]$.
+            \item If we can find $u'$ in terms of a diagonal matrix and $u$, we can solve for $y$.
+        \end{itemize}
+        \begin{center}
+            \begin{tikzpicture}
+                \draw (-2,0) -- (2,0) node[right]{
+                    $
+                        \begin{bmatrix}
+                            1\\
+                            0\\
+                        \end{bmatrix}
+                    $
+                };
+                \draw (0,-2) -- (0,2) node[above]{
+                    $
+                        \begin{bmatrix}
+                            0\\
+                            1\\
+                        \end{bmatrix}
+                    $
+                };
+
+                \draw [dashed] (-0.5,2) node[above]{$S_2$} -- (0.5,-2);
+                \draw [dashed] (-2,-0.7) -- (2,0.7) node[right]{$S_1$};
+
+                \draw [red,thick] (-1,2) to[out=-45,in=180] (1.8,1.3);
+                \draw [red,thick] plot[smooth,tension=1.2] coordinates{
+                    (-1,-1) (-0.5,-0.3) (0.2,-0.6) (1,0.4)
+                };
+            \end{tikzpicture}
+        \end{center}
+        \item We seek to find a new basis $S$ such that the matrix scaling $u$ will be diagonal.
+    \end{itemize}
+    \begin{align*}
+        Su' &= Ay\\
+        Su' &= ASu\\
+        u' &= S^{-1}ASu\\
+        u' &= \Lambda u
+    \end{align*}
+    \begin{itemize}
+        \item The last substitution above is legal because if $A=S\Lambda S^{-1}$, then $\Lambda=S^{-1}AS$.
+    \end{itemize}
+    \begin{align*}
+        0 &=
+        \begin{vmatrix}
+            1-\lambda & 1\\
+            4 & -2-\lambda\\
+        \end{vmatrix}\\
+        &= (1-\lambda)(-2-\lambda)-4\\
+        &= -2-\lambda+2\lambda+\lambda^2-4\\
+        &= \lambda^2+\lambda-6\\
+        &= (\lambda-2)(\lambda+3)
+    \end{align*}
+    \begin{align*}
+        \lambda_1 &= 2&
+        \lambda_2 &= -3
+    \end{align*}
+    \begin{itemize}
+        \item $
+            A-2I=
+            \begin{bmatrix}
+                -1 & 1\\
+                4 & -4\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                1\\
+                1\\
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+                0\\
+                0\\
+            \end{bmatrix}
+        $
+        \item $
+            A+3I=
+            \begin{bmatrix}
+                4 & 1\\
+                4 & 1\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                -1\\
+                4\\
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+                0\\
+                0\\
+            \end{bmatrix}
+        $
+    \end{itemize}
+    \begin{align*}
+        u' &= \Lambda u\\
+        \begin{bmatrix}
+            u_1'\\
+            u_2'\\
+        \end{bmatrix}
+        &=
+        \begin{bmatrix}
+            2 & 0\\
+            0 & -3\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            u_1\\
+            u_2\\
+        \end{bmatrix}
+    \end{align*}
+    \begin{align*}
+        u_1 &= k_1\e^{2x}\\
+        u_2 &= k_2\e^{-3x}
+    \end{align*}
+    \begin{align*}
+        y &= Su\\
+        \begin{bmatrix}
+            y_1\\
+            y_2\\
+        \end{bmatrix}
+        &=
+        \begin{bmatrix}
+            1 & -1\\
+            1 & 4\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            k_1\e^{2x}\\
+            k_2\e^{-3x}\\
+        \end{bmatrix}
+    \end{align*}
+    \begin{align*}
+        y_1 &= k_1\e^{2x}-k_2\e^{-3x}\\
+        y_2 &= k_1\e^{2x}+4k_2\e^{-3x}
+    \end{align*}
 \end{itemize}
 
 
