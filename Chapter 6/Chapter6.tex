@@ -876,7 +876,7 @@
         \end{itemize}
         \begin{center}
             \begin{tikzpicture}
-                \draw (-2,0) -- (2,0) node[right]{
+                \draw [red] (-2,0) -- (2,0) node[right]{
                     $
                         \begin{bmatrix}
                             1\\
@@ -884,7 +884,7 @@
                         \end{bmatrix}
                     $
                 };
-                \draw (0,-2) -- (0,2) node[above]{
+                \draw [red] (0,-2) -- (0,2) node[above]{
                     $
                         \begin{bmatrix}
                             0\\
@@ -893,12 +893,38 @@
                     $
                 };
 
-                \draw [dashed] (-0.5,2) node[above]{$S_2$} -- (0.5,-2);
-                \draw [dashed] (-2,-0.7) -- (2,0.7) node[right]{$S_1$};
+                \draw [blue] (-0.5,2) node[above left]{
+                    $
+                        S_2\
+                        \begin{bmatrix}
+                            -1\\
+                            4\\
+                        \end{bmatrix}
+                    $
+                } -- (0.5,-2);
+                \draw [blue] (-2,-2) -- (2,2) node[right]{
+                    $
+                        S_1\
+                        \begin{bmatrix}
+                            1\\
+                            1\\
+                        \end{bmatrix}
+                    $
+                };
 
-                \draw [red,thick] (-1,2) to[out=-45,in=180] (1.8,1.3);
-                \draw [red,thick] plot[smooth,tension=1.2] coordinates{
+                \draw [thick] (-1,2) node[below left]{
+                    $\color{red}y_1$
+                } node[below=3mm]{
+                    $\color{blue}u_1$
+                } to[out=-45,in=180] (1.8,1.3);
+                \draw [thick] plot[smooth,tension=1.2] coordinates{
                     (-1,-1) (-0.5,-0.3) (0.2,-0.6) (1,0.4)
+                };
+                \node at (-0.8,-1.2) {
+                    $\color{red}y_2$
+                };
+                \node at (-0.5,-0.9) {
+                    $\color{blue}u_2$
                 };
             \end{tikzpicture}
         \end{center}
@@ -1002,7 +1028,86 @@
         y_1 &= k_1\e^{2x}-k_2\e^{-3x}\\
         y_2 &= k_1\e^{2x}+4k_2\e^{-3x}
     \end{align*}
+    \item \marginnote{2/12:}Initial conditions: $y_1(0)=1$ and $y_2(0)=6$.
+    \begin{itemize}
+        \item Use augmented matrices.
+    \end{itemize}
+    \begin{equation*}
+        \begin{bmatrix}
+            1 & -1 & 1\\
+            1 & 4 & 6\\
+        \end{bmatrix}
+        \rightarrow
+        \begin{bmatrix}
+            1 & 0 & 2\\
+            0 & 1 & 1\\
+        \end{bmatrix}
+    \end{equation*}
+    \item Particular solution:
+    \begin{align*}
+        y_1 &= 2\e^{2x}-\e^{-3x}\\
+        y_2 &= 2\e^{2x}+4\e^{-3x}
+    \end{align*}
 \end{itemize}
+
+
+\subsection*{Matrix Exponentiation}
+\begin{itemize}
+    \item $\e^A$.
+    \item $f(t) = \e^t$.
+    \begin{center}
+        \renewcommand{\arraystretch}{1.8}
+        \begin{tabular}{l|l}
+            Differential Equation & Power Series\\
+            \hline
+            $f'(t)=f(t)$ & $f(t)=1+t+\frac{t^2}{2}+\frac{t^3}{3!}+\cdots$\\
+            $f(0)=1$ & $\frac{\text{d}}{\text{d}t}(t)=1$, $\frac{\text{d}}{\text{d}t}\left( \frac{t^2}{2} \right)=t$, \dots\\
+            & $f(t)=\sum_{n=0}^\infty \frac{t^n}{n!}$
+        \end{tabular}
+    \end{center}
+    \item $f(t)=\e^{at}$.
+    \begin{center}
+        \renewcommand{\arraystretch}{1.6}
+        \begin{tabular}{l|l}
+            Differential Equation & Power Series\\
+            \hline
+            $f'(t)=af(t)$ & $f(t)=\sum_{n=0}^\infty \frac{a^nt^n}{n!}$\\
+            $f(0)=1$ &\\
+        \end{tabular}
+    \end{center}
+    \item $F(t)=\e^{At}$.
+    \begin{itemize}
+        \item A matrix-valued function.
+        \item Ex. $
+            F(\theta) =
+            \begin{bmatrix}
+                \cos(\theta) & -\sin(\theta)\\
+                \sin(\theta) & \cos(\theta)\\
+            \end{bmatrix}
+        $
+        \item $F(\theta)A$ rotates points (arrows) of $A$ by $\theta$.
+    \end{itemize}
+    \begin{center}
+        \renewcommand{\arraystretch}{1.6}
+        \begin{tabular}{l|l}
+            Differential Equation & Power Series\\
+            \hline
+            $F'(t)=A\e^{At}$ & $F(t)=I+At+\frac{A^2t^2}{2!}+\frac{A^3t^3}{3!}+\cdots$\\
+            $F(0)=I$ & $F(t)=\sum_{n=0}^\infty \frac{A^nt^n}{n!}$\\
+        \end{tabular}
+    \end{center}
+\end{itemize}
+
+
+\subsection*{Diagonalization of e\textsuperscript{\emph{At}}}
+\begin{align*}
+    \e^{At} &= \sum_{n=0}^\infty \frac{A^nt^n}{n!}\\
+    &= \frac{S\Lambda^nS^{-1}t^n}{n!}\\
+    &= S\left( \frac{\Lambda^nt^n}{n!} \right)S^{-1}\\
+    &= S
+    [\hspace{3mm}]
+    S^{-1}
+\end{align*}
 
 
 
