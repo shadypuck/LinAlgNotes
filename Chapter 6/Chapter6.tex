@@ -7,6 +7,7 @@
 \usepackage{amssymb}
 \usepackage{tikz}
 \usepackage{csquotes}
+\usepackage{tabularx}
 
 \MakeOuterQuote{"}
 
@@ -14,6 +15,25 @@
 \newcommand{\dy}{\text{d}y}
 \newcommand{\dx}{\text{d}x}
 \newcommand{\e}{\text{e}}
+
+\newenvironment{tchart}[3]
+{
+    \\
+    \renewcommand{\arraystretch}{#1}
+    \hspace*{-\leftmargin}
+    \tabularx{\linewidth}{X|X}
+    \multicolumn{1}{c|}{\textbf{#2}} & \multicolumn{1}{c}{\textbf{#3}}\\
+    \hline
+}{
+    \endtabularx
+    \renewcommand{\arraystretch}{1}
+}
+
+\newenvironment{amatrix}[1]{
+    \left[\begin{array}{@{}*{#1}{c}|c@{}}
+}{
+    \end{array}\right]
+}
 
 \renewcommand{\labelitemiii}{\scriptsize$\blacksquare$}
 
@@ -458,12 +478,14 @@
 \marginnote{2/3:}
 \begin{center}
     \begin{tikzpicture}
-        \node (pgh) [circle,draw] {PGH};
-        \node (cle) [circle,draw] at (5,0) {CLE};
-        \draw [->,thick] (pgh.30) to[bend left=30] node[above]{0.05} (cle.150);
-        \draw [->,thick] (cle.-150) to[bend left=30] node[below]{0.2} (pgh.-30);
-        \draw [->,thick] (pgh.90) to[bend right=100,looseness=3] node[above]{0.95} (pgh.150);
-        \draw [->,thick] (cle.90) to[bend left=100,looseness=3] node[above]{0.8} (cle.30);
+        \node (pgh) [circle,draw] {PGH}
+            edge [out=100,in=130,loop,thick] node[above]{0.95} ()
+        ;
+        \node (cle) [circle,draw] at (5,0) {CLE}
+            edge [out=80,in=50,loop,thick] node[above]{0.8} ()
+        ;
+        \draw [->,thick] (pgh) to[bend left=30] node[above]{0.05} (cle);
+        \draw [->,thick] (cle) to[bend left=30] node[below]{0.2} (pgh);
     \end{tikzpicture}
 \end{center}
 \begin{itemize}
@@ -1030,18 +1052,18 @@
     \end{align*}
     \item \marginnote{2/12:}Initial conditions: $y_1(0)=1$ and $y_2(0)=6$.
     \begin{itemize}
-        \item Use augmented matrices.
+        \item Use augmented matrices to solve a system of equations.
     \end{itemize}
     \begin{equation*}
-        \begin{bmatrix}
+        \begin{amatrix}{2}
             1 & -1 & 1\\
             1 & 4 & 6\\
-        \end{bmatrix}
+        \end{amatrix}
         \rightarrow
-        \begin{bmatrix}
+        \begin{amatrix}{2}
             1 & 0 & 2\\
             0 & 1 & 1\\
-        \end{bmatrix}
+        \end{amatrix}
     \end{equation*}
     \item Particular solution:
     \begin{align*}
@@ -1055,27 +1077,21 @@
 \begin{itemize}
     \item $\e^A$.
     \item $f(t) = \e^t$.
-    \begin{center}
-        \renewcommand{\arraystretch}{1.8}
-        \begin{tabular}{l|l}
-            Differential Equation & Power Series\\
-            \hline
-            $f'(t)=f(t)$ & $f(t)=1+t+\frac{t^2}{2}+\frac{t^3}{3!}+\cdots$\\
-            $f(0)=1$ & $\frac{\text{d}}{\text{d}t}(t)=1$, $\frac{\text{d}}{\text{d}t}\left( \frac{t^2}{2} \right)=t$, \dots\\
-            & $f(t)=\sum_{n=0}^\infty \frac{t^n}{n!}$
-        \end{tabular}
-    \end{center}
+    \begin{tchart}{1.6}{Differential Equations}{Power Series}
+        $f'(t)=f(t)$ & $f(t)=1+t+\frac{t^2}{2}+\frac{t^3}{3!}+\cdots$\\
+        $f(0)=1$ & $\frac{\text{d}}{\text{d}t}(t)=1$, $\frac{\text{d}}{\text{d}t}\left( \frac{t^2}{2} \right)=t$, \dots\\
+        & $f(t)=\sum_{n=0}^\infty \frac{t^n}{n!}$
+    \end{tchart}
     \item $f(t)=\e^{at}$.
-    \begin{center}
-        \renewcommand{\arraystretch}{1.6}
-        \begin{tabular}{l|l}
-            Differential Equation & Power Series\\
-            \hline
-            $f'(t)=af(t)$ & $f(t)=\sum_{n=0}^\infty \frac{a^nt^n}{n!}$\\
-            $f(0)=1$ &\\
-        \end{tabular}
-    \end{center}
+    \begin{tchart}{1.5}{Differential Equations}{Power Series}
+        $f'(t)=af(t)$ & $f(t)=\sum_{n=0}^\infty \frac{a^nt^n}{n!}$\\
+        $f(0)=1$ &\\
+    \end{tchart}
     \item $F(t)=\e^{At}$.
+    \begin{tchart}{1.5}{Differential Equations}{Power Series}
+        $F'(t)=A\e^{At}$ & $F(t)=I+At+\frac{A^2t^2}{2!}+\frac{A^3t^3}{3!}+\cdots$\\
+        $F(0)=I$ & $F(t)=\sum_{n=0}^\infty \frac{A^nt^n}{n!}$\\
+    \end{tchart}
     \begin{itemize}
         \item A matrix-valued function.
         \item Ex. $
@@ -1087,27 +1103,175 @@
         $
         \item $F(\theta)A$ rotates points (arrows) of $A$ by $\theta$.
     \end{itemize}
-    \begin{center}
-        \renewcommand{\arraystretch}{1.6}
-        \begin{tabular}{l|l}
-            Differential Equation & Power Series\\
-            \hline
-            $F'(t)=A\e^{At}$ & $F(t)=I+At+\frac{A^2t^2}{2!}+\frac{A^3t^3}{3!}+\cdots$\\
-            $F(0)=I$ & $F(t)=\sum_{n=0}^\infty \frac{A^nt^n}{n!}$\\
-        \end{tabular}
-    \end{center}
 \end{itemize}
 
 
 \subsection*{Diagonalization of e\textsuperscript{\emph{At}}}
-\begin{align*}
-    \e^{At} &= \sum_{n=0}^\infty \frac{A^nt^n}{n!}\\
-    &= \frac{S\Lambda^nS^{-1}t^n}{n!}\\
-    &= S\left( \frac{\Lambda^nt^n}{n!} \right)S^{-1}\\
-    &= S
-    [\hspace{3mm}]
-    S^{-1}
-\end{align*}
+\begin{itemize}
+    \item Power series form:
+    \begin{align*}
+        \e^{At} &= \sum_{n=0}^\infty \frac{A^nt^n}{n!}\\
+        &= \sum_{n=0}^\infty \frac{S\Lambda^nS^{-1}t^n}{n!}\\
+        &= \sum_{n=0}^\infty S\left( \frac{\Lambda^nt^n}{n!} \right)S^{-1}\\
+        \marginnote{2/13:}&= S
+        \begin{bmatrix}
+            \sum_{n=0}^\infty \frac{\lambda_1^nt^n}{n!} &  & \\
+             & \ddots & \\
+             &  & \sum_{n=0}^\infty \frac{\lambda_k^nt^n}{n!}\\
+        \end{bmatrix}
+        S^{-1}\\
+        &= S
+        \begin{bmatrix}
+            \e^{\lambda_1t} &  & \\
+             & \ddots & \\
+             &  & \e^{\lambda_kt}\\
+        \end{bmatrix}
+        S^{-1}\\
+        &= F(t)
+    \end{align*}
+    \item Differential equation form:
+    \begin{align*}
+        F(t) &= \e^{At}\\
+        &= S
+        \begin{bmatrix}
+            \e^{\lambda_1t} &  & \\
+             & \ddots & \\
+             &  & \e^{\lambda_kt}\\
+        \end{bmatrix}
+        S^{-1}
+    \end{align*}
+    \begin{align*}
+        F'(t) &= S
+        \begin{bmatrix}
+            \lambda_1\e^{\lambda_1t} &  & \\
+             & \ddots & \\
+             &  & \lambda_k\e^{\lambda_kt}\\
+        \end{bmatrix}
+        S^{-1}\\
+        &= {\color{red}S
+        \begin{bmatrix}
+            \lambda_1 &  & \\
+             & \ddots & \\
+             &  & \lambda_k\\
+        \end{bmatrix}
+        S^{-1}}{\color{blue}S
+        \begin{bmatrix}
+            \e^{\lambda_1t} &  & \\
+             & \ddots & \\
+             &  & \e^{\lambda_kt}\\
+        \end{bmatrix}
+        S^{-1}}\\
+        &= {\color{red}A}{\color{blue}F(t)}
+    \end{align*}
+    \item In other words, $y'(t)=Ay(t)$ and $y(0)=y_0$. The solution is $y=\e^{At}y_0$.
+    \item Example:
+    \begin{align*}
+        y'_1 &= 5y_1+y_2& y_1(0) &= -3\\
+        y'_2 &= -2y_1+2y_2& y_2(0) &= 8
+    \end{align*}
+    \begin{align*}
+        y(t) &= \e^{At}y(0)\\
+        &= S\e^{\Lambda t}S^{-1}y(0)
+    \end{align*}
+    \begin{align*}
+        0 &= |A-\lambda I|\\
+        &=
+        \begin{vmatrix}
+            5-\lambda & 1\\
+            -2 & 2-\lambda\\
+        \end{vmatrix}\\
+        &= (\lambda-3)(\lambda-4)
+    \end{align*}
+    \begin{itemize}
+        \item $
+            A-3I =
+            \begin{bmatrix}
+                2 & 1\\
+                -2 & -1\\
+            \end{bmatrix}
+        $
+        \item $
+            N(A-3I) = \left\{
+            \begin{bmatrix}
+                1\\
+                -2\\
+            \end{bmatrix}
+            \right\}
+        $
+        \item $
+            A-4I =
+            \begin{bmatrix}
+                1 & 1\\
+                -2 & -2\\
+            \end{bmatrix}
+        $
+        \item $
+            N(A-4I) = \left\{
+            \begin{bmatrix}
+                -1\\
+                1\\
+            \end{bmatrix}
+            \right\}
+        $
+    \end{itemize}
+    \begin{align*}
+        y(t) &= S\e^{\Lambda t}S^{-1}y(0)\\
+        &=
+        \begin{bmatrix}
+            1 & -1\\
+            -2 & 1\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            \e^{3t} & 0\\
+            0 & \e^{4t}\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            -1 & -1\\
+            -2 & -1\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            -3\\
+            8\\
+        \end{bmatrix}\\
+        &=
+        \begin{bmatrix}
+            \e^{3t} & -\e^{4t}\\
+            -2\e^{3t} & \e^{4t}\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            -1 & -1\\
+            -2 & -1\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            -3\\
+            8\\
+        \end{bmatrix}\\
+        &=
+        \begin{bmatrix}
+            -\e^{3t}+2\e^{4t} & -\e^{3t}+\e^{4t}\\
+            2\e^{3t}-2\e^{4t} & 2\e^{3t}-\e^{4t}\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            -3\\
+            8\\
+        \end{bmatrix}\\
+        &=
+        \begin{bmatrix}
+            3\e^{3t}-6\e^{4t}-8\e^{3t}+8\e^{4t}\\
+            -6\e^{3t}+6\e^{4t}+16\e^{3t}-8\e^{4t}\\
+        \end{bmatrix}\\
+        &=
+        \begin{bmatrix}
+            -5\e^{3t}+2\e^{4t}\\
+            10\e^{3t}-2\e^{4t}\\
+        \end{bmatrix}\\
+        &=
+        \begin{bmatrix}
+            y_1(t)\\
+            y_2(t)\\
+        \end{bmatrix}
+    \end{align*}
+\end{itemize}
 
 
 
