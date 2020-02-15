@@ -11,16 +11,17 @@
 
 \MakeOuterQuote{"}
 
+\colorlet{grx}{green!50!black}
+
 \newcommand{\T}{\text{T}}
 \newcommand{\dy}{\text{d}y}
 \newcommand{\dx}{\text{d}x}
+\newcommand{\dd}[2][]{\frac{\text{d}#1}{\text{d}#2}}
 \newcommand{\e}{\text{e}}
 
 \newenvironment{tchart}[3]
 {
-    \\
     \renewcommand{\arraystretch}{#1}
-    \hspace*{-\leftmargin}
     \tabularx{\linewidth}{X|X}
     \multicolumn{1}{c|}{\textbf{#2}} & \multicolumn{1}{c}{\textbf{#3}}\\
     \hline
@@ -786,9 +787,9 @@
 \begin{itemize}
     \item \marginnote{2/11:}Let $f(x)=y$ and $a,c,K\in\mathbb{F}$.
     \begin{align*}
-        \frac{\dy}{\dx} &= ay\\
-        \frac{1}{y}\frac{\dy}{\dx} &= a\\
-        \frac{1}{y}\frac{\dy}{\dx}\, \dx &= a\, \dx\\
+        \dd[y]{x} &= ay\\
+        \frac{1}{y}\dd[y]{x} &= a\\
+        \frac{1}{y}\dd[y]{x}\, \dx &= a\, \dx\\
         \frac{1}{y}\, \dy &= a\, \dx\\
         \int \frac{1}{y}\, \dy &= \int a\, \dx\\
         \ln y &= ax+c\\
@@ -796,7 +797,7 @@
         &= \e^{ax}\text{e}^c\\
         &= K\e^{ax}
     \end{align*}
-    \item Let $\frac{\dy}{\dx}=y'$.
+    \item Let $\dd[y]{x}=y'$.
     \begin{itemize}
         \item $y_1' = a_{11}y_1+a_{12}y_2+\cdots+a_{1n}y_n$.
         \item $y_2' = a_{21}y_1+a_{22}y_2+\cdots+a_{2n}y_n$.
@@ -1075,23 +1076,23 @@
 
 \subsection*{Matrix Exponentiation}
 \begin{itemize}
-    \item $\e^A$.
+    \item $\e^A$ is a matrix defined as the infinite sum of a power series.
     \item $f(t) = \e^t$.
-    \begin{tchart}{1.6}{Differential Equations}{Power Series}
-        $f'(t)=f(t)$ & $f(t)=1+t+\frac{t^2}{2}+\frac{t^3}{3!}+\cdots$\\
-        $f(0)=1$ & $\frac{\text{d}}{\text{d}t}(t)=1$, $\frac{\text{d}}{\text{d}t}\left( \frac{t^2}{2} \right)=t$, \dots\\
-        & $f(t)=\sum_{n=0}^\infty \frac{t^n}{n!}$
-    \end{tchart}
+\end{itemize}
+\begin{tchart}{1.6}{Differential Equations}{Power Series}
+    $f'(t)=f(t)$ & $f(t)=1+t+\frac{t^2}{2}+\frac{t^3}{3!}+\cdots$\\
+    $f(0)=1$ & $\frac{\text{d}}{\text{d}t}(t)=1$, $\frac{\text{d}}{\text{d}t}\left( \frac{t^2}{2} \right)=t$, \dots\\
+    & $f(t)=\sum_{n=0}^\infty \frac{t^n}{n!}$
+\end{tchart}
+\begin{itemize}
     \item $f(t)=\e^{at}$.
-    \begin{tchart}{1.5}{Differential Equations}{Power Series}
-        $f'(t)=af(t)$ & $f(t)=\sum_{n=0}^\infty \frac{a^nt^n}{n!}$\\
-        $f(0)=1$ &\\
-    \end{tchart}
+\end{itemize}
+\begin{tchart}{1.5}{Differential Equations}{Power Series}
+    $f'(t)=af(t)$ & $f(t)=\sum_{n=0}^\infty \frac{a^nt^n}{n!}$\\
+    $f(0)=1$ &\\
+\end{tchart}
+\begin{itemize}
     \item $F(t)=\e^{At}$.
-    \begin{tchart}{1.5}{Differential Equations}{Power Series}
-        $F'(t)=A\e^{At}$ & $F(t)=I+At+\frac{A^2t^2}{2!}+\frac{A^3t^3}{3!}+\cdots$\\
-        $F(0)=I$ & $F(t)=\sum_{n=0}^\infty \frac{A^nt^n}{n!}$\\
-    \end{tchart}
     \begin{itemize}
         \item A matrix-valued function.
         \item Ex. $
@@ -1104,15 +1105,48 @@
         \item $F(\theta)A$ rotates points (arrows) of $A$ by $\theta$.
     \end{itemize}
 \end{itemize}
+\begin{tchart}{1.5}{Differential Equations}{Power Series}
+    $F'(t)=A\e^{At}$ & $F(t)=I+At+\frac{A^2t^2}{2!}+\frac{A^3t^3}{3!}+\cdots$\\
+    $F(0)=I$ & $F(t)=\sum_{n=0}^\infty \frac{A^nt^n}{n!}$\\
+\end{tchart}
 
 
 \subsection*{Diagonalization of e\textsuperscript{\emph{At}}}
 \begin{itemize}
-    \item Power series form:
+    \item Find an alternate form for $\e^{At}$ by manipulating its power series definition:
     \begin{align*}
         \e^{At} &= \sum_{n=0}^\infty \frac{A^nt^n}{n!}\\
         &= \sum_{n=0}^\infty \frac{S\Lambda^nS^{-1}t^n}{n!}\\
         &= \sum_{n=0}^\infty S\left( \frac{\Lambda^nt^n}{n!} \right)S^{-1}\\
+        &= S\left( {\color{grx}\sum_{n=0}^\infty \frac{t^n}{n!}\Lambda^n} \right)S^{-1}\\
+        &= S\left( \sum_{n=0}^\infty \frac{t^n}{n!}
+        \begin{bmatrix}
+            \lambda_1 &  & \\
+             & \ddots & \\
+             &  & \lambda_k\\
+        \end{bmatrix}^n
+        \right)S^{-1}\\
+        &= S\left( \sum_{n=0}^\infty \frac{t^n}{n!}
+        \begin{bmatrix}
+            \lambda_1^n &  & \\
+             & \ddots & \\
+             &  & \lambda_k^n\\
+        \end{bmatrix}
+        \right)S^{-1}\\
+        &= S\left( \sum_{n=0}^\infty
+        \begin{bmatrix}
+            \frac{t^n}{n!}\lambda_1^n &  & \\
+             & \ddots & \\
+             &  & \frac{t^n}{n!}\lambda_k^n\\
+        \end{bmatrix}
+        \right)S^{-1}\\
+        &= S\left( \sum_{n=0}^\infty
+        \begin{bmatrix}
+            \frac{\lambda_1^nt^n}{n!} &  & \\
+             & \ddots & \\
+             &  & \frac{\lambda_k^nt^n}{n!}\\
+        \end{bmatrix}
+        \right)S^{-1}\\
         \marginnote{2/13:}&= S
         \begin{bmatrix}
             \sum_{n=0}^\infty \frac{\lambda_1^nt^n}{n!} &  & \\
@@ -1127,9 +1161,10 @@
              &  & \e^{\lambda_kt}\\
         \end{bmatrix}
         S^{-1}\\
+        &= S{\color{grx}\e^{\Lambda t}}S^{-1}\\
         &= F(t)
     \end{align*}
-    \item Differential equation form:
+    \item Prove, using the above result, that $F'(t)$ can be defined in terms of $F(t)$:
     \begin{align*}
         F(t) &= \e^{At}\\
         &= S
@@ -1141,11 +1176,57 @@
         S^{-1}
     \end{align*}
     \begin{align*}
-        F'(t) &= S
+        F'(t) &= \dd{t}\left( S
+        \begin{bmatrix}
+            \e^{\lambda_1t} &  & \\
+             & \ddots & \\
+             &  & \e^{\lambda_kt}\\
+        \end{bmatrix}
+        S^{-1} \right)\\
+        &= S\dd{t}\left(
+        \begin{bmatrix}
+            \e^{\lambda_1t} &  & \\
+             & \ddots & \\
+             &  & \e^{\lambda_kt}\\
+        \end{bmatrix}
+        \right)S^{-1}\\
+        &= S
+        \begin{bmatrix}
+            \dd{t}\e^{\lambda_1t} &  & \\
+             & \ddots & \\
+             &  & \dd{t}\e^{\lambda_kt}\\
+        \end{bmatrix}
+        S^{-1}\\
+        &= S
         \begin{bmatrix}
             \lambda_1\e^{\lambda_1t} &  & \\
              & \ddots & \\
              &  & \lambda_k\e^{\lambda_kt}\\
+        \end{bmatrix}
+        S^{-1}\\
+        &= S
+        \begin{bmatrix}
+            \lambda_1 &  & \\
+             & \ddots & \\
+             &  & \lambda_k\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            \e^{\lambda_1t} &  & \\
+             & \ddots & \\
+             &  & \e^{\lambda_kt}\\
+        \end{bmatrix}
+        S^{-1}\\
+        &= S
+        \begin{bmatrix}
+            \lambda_1 &  & \\
+             & \ddots & \\
+             &  & \lambda_k\\
+        \end{bmatrix}
+        I_k
+        \begin{bmatrix}
+            \e^{\lambda_1t} &  & \\
+             & \ddots & \\
+             &  & \e^{\lambda_kt}\\
         \end{bmatrix}
         S^{-1}\\
         &= {\color{red}S
@@ -1161,7 +1242,8 @@
              &  & \e^{\lambda_kt}\\
         \end{bmatrix}
         S^{-1}}\\
-        &= {\color{red}A}{\color{blue}F(t)}
+        &= {\color{red}A}{\color{blue}F(t)}\\
+        &= A\e^{At}
     \end{align*}
     \item In other words, $y'(t)=Ay(t)$ and $y(0)=y_0$. The solution is $y=\e^{At}y_0$.
     \item Example:
