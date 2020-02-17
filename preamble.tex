@@ -1,0 +1,44 @@
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{marginnote}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{csquotes}
+\usepackage{tabularx}
+
+\MakeOuterQuote{"}
+
+\colorlet{grx}{green!50!black}
+
+\newcommand{\T}{\text{T}}
+\newcommand{\dy}{\text{d}y}
+\newcommand{\dx}{\text{d}x}
+\newcommand{\dd}[2][]{\frac{\text{d}#1}{\text{d}#2}}
+\newcommand{\e}{\text{e}}
+
+\newenvironment{tchart}[3]
+{
+    \renewcommand{\arraystretch}{#1}
+    \tabularx{\linewidth}{X|X}
+    \multicolumn{1}{c|}{\textbf{#2}} & \multicolumn{1}{c}{\textbf{#3}}\\
+    \hline
+}{
+    \endtabularx
+    \renewcommand{\arraystretch}{1}
+}
+
+\newenvironment{amatrix}[1]{
+    \left[\begin{array}{@{}*{#1}{c}|c@{}}
+}{
+    \end{array}\right]
+}
+
+\renewcommand{\labelitemiii}{\scriptsize$\blacksquare$}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rfoot{Labalme \thepage}
+\rhead{(H) Linear Algebra}
+
+\reversemarginpar
