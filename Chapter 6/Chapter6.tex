@@ -1314,9 +1314,85 @@
 
 
 
-\section*{Hi}
+\section*{Orthonormally Diagonalizable Matrices}
 \begin{itemize}
-    \item \marginnote{2/17:}hi
+    \item \marginnote{2/19:}$A=Q\Lambda Q^\T$.
+    \begin{itemize}
+        \item Eigenvectors are orthonormal.
+    \end{itemize}
+    \item $A^\T = \left( Q\Lambda Q^\T \right)^\T = Q^{\T\T}\Lambda^\T Q^\T = Q\Lambda Q^\T = A$.
+    \item Prove that the symmetric matrices are exactly those that are orthonormally diagonalizable.
+    \begin{itemize}
+        \item Let $A = A^\T$.
+        \begin{equation}\label{eqn:ortho1}
+            Ax_1 = \lambda_1x_1
+        \end{equation}
+        \begin{equation}\label{eqn:ortho2}
+            Ax_2 = \lambda_2x_2
+        \end{equation}
+        \item Multiply Equation \ref{eqn:ortho1} by $x_2^\T$ from Equation \ref{eqn:ortho2}.
+        \begin{itemize}
+            \item We have to relate the two equations.
+            \item Later, we transpose, because we have to specifically target the properties of symmetric matrices.
+        \end{itemize}
+        \begin{align*}
+            \lambda_1x_2^\T x_1 &= x_2^\T Ax_1\\
+            &= (x_2^\T A)x_1\\
+            &= \left( A^\T x_2 \right)^\T x_1\\
+            &= \left( A x_2 \right)^\T x_1\\
+            \lambda_1x_2^\T x_1 &= \lambda_2x_2^T x_1\\
+            \lambda_1x_2^\T x_1-\lambda_2x_2^T x_1 &= 0\\
+            x_2^\T x_1(\lambda_1-\lambda_2) &= 0
+        \end{align*}
+        \item The last line above implies that $x_2^\T x_1 = 0$ iff $\lambda_1\neq\lambda_2$.
+    \end{itemize}
+    \item The only matrices that we can guarantee will never have complex eigenvalues are symmetric matrices.
+    \item On complex numbers/vectors:
+    \begin{itemize}
+        \item $z=a+bi$ and $\bar{z}=a-bi$, where $a,b\in\R$, $i=\sqrt{-1}$.
+        \item $z\bar{z} = a^2+b^2$.
+        \item $
+            x =
+            \begin{bmatrix}
+                a_1+b_1i\\
+                \vdots\\
+                a_n+b_ni\\
+            \end{bmatrix}
+        $ and $
+            \bar{x} =
+            \begin{bmatrix}
+                a_1-b_1i\\
+                \vdots\\
+                a_n-b_ni\\
+            \end{bmatrix}
+        $.
+    \end{itemize}
+    \item Prove that when $A = A^\T$, $\lambda_n\in\R$.
+    \begin{itemize}
+        \item Let $A = A^\T$, $A\in\R^n$.
+        \begin{equation}\label{eqn:ortho3}
+            Ax = \lambda x
+        \end{equation}
+        \begin{equation*}
+            \bar{A}\bar{x} = \bar{\lambda}\bar{x}
+        \end{equation*}
+        \item If $A\in\R^n$, then $A=\bar{A}$.
+        \begin{align*}
+            A\bar{x} &= \bar{\lambda}\bar{x}\\
+            \left( A\bar{x} \right)^\T &= \left( \bar{\lambda}\bar{x} \right)^\T\\
+            \bar{x}^\T A^\T &= \bar{\lambda}\bar{x}^\T\\
+            \bar{x}^\T A &= \bar{\lambda}\bar{x}^\T\stepcounter{equation}\tag{\theequation}\label{eqn:ortho4}\\
+        \end{align*}
+        \item Multiply Equation \ref{eqn:ortho3} by $\bar{x}^\T$ from the left.
+        \begin{itemize}
+            \item ${\color{blue}\bar{x}^\T Ax} = {\color{red}\lambda\bar{x}^\T x}$.
+        \end{itemize}
+        \item Multiply Equation \ref{eqn:ortho4} by $x$ from the right.
+        \begin{itemize}
+            \item ${\color{blue}\bar{x}^\T Ax} = {\color{grx}\bar{\lambda}\bar{x}^\T x}$.
+        \end{itemize}
+        \item ${\color{red}\lambda\bar{x}^\T x} = {\color{grx}\bar{\lambda}\bar{x}^\T x} \Rightarrow \lambda = \bar{\lambda} \Rightarrow \lambda\in\R$.
+    \end{itemize}
 \end{itemize}
 
 
