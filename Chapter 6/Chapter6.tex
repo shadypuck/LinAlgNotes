@@ -1397,5 +1397,198 @@
 
 
 
+\subsection*{Spectral Decomposition}
+\marginnote{2/20:}\begin{equation*}
+    A =
+    \begin{bmatrix}
+        2 & 1 & 1\\
+        1 & 2 & 1\\
+        1 & 1 & 2\\
+    \end{bmatrix}
+\end{equation*}
+\begin{itemize}
+    \item $\lambda_1 = 4,\ \lambda_2=\lambda_3=1$.
+    \item $
+        x_1 =
+        \begin{bmatrix}
+            1\\
+            1\\
+            1\\
+        \end{bmatrix}
+    $, $
+        x_2 =
+        \begin{bmatrix}
+            -1\\
+            0\\
+            1\\
+        \end{bmatrix}
+    $, $
+        x_3 =
+        \begin{bmatrix}
+            -1\\
+            1\\
+            0\\
+        \end{bmatrix}
+    $.
+    \begin{itemize}
+        \item $x_1^\T x_2 = 0$, $x_1^\T x_3 = 0$, $x_2^\T x_3 = -1$.
+    \end{itemize}
+    \item Orthogonalize by Gram-Schmidt, inspection, put the vectors in a matrix and find the null space (the null vector will be orthogonal by the fundamental theorem).
+    \item $
+        x_3' =
+        \begin{bmatrix}
+            -1\\
+            2\\
+            -1\\
+        \end{bmatrix}
+    $.
+    \begin{itemize}
+        \item $x_3'$ is not scaled along its line by $A$, but it is scaled in the plane of $x_2$ and $x_3$ by $A$.
+        \item $x_1^\T x_3' = 0$, $x_2^\T x_3' = 0$.
+    \end{itemize}
+    \item $
+        q_1 = \frac{1}{\sqrt{3}}
+        \begin{bmatrix}
+            1\\
+            1\\
+            1\\
+        \end{bmatrix}
+    $, $
+        q_2 = \frac{1}{\sqrt{2}}
+        \begin{bmatrix}
+            -1\\
+            0\\
+            1\\
+        \end{bmatrix}
+    $, $
+        q_3 = \frac{1}{\sqrt{6}}
+        \begin{bmatrix}
+            -1\\
+            2\\
+            -1\\
+        \end{bmatrix}
+    $.
+    \begin{align*}
+        A &= Q\Lambda Q^\T\\
+        &=
+        \begin{bmatrix}
+            | &  & |\\
+            q_1 & \cdots & q_n\\
+            | &  & |\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            \lambda_1 &  & \\
+             & \ddots & \\
+             &  & \lambda_n\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            \text{---} & q_1^\T & \text{---}\\
+             & \vdots & \\
+            \text{---} & q_n^\T & \text{---}\\
+        \end{bmatrix}\\
+        &=
+        \begin{bmatrix}
+            | &  & |\\
+            q_1\lambda_1 & \cdots & q_n\lambda_n\\
+            | &  & |\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            \text{---} & q_1^\T & \text{---}\\
+             & \vdots & \\
+            \text{---} & q_n^\T & \text{---}\\
+        \end{bmatrix}\\
+        &= \lambda_1q_1q_1^\T+\cdots+\lambda_nq_nq_n^\T
+    \end{align*}
+    \renewcommand{\arraystretch}{1.6}
+    \item $
+        q_1q_1^\T =
+        \begin{bmatrix}
+            \frac{1}{\sqrt{3}}\\
+            \frac{1}{\sqrt{3}}\\
+            \frac{1}{\sqrt{3}}\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            \frac{1}{\sqrt{3}} & \frac{1}{\sqrt{3}} & \frac{1}{\sqrt{3}}\\
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            \frac{1}{3} & \frac{1}{3} & \frac{1}{3}\\
+            \frac{1}{3} & \frac{1}{3} & \frac{1}{3}\\
+            \frac{1}{3} & \frac{1}{3} & \frac{1}{3}\\
+        \end{bmatrix}
+    $
+    \item $
+        q_2q_2^\T =
+        \begin{bmatrix}
+            -\frac{1}{\sqrt{2}}\\
+            0\\
+            \frac{1}{\sqrt{2}}\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            -\frac{1}{\sqrt{2}} & 0 & \frac{1}{\sqrt{2}}\\
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            \frac{1}{2} & 0 & -\frac{1}{2}\\
+            0 & 0 & 0\\
+            -\frac{1}{2} & 0 & \frac{1}{2}\\
+        \end{bmatrix}
+    $
+    \item $
+        q_3q_3^\T =
+        \begin{bmatrix}
+            -\frac{1}{\sqrt{6}}\\
+            \frac{2}{\sqrt{6}}\\
+            -\frac{1}{\sqrt{6}}\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            -\frac{1}{\sqrt{6}} & \frac{2}{\sqrt{6}} & -\frac{1}{\sqrt{6}}\\
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            \frac{1}{6} & -\frac{1}{3} & \frac{1}{6}\\
+            -\frac{1}{3} & \frac{2}{3} & -\frac{1}{3}\\
+            \frac{1}{6} & -\frac{1}{3} & \frac{1}{6}\\
+        \end{bmatrix}
+    $
+    \item $
+        A = 4
+        \begin{bmatrix}
+            \frac{1}{3} & \frac{1}{3} & \frac{1}{3}\\
+            \frac{1}{3} & \frac{1}{3} & \frac{1}{3}\\
+            \frac{1}{3} & \frac{1}{3} & \frac{1}{3}\\
+        \end{bmatrix}
+        +
+        \begin{bmatrix}
+            \frac{1}{2} & 0 & -\frac{1}{2}\\
+            0 & 0 & 0\\
+            -\frac{1}{2} & 0 & \frac{1}{2}\\
+        \end{bmatrix}
+        +
+        \begin{bmatrix}
+            \frac{1}{6} & -\frac{1}{3} & \frac{1}{6}\\
+            -\frac{1}{3} & \frac{2}{3} & -\frac{1}{3}\\
+            \frac{1}{6} & -\frac{1}{3} & \frac{1}{6}\\
+        \end{bmatrix}
+    $
+    \item $
+        A = 4
+        \begin{bmatrix}
+            \frac{1}{3} & \frac{1}{3} & \frac{1}{3}\\
+            \frac{1}{3} & \frac{1}{3} & \frac{1}{3}\\
+            \frac{1}{3} & \frac{1}{3} & \frac{1}{3}\\
+        \end{bmatrix}
+        +
+        \begin{bmatrix}
+            \frac{2}{3} & -\frac{1}{3} & -\frac{1}{3}\\
+            -\frac{1}{3} & \frac{2}{3} & -\frac{1}{3}\\
+            -\frac{1}{3} & -\frac{1}{3} & \frac{2}{3}\\
+        \end{bmatrix}
+    $ is the spectral decomposition of $A$.
+    \renewcommand{\arraystretch}{1}
+\end{itemize}
+
+
+
 
 \end{document}
