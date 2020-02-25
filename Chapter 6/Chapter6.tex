@@ -1596,8 +1596,9 @@
 
 \section*{Quadric Forms / Positive Definite Matrices}
 \begin{itemize}
+    \item \marginnote{2/24:}Motivation: Find bases for conic sections that eliminate rotation terms.
     \renewcommand{\arraystretch}{1.6}
-    \item \marginnote{2/24:}Let $
+    \item Let $
         x =
         \begin{bmatrix}
             x\\
@@ -1818,6 +1819,208 @@
         $
         \item $y^\T \Lambda y = \left( -\sqrt{5} \right)^2+6\left( \sqrt{5} \right)^2 = 35$.
     \end{itemize}
+\end{itemize}
+
+
+\subsection*{Sketching a Rotated Conic}
+\begin{itemize}
+    \item \marginnote{2/25:}Principal Axes Theorem: $x^\T Ax \rightarrow y^\T\Lambda y$.
+    \item Consider $13x^2-10xy+13y^2-72=0$.
+    \begin{itemize}
+        \item We want to reexpress this using the Principal Axes Theorem to deal with the rotation term.
+        \item $
+            x^\T Ax = 72 =
+            \begin{bmatrix}
+                x & y\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                13 & -5\\
+                -5 & 13\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                x\\
+                y\\
+            \end{bmatrix}
+        $
+        \item $0 = |A-\lambda I| = (\lambda-8)(\lambda-18)$.
+        \begin{align*}
+            \lambda_1 &= 8 & \lambda_2 &= 18\\
+            x_1 &=
+            \begin{bmatrix}
+                1\\
+                1\\
+            \end{bmatrix}&
+            x_2 &=
+            \begin{bmatrix}
+                -1\\
+                1\\
+            \end{bmatrix}
+        \end{align*}
+        \item Let $
+            y=
+            \begin{bmatrix}
+                x'\\
+                y'\\
+            \end{bmatrix}
+        $, $
+            y^\T\Lambda y =
+            \begin{bmatrix}
+                x' & y'\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                8 & 0\\
+                0 & 18\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                x'\\
+                y'\\
+            \end{bmatrix}
+            =72
+        $.
+        \item $8(x')^2+18(y')^2=72$.
+        \item $\left( \frac{x'}{3} \right)^2+\left( \frac{y'}{2} \right)^2=1$.
+    \end{itemize}
+    \item Sidenote on rotation matrices:
+    \begin{itemize}
+        \item No rotation (rotates $
+            \begin{bmatrix}
+                0^\circ & 0^\circ\\
+                0^\circ & 0^\circ\\
+            \end{bmatrix}
+        $): $
+            \begin{bmatrix}
+                1 & 0\\
+                0 & 1\\
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+                \cos\theta & -\sin\theta\\
+                \sin\theta & \cos\theta\\
+            \end{bmatrix}
+        $
+        \begin{itemize}
+            \item Identity matrix is special case of rotation matrix when $\theta=0^\circ$.
+        \end{itemize}
+        \item Any rotation matrix has $|R|=1$ because otherwise, it would do something to the size.
+    \end{itemize}
+    \item Back with the example:
+    \begin{itemize}
+        \renewcommand{\arraystretch}{1.6}
+        \item $
+            Q =
+            \begin{bmatrix}
+                \frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}\\
+                \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}\\
+            \end{bmatrix}
+        $
+        \renewcommand{\arraystretch}{1}
+        \item $|Q|=1$.
+        \item When $Q$ is set equivalent to the general rotation matrix (above), it is shown that $\theta=\frac{\pi}{4}$.
+        \begin{center}
+            \begin{tikzpicture}
+                \draw (-2,0) -- (2,0) node[right]{$x$};
+                \draw (0,-2) -- (0,2) node[above]{$y$};
+
+                \draw [dashed] (-2,-2) -- (2,2) node[right]{$x'$};
+                \draw [dashed] (2,-2) -- (-2,2) node[left]{$y'$};
+
+                \begin{scope}[
+                    rotate=45
+                ]
+                    \foreach \x in {-1.5,-1,-0.5,0.5,1,1.5} {
+                        \draw [blue,thick] (\x,-0.1) -- (\x,0.1);
+                    }
+                    \foreach \y in {-1,-0.5,0.5,1} {
+                        \draw [blue,thick] (-0.1,\y) -- (0.1,\y);
+                    }
+
+                    \fill [blue] (-1.5,0) circle (2pt);
+                    \fill [blue] (1.5,0) circle (2pt);
+                    \fill [blue] (0,-1) circle (2pt);
+                    \fill [blue] (0,1) circle (2pt);
+
+                    \draw [blue,thick] ellipse (1.5cm and 1cm);
+                \end{scope}
+            \end{tikzpicture}
+        \end{center}
+        \item If the sign of $|Q|$ is wrong, flip the columns (flips the sign of the determinant).
+        \renewcommand{\arraystretch}{1.8}
+        \begin{center}
+            \begin{tabular}{c|c|c|c}
+                $\lambda$'s & $\lambda_1 = 8$, $\lambda_2 = 18$ & $\lambda_1 = 18$, $\lambda_2 = 8$ & $\lambda_1 = 18$, $\lambda_2 = 8$\\
+                \hline
+                $Q$ & $
+                    \begin{bmatrix}
+                        -\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}\\
+                        -\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}\\
+                    \end{bmatrix}
+                $ & $
+                    \begin{bmatrix}
+                        -\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}\\
+                        \frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}\\
+                    \end{bmatrix}
+                $ & $
+                    \begin{bmatrix}
+                        \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}\\
+                        -\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}\\
+                    \end{bmatrix}
+                $\\
+                \hline
+                $\theta$ & $\frac{5\pi}{4}$ & $\frac{3\pi}{4}$ & $\frac{7\pi}{4}$\\
+                \hline
+                Graph & \tikz[scale=0.5]{
+                    \draw (-2,0) -- (2,0);
+                    \draw (0,-2) -- (0,2);
+                    \draw [white] (0,2) -- (0,2.3);
+
+                    \draw [dashed] (-1.41,-1.41) -- (1.41,1.41) node[right]{$x'$};
+                    \draw [dashed] (1.41,-1.41) -- (-1.41,1.41) node[left]{$y'$};
+
+                    \draw [thick,->] (0,1.2) arc[start angle=90,end angle=315,radius=1.2cm];
+                    \draw [thick,->] (0.8,0) arc[start angle=0,end angle=225,radius=0.8cm];
+                } & \tikz[scale=0.5]{
+                    \draw (-2,0) -- (2,0);
+                    \draw (0,-2) -- (0,2);
+                    \draw [white] (0,2) -- (0,2.3);
+
+                    \draw [dashed] (-1.41,-1.41) -- (1.41,1.41) node[right]{$y'$};
+                    \draw [dashed] (1.41,-1.41) -- (-1.41,1.41) node[left]{$x'$};
+
+                    \draw [thick,->] (0,1.2) arc[start angle=90,end angle=225,radius=1.2cm];
+                    \draw [thick,->] (0.8,0) arc[start angle=0,end angle=135,radius=0.8cm];
+                } & \tikz[scale=0.5]{
+                    \draw (-2,0) -- (2,0);
+                    \draw (0,-2) -- (0,2);
+                    \draw [white] (0,2) -- (0,2.3);
+
+                    \draw [dashed] (-1.41,-1.41) -- (1.41,1.41) node[right]{$y'$};
+                    \draw [dashed] (1.41,-1.41) -- (-1.41,1.41) node[left]{$x'$};
+
+                    \draw [thick,->] (0,1.2) arc[start angle=90,end angle=405,radius=1.2cm];
+                    \draw [thick,->] (0.8,0) arc[start angle=0,end angle=315,radius=0.8cm];
+                }\\
+                \hline
+                Eq. & $\left( \frac{x'}{3} \right)^2+\left( \frac{y'}{2} \right)^2=1$ & $\left( \frac{x'}{2} \right)^2+\left( \frac{y'}{3} \right)^2=1$ & $\left( \frac{x'}{2} \right)^2+\left( \frac{y'}{3} \right)^2=1$\\
+            \end{tabular}
+        \end{center}
+    \end{itemize}
+    \item Classification of symmetric matrices:
+    \renewcommand{\arraystretch}{1.4}
+    \begin{center}
+        \begin{tabular}{l|c|c}
+            Classification & $x^\T Ax$ & $\lambda$'s\\
+            \hline
+            Positive definite & $f=x^\T Ax$, $f>0$ & All $\lambda\text{'s}>0$\\
+            \hline
+            Positive semidefinite & $f\geq 0$ & All $\lambda\text{'s}\geq0$\\
+            \hline
+            Negative definite & $f<0$ & All $\lambda\text{'s}<0$\\
+            \hline
+            Negative semidefinite & $f\leq 0$ & All $\lambda\text{'s}\leq0$\\
+            \hline
+            Indefinite & $f$ is positive and negative & $\lambda\text{'s}\in\R$\\
+        \end{tabular}
+    \end{center}
 \end{itemize}
 
 
