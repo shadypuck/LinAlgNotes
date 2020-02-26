@@ -2025,5 +2025,178 @@
 
 
 
+\section*{Nondiagonalizable Matrices: Perturbations}
+\begin{itemize}
+    \item \marginnote{2/26:}If it's nondiagonalizable, how can we get it to as close to diagonalizable as possible? If that doesn't help, how can we get it into a useful form?
+    \begin{equation*}
+        A=
+        \begin{bmatrix}
+            1 & 1\\
+            0 & 1\\
+        \end{bmatrix}
+    \end{equation*}
+    \item $A$ is nondiagonalizable because the eigenvalues are sitting on the principal diagonal already, and they're the same. We want distinct eigenvalues.
+    \item Let $\epsilon$ be a very small, approaching zero quantity.
+    \begin{equation*}
+        A_\epsilon =
+        \begin{bmatrix}
+            1 & 1\\
+            \epsilon^2 & 1\\
+        \end{bmatrix}
+    \end{equation*}
+    \begin{itemize}
+        \item Choice of $\epsilon^2$ vs. $\epsilon$ helps when diagonalizing.
+        \begin{align*}
+            0 &= |A_\epsilon-\lambda I|\\
+            &=
+            \begin{vmatrix}
+                1-\lambda & 1\\
+                \epsilon^2 & 1-\lambda\\
+            \end{vmatrix}\\
+            &= (1-\lambda)^2-\epsilon^2\\
+            &= 1-2\lambda+\lambda^2-\epsilon^2\\
+            &= \lambda^2-2\lambda+(1-\epsilon)^2\\
+            &= (\lambda-(1+\epsilon))(\lambda-(1-\epsilon))
+        \end{align*}
+        \item Quadratic formula may be helpful for factoring.
+        \item Alternatively, think of it as a kind of difference of squares with a middle component.
+    \end{itemize}
+    \begin{align*}
+        \lambda_1 &= 1+\epsilon & \lambda_2 &= 1-\epsilon
+    \end{align*}
+    \item $
+        A_\epsilon-\lambda_1 I =
+        \begin{bmatrix}
+            -\epsilon & 1\\
+            \epsilon^2 & -\epsilon\\
+        \end{bmatrix}
+    $, $
+        x_1 =
+        \begin{bmatrix}
+            1\\
+            \epsilon\\
+        \end{bmatrix}
+    $
+    \item $
+        A_\epsilon-\lambda_2 I =
+        \begin{bmatrix}
+            \epsilon & 1\\
+            \epsilon^2 & \epsilon\\
+        \end{bmatrix}
+    $, $
+        x_2 =
+        \begin{bmatrix}
+            1\\
+            -\epsilon\\
+        \end{bmatrix}
+    $
+    \item Find $S^{-1}$.
+    \begin{itemize}
+        \item $
+            S^{-1} = \frac{1}{|S|}C^\T = -\frac{1}{2\epsilon}
+            \begin{bmatrix}
+                -\epsilon & -1\\
+                -\epsilon & 1\\
+            \end{bmatrix}
+        $
+    \end{itemize}
+    \item $
+        A_\epsilon = S\Lambda S^{-1} = -\frac{1}{2\epsilon}
+        \begin{bmatrix}
+            1 & 1\\
+            \epsilon & -\epsilon\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            1+\epsilon & 0\\
+            0 & 1-\epsilon\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            -\epsilon & -1\\
+            -\epsilon & 1\\
+        \end{bmatrix}
+    $
+    \item $
+        A_\epsilon^n = -\frac{1}{2\epsilon}
+        \begin{bmatrix}
+            1 & 1\\
+            \epsilon & -\epsilon\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            (1+\epsilon)^n & 0\\
+            0 & (1-\epsilon)^n\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            -\epsilon & -1\\
+            -\epsilon & 1\\
+        \end{bmatrix}
+    $
+    \item Goal: In $A$, $\epsilon^2=0$. So we want $\lim_{\epsilon\to 0}A_\epsilon^n$.
+    \begin{align*}
+        \lim_{\epsilon\to 0} A_\epsilon^n &= \lim_{\epsilon\to 0} -\frac{1}{2\epsilon}
+        \begin{bmatrix}
+            1 & 1\\
+            \epsilon & -\epsilon\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            (1+\epsilon)^n & 0\\
+            0 & (1-\epsilon)^n\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            -\epsilon & -1\\
+            -\epsilon & 1\\
+        \end{bmatrix}\\
+        &= \lim_{\epsilon\to 0} -\frac{1}{2\epsilon}
+        \begin{bmatrix}
+            1 & 1\\
+            \epsilon & -\epsilon\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            -\epsilon(1+\epsilon)^n & -(1+\epsilon)^n\\
+            -\epsilon(1-\epsilon)^n & (1-\epsilon)^n\\
+        \end{bmatrix}\\
+        &= \lim_{\epsilon\to 0} -\frac{1}{2\epsilon}
+        \begin{bmatrix}
+            -\epsilon(1+\epsilon)^n-\epsilon(1-\epsilon)^n & -(1+\epsilon)^n+(1-\epsilon)^n\\
+            -\epsilon^2(1+\epsilon)^n+\epsilon^2(1-\epsilon)^n & -\epsilon(1+\epsilon)^n-\epsilon(1-\epsilon)^n\\
+        \end{bmatrix}\\
+        &= \lim_{\epsilon\to 0}
+        \renewcommand{\arraystretch}{1.6}
+        \begin{bmatrix}
+            \frac{(1+\epsilon)^n+(1-\epsilon)^n}{2} & \frac{(1+\epsilon)^n-(1-\epsilon)^n}{2\epsilon}\\
+            \frac{\epsilon(1+\epsilon)^n-\epsilon(1-\epsilon)^n}{2} & \frac{(1+\epsilon)^n+(1-\epsilon)^n}{2}\\
+        \end{bmatrix}\\
+        &=
+        \begin{bmatrix}
+            1 & \lim_{\epsilon\to 0} \frac{(1+\epsilon)^n-(1-\epsilon)^n}{2\epsilon}\\
+            0 & 1\\
+        \end{bmatrix}
+    \end{align*}
+    \begin{itemize}
+        \item Use L'H\^{o}pital's rule for the last limit.
+        \begin{align*}
+            \dd{\epsilon}\left( (1+\epsilon)^n-(1-\epsilon)^n \right) &= \dd{\epsilon}(1+\epsilon)^n-\dd{\epsilon}(1-\epsilon)^n\\
+            &= n(1+\epsilon)^{n-1}\dd{\epsilon}(1+\epsilon)-n(1-\epsilon)^{n-1}\dd{\epsilon}(1-\epsilon)\\
+            &= n(1+\epsilon)^{n-1}(1)-n(1-\epsilon)^{n-1}(-1)\\
+            &= n(1+\epsilon)^{n-1}+n(1-\epsilon)^{n-1}\\
+            &= n\left( (1+\epsilon)^{n-1}+(1-\epsilon)^{n-1} \right)
+        \end{align*}
+        \begin{align*}
+            \lim_{\epsilon\to 0} \frac{(1+\epsilon)^n-(1-\epsilon)^n}{2\epsilon} &= \lim_{\epsilon\to 0} \frac{n\left( (1+\epsilon)^{n-1}+(1-\epsilon)^{n-1} \right)}{2}\\
+            &= \frac{2n}{2}\\
+            &= n
+        \end{align*}
+        \item Thus, we find the following final formula for $A^n$.
+        \begin{equation*}
+            A^n =
+            \begin{bmatrix}
+                1 & n\\
+                0 & 1\\
+            \end{bmatrix}
+        \end{equation*}
+    \end{itemize}
+\end{itemize}
+
+
+
 
 \end{document}
