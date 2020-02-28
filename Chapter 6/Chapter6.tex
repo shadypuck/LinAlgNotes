@@ -186,14 +186,14 @@
     \begin{itemize}
         \item Signs flip term to term (think about binomial expansion).
     \end{itemize}
-    \item Coefficients of the $n-1$ degree term is the sum of the diagonal entries.
+    \item Coefficient of the $n-1$ degree term is the sum of the diagonal entries.
     \item Coefficient of the $0^\text{th}$ degree term is $|A|$.
     \begin{itemize}
         \item $P_\lambda(0) = |A-0\cdot I| = |A|$.
     \end{itemize}
     \item Product of the eigenvalues is $|A|$.
     \begin{itemize}
-        \item Think about expanding the factorization.
+        \item Think about expanding the factorization of $P(\lambda)$.
     \end{itemize}
     \item Eigenvalues of $U$ are the diagonal values.
     \begin{itemize}
@@ -338,7 +338,7 @@
                 -3\\
                 -1\\
             \end{bmatrix}
-        $
+        $.
         \item Use an $S$ matrix of eigenvectors.
         \item $
             A = S\Lambda S^{-1} = \frac{1}{2}
@@ -1008,6 +1008,9 @@
         y_1 &= k_1\e^{2x}-k_2\e^{-3x}\\
         y_2 &= k_1\e^{2x}+4k_2\e^{-3x}
     \end{align*}
+
+    %%%%%%%%%%%%%%%%%%%%%%
+
     \item \marginnote{2/12:}Initial conditions: $y_1(0)=1$ and $y_2(0)=6$.
     \begin{itemize}
         \item Use augmented matrices to solve a system of equations.
@@ -1104,6 +1107,9 @@
              &  & \frac{\lambda_k^nt^n}{n!}\\
         \end{bmatrix}
         \right)S^{-1}\\
+        %
+        %%%%%%%%%%%%%%%%%%%%%%
+        %
         \marginnote{2/13:}&= S
         \begin{bmatrix}
             \sum_{n=0}^\infty \frac{\lambda_1^nt^n}{n!} &  & \\
@@ -1349,7 +1355,7 @@
     \item The only matrices that we can guarantee will never have complex eigenvalues are symmetric matrices.
     \item On complex numbers/vectors:
     \begin{itemize}
-        \item $z=a+bi$ and $\bar{z}=a-bi$, where $a,b\in\R$, $i=\sqrt{-1}$.
+        \item $z=a+bi$ and $\bar{z}=a-bi$, where $a,b\in\R$, $i=\sqrt{-1}$. Note that $\bar{z}$ is the \textbf{complex conjugate} of $z$.
         \item $z\bar{z} = a^2+b^2$.
         \item $
             x =
@@ -2025,7 +2031,8 @@
 
 
 
-\section*{Nondiagonalizable Matrices: Perturbations}
+\section*{Nondiagonalizable Matrices}
+\subsection*{Perturbations}
 \begin{itemize}
     \item \marginnote{2/26:}If it's nondiagonalizable, how can we get it to as close to diagonalizable as possible? If that doesn't help, how can we get it into a useful form?
     \begin{equation*}
@@ -2194,6 +2201,408 @@
             \end{bmatrix}
         \end{equation*}
     \end{itemize}
+\end{itemize}
+
+
+\subsection*{Jordan Canonical Form}
+\begin{itemize}
+    \item \marginnote{2/27:}If $A$ is diagonalizable, $A=S\Lambda S^{-1}$.
+    \begin{itemize}
+        \item $
+            \Lambda=
+            \begin{bmatrix}
+                \lambda_1 & & & 0\\
+                 & \lambda_2 & & \\
+                 & & \ddots & \\
+                0 & & & \lambda_n\\
+            \end{bmatrix}
+        $
+    \end{itemize}
+    \item If $A$ is nondiagonalizable, $A=MJM^{-1}$$^[$\footnote{$J$ for Jordan matrix.}$^]$.
+    \begin{itemize}
+        \item $
+            J=
+            \begin{bmatrix}
+                \lambda_1 & 1 & & 0\\
+                 & \lambda_2 & &\\
+                 &  & \ddots & 1\\
+                0 &  &  & \lambda_n\\
+            \end{bmatrix}
+        $
+        \item You are only allowed to have some 1s directly above the principal diagonal.
+        \item Example: $
+            J =
+            \begin{bmatrix}
+                \lambda_1 & 1\\
+                0 & \lambda_2\\
+            \end{bmatrix}
+        $
+        \item Example: $
+            J =
+            \begin{bmatrix}
+                \lambda_1 & 0 & 0\\
+                0 & \lambda_2 & 1\\
+                0 & 0 & \lambda_3\\
+            \end{bmatrix}
+        $
+        \item Note that if a Jordan form factorization is necessary, at least two $\lambda_1$, $\lambda_2$, and $\lambda_3$ are the same value. 
+    \end{itemize}
+\end{itemize}
+\begin{tchart}{1.4}{Eigenvectors}{Generalized Eigenvectors / Power Vectors}
+    $Ax=\lambda x$ & $(A-\lambda I)^px_m=0$\\
+    $(A-\lambda I)x_s=0$ &\\
+    $x_s$ is an eigenvector. &\\
+\end{tchart}
+\vspace{1em}
+\begin{equation*}
+    A=
+    \begin{bmatrix}
+        2 & 1\\
+        0 & 2\\
+    \end{bmatrix}
+\end{equation*}
+\begin{itemize}
+    \item $\lambda_1=\lambda_2=2$.
+    \item $
+        A-2I =
+        \begin{bmatrix}
+            0 & 1\\
+            0 & 0\\
+        \end{bmatrix}
+    $, so $
+        x_1 =
+        \begin{bmatrix}
+            1\\
+            0\\
+        \end{bmatrix}
+    $. This is an eigenvector.
+    \item Now, note that given a singular matrix (such as $A-2I$), we are guaranteed that multiplying it by itself repeatedly will eventually give the zero matrix.
+    \begin{itemize}
+        \item This implies that we are guaranteed a power vector for some power $p$.
+    \end{itemize}
+    \item Let's find that power vector.
+    \item $
+        (A-2I)^2 =
+        \begin{bmatrix}
+            0 & 0\\
+            0 & 0\\
+        \end{bmatrix}
+    $, so we can define a power vector $
+        x_2 =
+        \begin{bmatrix}
+            0\\
+            1\\
+        \end{bmatrix}
+    $. This P.V. has degree 2.
+    \item Note that $A$ is already a Jordan matrix, so it makes sense that the eigenvectors/power vectors form the identity matrix. In other words, $M=M^{-1}=I_2$.
+    \item Let's try another, less immediately clear example.
+    \begin{equation*}
+        A=
+        \begin{bmatrix}
+            3 & 1\\
+            -1 & 1\\
+        \end{bmatrix}
+    \end{equation*}
+    \item Since $A$ is neither upper triangular nor diagonal, we must derive the characteristic polynomial to find the eigenvectors.
+    \begin{align*}
+        0 &= |A-\lambda I|\\
+        &= (3-\lambda)(1-\lambda)+1\\
+        &= \lambda^2-4\lambda+4\\
+        &= (\lambda-2)^2
+    \end{align*}
+    \begin{equation*}
+        \lambda_1=\lambda_2=2
+    \end{equation*}
+    \item Since the algebraic multiplicity is 2 and the geometric multiplicity is only 1, find the one possible eigenvector.
+    \begin{itemize}
+        \item $
+            A-2I=
+            \begin{bmatrix}
+                1 & 1\\
+                -1 & -1\\
+            \end{bmatrix}
+        $, so $
+            x_1 =
+            \begin{bmatrix}
+                1\\
+                -1\\
+            \end{bmatrix}
+        $. This is an E.V.
+    \end{itemize}
+    \item We can also find a power vector.
+    \begin{itemize}
+        \item $
+            (A-2I)^2 =
+            \begin{bmatrix}
+                0 & 0\\
+                0 & 0\\
+            \end{bmatrix}
+        $, so $
+            x_2=
+            \begin{bmatrix}
+                1\\
+                0\\
+            \end{bmatrix}
+        $. This is a P.V. of degree 2.
+    \end{itemize}
+    \item We know that $Ax_1=2x_1$. However, in order to finish finding $J$, we need to (the reason will soon become clear) find $Ax_2$ in terms of $x_2$ and/or $x_1$. This can be done as follows.
+    \begin{align*}
+        (A-2I)^2x_2 &= 0\\
+        (A-2I)(A-2I)x_2 &= (A-2I)x_1\\
+        (A-2I)x_2 &= x_1\\
+        Ax_2-2Ix_2 &= x_1\\
+        Ax_2-2x_2 &= x_1\\
+        Ax_2 &= x_1+2x_2
+    \end{align*}
+    \item Combine this result with $Ax_1=2x_1$ to yield the following set of equations.
+    \begin{align*}
+        Ax_1 &= 2x_1+0x_2\\
+        Ax_2 &= x_1+2x_2
+    \end{align*}
+    \item Express the set of equations above explicitly in terms of the matrices that the variables represent.
+    \begin{align*}
+        \begin{bmatrix}
+            3 & 1\\
+            -1 & 1\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            1\\
+            -1\\
+        \end{bmatrix}
+        &= 2
+        \begin{bmatrix}
+            1\\
+            -1\\
+        \end{bmatrix}
+        +0
+        \begin{bmatrix}
+            1\\
+            0\\
+        \end{bmatrix}\\
+        \begin{bmatrix}
+            3 & 1\\
+            -1 & 1\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            1\\
+            0\\
+        \end{bmatrix}
+        &= 1
+        \begin{bmatrix}
+            1\\
+            -1\\
+        \end{bmatrix}
+        +2
+        \begin{bmatrix}
+            1\\
+            0\\
+        \end{bmatrix}\\
+    \end{align*}
+    \item Rewrite the right side of the above set of equations to condense linear operations into matrix multiplication.
+    \begin{align*}
+        \begin{bmatrix}
+            3 & 1\\
+            -1 & 1\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            1\\
+            -1\\
+        \end{bmatrix}
+        &=
+        \begin{bmatrix}
+            1 & 1\\
+            -1 & 0\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            2\\
+            0\\
+        \end{bmatrix}\\
+        \begin{bmatrix}
+            3 & 1\\
+            -1 & 1\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            1\\
+            0\\
+        \end{bmatrix}
+        &=
+        \begin{bmatrix}
+            1 & 1\\
+            -1 & 0\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            1\\
+            2\\
+        \end{bmatrix}
+    \end{align*}
+    \item Combine the two equations into one, giving $AM=MJ$.
+    \begin{equation*}
+        \begin{bmatrix}
+            3 & 1\\
+            -1 & 1\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            1 & 1\\
+            -1 & 0\\
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            1 & 1\\
+            -1 & 0\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            2 & 1\\
+            0 & 2\\
+        \end{bmatrix}
+    \end{equation*}
+    \item Now, we have the Jordan matrix (the rightmost matrix above).
+    \item Note that the following algebra would give us the $MJM^{-1}$ factorization of $A$.
+    \begin{align*}
+        AM &= MJ\\
+        AMM^{-1} &= MJM^{-1}\\
+        A &= MJM^{-1}
+    \end{align*}
+    \item Also note that if we find a coefficient matrix from the original set of equations and transpose it, we will get the Jordan matrix:
+    \begin{equation*}
+        \begin{bmatrix}
+            2 & 0\\
+            1 & 2\\
+        \end{bmatrix}^\T
+        = J =
+        \begin{bmatrix}
+            2 & 1\\
+            0 & 2\\
+        \end{bmatrix}
+    \end{equation*}
+    \item Let's try a bigger example.
+    \begin{equation*}
+        A=
+        \begin{bmatrix}
+            3 & 0 & 0\\
+            0 & 4 & -1\\
+            0 & 1 & 2\\
+        \end{bmatrix}
+    \end{equation*}
+    \item $\lambda_1=\lambda_2=\lambda_3=3$
+    \item $\text{A.M.}=3$, $\text{G.M.}=2$.
+    \item $
+        A-3I=
+        \begin{bmatrix}
+            0 & 0 & 0\\
+            0 & 1 & -1\\
+            0 & 1 & -1\\
+        \end{bmatrix}
+    $
+    \item $
+        x_1=
+        \begin{bmatrix}
+            1\\
+            0\\
+            0\\
+        \end{bmatrix}
+    $, $
+        x_2=
+        \begin{bmatrix}
+            0\\
+            1\\
+            1\\
+        \end{bmatrix}
+    $
+    \item Because $(A-3I)^2=0_3$ and because of the equivalence outlined in the previous example, we can use one of the following to find an $x_3$ that will suit out needs.
+    \begin{itemize}
+        \item $
+            \begin{bmatrix}
+                0 & 0 & 0\\
+                0 & 1 & -1\\
+                0 & 1 & -1\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                |\\
+                x_3\\
+                |\\
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+                1\\
+                0\\
+                0\\
+            \end{bmatrix}
+        $ or $
+            \begin{bmatrix}
+                0 & 0 & 0\\
+                0 & 1 & -1\\
+                0 & 1 & -1\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                |\\
+                x_3\\
+                |\\
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+                0\\
+                1\\
+                1\\
+            \end{bmatrix}
+        $
+    \end{itemize}
+    \item The first option will not work because no $x_3$ vector can get a 1 in the top position of $x_1$.
+    \item For the second one, use inspection: $
+        \begin{bmatrix}
+            0 & 0 & 0\\
+            0 & 1 & -1\\
+            0 & 1 & -1\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            0\\
+            1\\
+            0\\
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            0\\
+            1\\
+            1\\
+        \end{bmatrix}
+    $
+    \item Find $Ax_3$ in terms of $x_1$, $x_2$, and $x_3$.
+    \begin{itemize}
+        \item $(A-3I)x_3=x_2 \Rightarrow Ax_3-3x_3=x_2 \Rightarrow Ax_3=x_2+3x_3$.
+    \end{itemize}
+    \begin{align*}
+        Ax_1 &= 3x_1+0x_2+0x_3\\
+        Ax_2 &= 0x_1+3x_2+0x_3\\
+        Ax_3 &= 0x_1+1x_2+3x_3
+    \end{align*}
+    \item Instead of going through converting this set of equations to matrix equations, simply take a coefficient matrix and transpose it to find $J$:
+    \begin{itemize}
+        \item $
+            J=
+            \begin{bmatrix}
+                3 & 0 & 0\\
+                0 & 3 & 1\\
+                0 & 0 & 3\\
+            \end{bmatrix}
+        $
+    \end{itemize}
+    \item $
+        A=MJM^{-1}=
+        \begin{bmatrix}
+            1 & 0 & 0\\
+            0 & 1 & 1\\
+            0 & 1 & 0\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            3 & 0 & 0\\
+            0 & 3 & 1\\
+            0 & 0 & 3\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            1 & 0 & 0\\
+            0 & 0 & 1\\
+            0 & 1 & -1\\
+        \end{bmatrix}
+    $
 \end{itemize}
 
 
