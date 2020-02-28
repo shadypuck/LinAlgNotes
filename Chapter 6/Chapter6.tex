@@ -2276,9 +2276,10 @@
             0\\
         \end{bmatrix}
     $. This is an eigenvector.
-    \item Now, note that given a singular matrix (such as $A-2I$), we are guaranteed that multiplying it by itself repeatedly will eventually give the zero matrix.
+    \item Now, note that $A-\lambda I$ raised to a power $p$ will eventually have a null space different from that of $A-\lambda I$ for some $p>1$ and $p\in\mathbb{N}$.
     \begin{itemize}
-        \item This implies that we are guaranteed a power vector for some power $p$.
+        \item Also note that $p\leq n$ for an $n$-square matrix.
+        \item This implies that there exists a power vector distinct from the eigenvector(s) for some power $p$.
     \end{itemize}
     \item Let's find that power vector.
     \item $
@@ -2354,6 +2355,10 @@
         Ax_2-2x_2 &= x_1\\
         Ax_2 &= x_1+2x_2
     \end{align*}
+    \begin{itemize}
+        \item Alternatively, we can think of starting from $(A-2I)x_2=x_1$ because we need to introduce the coefficient of 1 for one of the eigenvectors somehow.
+        \item What combination of $A-\lambda I$ gives us another eigenvector?
+    \end{itemize}
     \item Combine this result with $Ax_1=2x_1$ to yield the following set of equations.
     \begin{align*}
         Ax_1 &= 2x_1+0x_2\\
@@ -2396,7 +2401,7 @@
         \begin{bmatrix}
             1\\
             0\\
-        \end{bmatrix}\\
+        \end{bmatrix}
     \end{align*}
     \item Rewrite the right side of the above set of equations to condense linear operations into matrix multiplication.
     \begin{align*}
@@ -2565,10 +2570,14 @@
             1\\
         \end{bmatrix}
     $
+    \begin{itemize}
+        \item $x_3$ must be a power vector of $A-3I$ and must be independent of $x_1$ and $x_2$, so that $M$ is invertible.
+    \end{itemize}
     \item Find $Ax_3$ in terms of $x_1$, $x_2$, and $x_3$.
     \begin{itemize}
         \item $(A-3I)x_3=x_2 \Rightarrow Ax_3-3x_3=x_2 \Rightarrow Ax_3=x_2+3x_3$.
     \end{itemize}
+    \item Write the three equations as a set.
     \begin{align*}
         Ax_1 &= 3x_1+0x_2+0x_3\\
         Ax_2 &= 0x_1+3x_2+0x_3\\
@@ -2603,6 +2612,7 @@
             0 & 1 & -1\\
         \end{bmatrix}
     $
+    \item Raising $J^n$ is easier than raising $A^n$, but it's still not easy.
 \end{itemize}
 
 
