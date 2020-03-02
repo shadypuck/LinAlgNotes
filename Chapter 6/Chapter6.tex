@@ -2613,6 +2613,67 @@
         \end{bmatrix}
     $
     \item Raising $J^n$ is easier than raising $A^n$, but it's still not easy.
+    \item Note that $A^n=MJ^nM^{-1}$ and $
+        J^n =
+        \begin{bmatrix}
+            3^n & 0 & 0\\
+            0 & 3^n & n3^{n-1}\\
+            0 & 0 & 3^n\\
+        \end{bmatrix}
+    $, as can be proved via induction.
+    \begin{itemize}
+        \item In other words, this factorization is useful.
+        \item The $MJ^nM^{-1}$ factorization could also be condensed into a single matrix.
+    \end{itemize}
+\end{itemize}
+
+
+
+\section*{Computational Complexity of the Jordan Canonical Form}
+\begin{itemize}
+    \item \marginnote{3/2:}Recall:
+    \begin{itemize}
+        \item Eigenvector: $Ax-\lambda x \Rightarrow A^nx_i=\lambda^n_ix_i \Rightarrow (A-\lambda I)x=0$.
+        \item Power vector: $(A-\lambda I)^nx=0$.
+    \end{itemize}
+    \item Binomial expansion:
+    \begin{itemize}
+        \item Let $\binom{n}{r}={}_nC_r=\frac{n!}{r!(n-r)!}$.
+        \item Theorem:
+    \end{itemize}
+    \begin{equation*}
+        (x+y)^n = \binom{n}{0}x^n+\binom{n}{1}x^{n-1}y+\binom{n}{2}x^{n-2}y^2+\cdots+\binom{n}{n-1}xy^{n-1}+\binom{n}{n}y^n
+    \end{equation*}
+    \item Apply binomial expansion to finding $A^n$.
+    \begin{align*}
+        A^n &= (A-\lambda I+\lambda I)^n\\
+        &= ((A-\lambda I)+(\lambda I))^n\\
+        &= \binom{n}{0}(A-\lambda I)^n+\binom{n}{1}(A-\lambda I)^{n-1}(\lambda I)+\binom{n}{2}(A-\lambda I)^{n-2}(\lambda I)^2+\cdots+\binom{n}{n}(\lambda I)^n
+    \end{align*}
+    \item Consider a degree 2 power vector.
+    \begin{itemize}
+        \item Let $x$ be a power vector of degree 2.
+        \begin{itemize}
+            \item Note that we are doing the binomial expansion in the reverse order in the following equation.
+        \end{itemize}
+        \begin{equation*}
+            (A-\lambda I)^nx = {\color{red}\lambda^nIx+n\lambda^{n-1}(A-\lambda I)x}+{\color{blue}\binom{n}{2}\lambda^{n-1}(A-\lambda I)^2x}+{\color{grx}\cdots}+{\color{grx}\binom{n}{n}(A-\lambda I)^nx}
+        \end{equation*}
+        \item Because $x$ is a second-degree power vector and the blue term includes $(A-\lambda I)^2x$, the blue term equals zero.
+        \item Furthermore, every subsequent term (the green terms) also equals zero. This is because the $(A-\lambda I)^kx$, $k\in[3,n]\cap\mathbb{N}$, term can always be factored into $(A-\lambda I)^{k-2}(A-\lambda I)^2x$, and, as we know, $(A-\lambda I)^2x=0$. If one part of the term is equal to zero, the whole term must be equal to zero as well.
+        \item The implication is that only the red term remains. More succinctly:
+        \begin{equation*}
+            (A-\lambda I)^nx = {\color{red}\lambda^nIx+n\lambda^{n-1}(A-\lambda I)x}
+        \end{equation*}
+    \end{itemize}
+    \item Let's generalize this to a degree $p$ power vector.
+    \begin{itemize}
+        \item Let $x$ be a power vector of degree $p$.
+    \end{itemize}
+    \begin{equation*}
+        (A-\lambda I)^nx = \lambda^nIx+n\lambda^{n-1}(A-\lambda I)x+\cdots+\binom{n}{p-1}\lambda^{n-(p-1)}(A-\lambda I)^{p-1}
+    \end{equation*}
+    \item Note: $\e^{(A-\lambda I+\lambda I)t}=\e^{\lambda It}\e^{(A-\lambda I)t}$.
 \end{itemize}
 
 
