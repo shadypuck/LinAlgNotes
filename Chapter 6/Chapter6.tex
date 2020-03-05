@@ -2650,6 +2650,7 @@
         &= ((A-\lambda I)+(\lambda I))^n\\
         &= \binom{n}{0}(A-\lambda I)^n+\binom{n}{1}(A-\lambda I)^{n-1}(\lambda I)+\binom{n}{2}(A-\lambda I)^{n-2}(\lambda I)^2+\cdots+\binom{n}{n}(\lambda I)^n
     \end{align*}
+    \item Now consider each term in the above expansion of $A^n$.
     \item Consider a degree 2 power vector.
     \begin{itemize}
         \item Let $x$ be a power vector of degree 2.
@@ -2673,7 +2674,95 @@
     \begin{equation*}
         (A-\lambda I)^nx = \lambda^nIx+n\lambda^{n-1}(A-\lambda I)x+\cdots+\binom{n}{p-1}\lambda^{n-(p-1)}(A-\lambda I)^{p-1}
     \end{equation*}
+    \item Basically, the higher the degree of the power vector, the harder it is to compute the JCF.
     \item Note: $\e^{(A-\lambda I+\lambda I)t}=\e^{\lambda It}\e^{(A-\lambda I)t}$.
+\end{itemize}
+
+
+
+\section*{Singular Value Decomposition}
+\begin{itemize}
+    \item \marginnote{3/5:}Let's deal with rectangular matrices.
+    \item What we know:
+    \begin{itemize}
+        \item Regardless of the shape of $A_{m\times n}$, $A^\T A$ will be square ($n\times n$) and symmetric.
+        \begin{itemize}
+            \item From several chapters ago: $(A^\T A)^\T = A^\T A^{\T\T} = A^\T A$.
+        \end{itemize}
+        \item A symmetric matrix has a full set of real eigenvectors (guaranteed by spectral theory).
+        \item If $A=A^\T$, then $A=Q\Lambda Q^\T$ ($A$ is orthonormally diagonalizable).
+    \end{itemize}
+    \item We will show:
+    \begin{itemize}
+        \item Any $A_{m\times n}=QD^\dagger Q'^\T$.
+        \begin{itemize}
+            \item $D^\dagger$ is pseudo-diagonal (close to diagonal).
+            \item $Q$ and $Q'^\T$$^[$\footnote{Que prime transpose.}$^]$ are slightly different sets of eigenvectors.
+        \end{itemize}
+    \end{itemize}
+    \item Singular values:
+    \begin{itemize}
+        \item $A^\T A$ is symmetric.
+        \item All $\lambda$'s are real.
+        \item All eigenvectors ($(A-\lambda I)x=0$) can be chosen orthonormally.
+        \item All $\lambda$'s are positive (shown by the following).
+    \end{itemize}
+    \item Let $x$ be a unit eigenvector of $A^\T A$ with corresponding eigenvalue $\lambda$.
+    \begin{itemize}
+        \item Symbolically, $A^\T Ax=\lambda x$.
+    \end{itemize}
+    \begin{align*}
+        0 &\leq ||Ax||^2\\
+        &= (Ax)^\T(Ax)\\
+        &= x^\T A^\T Ax\\
+        &= x^\T\lambda x\\
+        &= \lambda x^\T x\\
+        &= \lambda(1)\\
+        &= \lambda
+    \end{align*}
+    \item Singular values: $\sigma_i=\sqrt{\lambda_i}$.
+    \item By convention, we list the singular values in descending order: $\sigma_1\geq\sigma_2\geq\dots\geq\sigma_n$.
+    \item Let's try an example.
+    \begin{equation*}
+        A=
+        \begin{bmatrix}
+            1 & 1 & 0\\
+            0 & 0 & 1\\
+        \end{bmatrix}
+    \end{equation*}
+    \begin{itemize}
+        \item Find $A^\T A$.
+        \begin{equation*}
+            A^\T A =
+            \begin{bmatrix}
+                1 & 0\\
+                1 & 0\\
+                0 & 1\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                1 & 1 & 0\\
+                0 & 0 & 1\\
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+                1 & 1 & 0\\
+                1 & 1 & 0\\
+                0 & 0 & 1\\
+            \end{bmatrix}
+        \end{equation*}
+        \item Find the eigenvectors of $A^\T A$.
+        \begin{align*}
+            \lambda_1 &= 2&
+            \lambda_2 &= 1&
+            \lambda_3 &= 0
+        \end{align*}
+        \item Find the singular values of $A^\T A$.
+        \begin{align*}
+            \sigma_1 &= \sqrt{2}&
+            \sigma_2 &= 1&
+            \sigma_3 &= 0
+        \end{align*}
+    \end{itemize}
 \end{itemize}
 
 
