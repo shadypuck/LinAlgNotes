@@ -2685,11 +2685,11 @@
     \item \marginnote{3/5:}Let's deal with rectangular matrices.
     \item What we know:
     \begin{itemize}
-        \item Regardless of the shape of $A_{m\times n}$, $A^\T A$ will be square ($n\times n$) and symmetric.
+        \item Regardless of the shape of $A_{m\times n}$, $A^\T A$ will be $n$-square and symmetric.
         \begin{itemize}
             \item From several chapters ago: $(A^\T A)^\T = A^\T A^{\T\T} = A^\T A$.
         \end{itemize}
-        \item A symmetric matrix has a full set of real eigenvectors (guaranteed by spectral theory).
+        \item A symmetric matrix has a full set of real eigenvectors (guaranteed by spectral theorem).
         \item If $A=A^\T$, then $A=Q\Lambda Q^\T$ ($A$ is orthonormally diagonalizable).
     \end{itemize}
     \item We will show:
@@ -2707,7 +2707,7 @@
         \item All eigenvectors ($(A-\lambda I)x=0$) can be chosen orthonormally.
         \item All $\lambda$'s are positive (shown by the following).
     \end{itemize}
-    \item Let $x$ be a unit eigenvector of $A^\T A$ with corresponding eigenvalue $\lambda$.
+    \item Let $x$ be a unit$^[$\footnote{Note that we are guaranteed that $x$ can have $||x||=1$ because we are guaranteed orthonormal eigenvectors.}$^]$ eigenvector of $A^\T A$ with corresponding eigenvalue $\lambda$.
     \begin{itemize}
         \item Symbolically, $A^\T Ax=\lambda x$.
     \end{itemize}
@@ -2762,6 +2762,188 @@
             \sigma_2 &= 1&
             \sigma_3 &= 0
         \end{align*}
+    \end{itemize}
+
+    %%%%%%%%%%%%%%%%%%%
+
+    \item \marginnote{3/6:}Let's step back for a second.
+    \item The SVD is canonically written $A=U\Sigma V^\T$.
+    \begin{itemize}
+        \item If $A$ is $m\times n$:
+        \begin{itemize}
+            \item $U$ is $m\times m$ and orthonormal.
+            \item $\Sigma$ is $m\times n$.
+            \item $V$ is $n\times n$ and orthonormal.
+        \end{itemize}
+    \end{itemize}
+    \item $\Sigma$ has the following form.
+    \begin{center}
+        \begin{tikzpicture}[
+            node distance=4mm
+        ]
+            \matrix (Sigma) [matrix of math nodes,left delimiter={[},right delimiter={]},nodes in empty cells]
+            {
+                \sigma_1 & & 0 &\\
+                 & \sigma_2 & & 0\\
+                0 & & \ddots &\\
+                 & 0 & & 0\\
+            };
+            \draw ([yshift=2mm]$ (Sigma-1-3)!0.5!(Sigma-1-4) $) -- ([yshift=-2mm]$ (Sigma-4-3)!0.5!(Sigma-4-4) $);
+            \draw ([xshift=-2mm]$ (Sigma-3-1)!0.5!(Sigma-4-1) $) -- ([xshift=2mm]$ (Sigma-3-4)!0.5!(Sigma-4-4) $);
+
+            \node [left=of Sigma,xshift=2mm] {$\Sigma =$};
+            \node [above=of Sigma-1-2,anchor=south] {$r$};
+            \node [above=of Sigma-1-4,anchor=south] {$n-r$};
+            \node [right=of Sigma-2-4,anchor=west] {$r$};
+            \node [right=of Sigma-4-4,anchor=west] {$m-r$};
+        \end{tikzpicture}
+    \end{center}
+    \begin{itemize}
+        \item All of the nonzero singular values go diagonally in the upper-left block.
+        \item Zeroes everywhere else.
+    \end{itemize}
+    \item Continuing with the previous example:
+    \begin{itemize}
+        \item For $V$, form an orthonormal basis of eigenvectors of $A^\T A$.
+        \item $
+            x_1 =
+            \begin{bmatrix}
+                1\\
+                1\\
+                0\\
+            \end{bmatrix}
+        $, $
+            x_2 =
+            \begin{bmatrix}
+                0\\
+                0\\
+                1\\
+            \end{bmatrix}
+        $, $
+            x_3 =
+            \begin{bmatrix}
+                -1\\
+                1\\
+                0\\
+            \end{bmatrix}
+        $
+        \renewcommand{\arraystretch}{1.6}
+        \item $
+            V =
+            \begin{bmatrix}
+                \frac{1}{\sqrt{2}} & 0 & \frac{-1}{\sqrt{2}}\\
+                \frac{1}{\sqrt{2}} & 0 & \frac{1}{\sqrt{2}}\\
+                0 & 1 & 0\\
+            \end{bmatrix}
+        $
+        \renewcommand{\arraystretch}{1}
+        \item Note that we put the eigenvectors in $V$ (not $U$) because the eigenvectors are $n$-dimensional and $V$ is the only $n$-square matrix (recall $U$ is $m$-square).
+        \item For $U$, manipulate the eigenvectors by using them to rearrange $C(A)$.
+        \item Note that $\left\{ Av_1,Av_2,\dots,Av_n \right\}$ is still an orthogonal basis for $\R^m$.
+        \begin{itemize}
+            \item This is because $A$ scales each orthogonal vector by the same amount, but brings them into $C(A)\in\R^m$.
+            \item Furthermore, the following proves that orthogonality is maintained.
+        \end{itemize}
+        \begin{align*}
+            (Av_i)^\T(Av_j) &= v_i^\T A^\T Av_j\\
+            &= v_i^\T\lambda v_j\\
+            &= \lambda v_i^\T v_j\\
+            &= \lambda(0)\\
+            &= 0
+        \end{align*}
+        \item Since $\sigma_i=||Av_i||$, set $u_i=\frac{1}{\sigma_i}Av_i$ to normalize $Av_i$ into the correct dimension.
+        \item Essentially, the singular values allow us to define $U$ as follows.
+        \begin{align*}
+            Av_i &= \sigma_iu_i\\
+            AV &= U\Sigma
+        \end{align*}
+        \begin{align*}
+            A
+            \begin{bmatrix}
+                | &  & |\\
+                v_1 & \cdots & v_n\\
+                | &  & |\\
+            \end{bmatrix}
+            &=
+            \begin{bmatrix}
+                | &  & |\\
+                Av_1 & \cdots & Av_n\\
+                | &  & |\\
+            \end{bmatrix}\\
+            &=
+            \begin{bmatrix}
+                | &  & |\\
+                \sigma_1u_1 & \cdots & \sigma_nu_n\\
+                | &  & |\\
+            \end{bmatrix}\\
+            &=
+            \begin{bmatrix}
+                | &  & |\\
+                u_1 & \cdots & u_n\\
+                | &  & |\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                \sigma_1 & & &\\
+                 & \sigma_2 & & 0\\
+                 & & \ddots &\\
+                 & 0 & & 0\\
+            \end{bmatrix}
+        \end{align*}
+    \end{itemize}
+    \item Note: If $A=U\Sigma V^\T$, then the following holds.
+    \begin{align*}
+        A^\T A &= (U\Sigma V^\T)^\T(U\Sigma V^\T)\\
+        &= V\sigma^\T U^\T U\Sigma V^\T\\
+        &= V\Sigma\Sigma V^\T\\
+        &= V\Sigma^2V^\T\\
+        &= V\Lambda V^\T
+    \end{align*}
+    \item In the opposite direction:
+    \begin{align*}
+        AA^\T &= (U\Sigma V^\T)(U\Sigma V^\T)^\T\\
+        &= \vdots\\
+        &= U\Lambda U^\T
+    \end{align*}
+    \begin{itemize}
+        \item Back to the example to finish it.
+        \item The following finds $u_1$. This process can be iterated for $u_i$.
+        \item $
+            u_1 = \frac{1}{\sigma_1}Av_1 = \frac{1}{\sqrt{2}}
+            \begin{bmatrix}
+                1 & 1 & 0\\
+                0 & 0 & 1\\
+            \end{bmatrix}
+            \renewcommand{\arraystretch}{1.6}
+            \begin{bmatrix}
+                \frac{1}{\sqrt{2}}\\
+                \frac{1}{\sqrt{2}}\\
+                0\\
+            \end{bmatrix}
+            \renewcommand{\arraystretch}{1}
+            =
+            \begin{bmatrix}
+                0\\
+                1\\
+            \end{bmatrix}
+        $
+        \item Assemble the final factorization.
+        \item $
+            A = U\Sigma V^\T =
+            \begin{bmatrix}
+                1 & 0\\
+                0 & 1\\
+            \end{bmatrix}
+            \begin{amatrix}{2}
+                \sqrt{2} & 0 & 0\\
+                0 & 1 & 0\\
+            \end{amatrix}
+            \renewcommand{\arraystretch}{1.6}
+            \begin{bmatrix}
+                \frac{1}{\sqrt{2}} & 0 & \frac{-1}{\sqrt{2}}\\
+                \frac{1}{\sqrt{2}} & 0 & \frac{1}{\sqrt{2}}\\
+                0 & 1 & 0\\
+            \end{bmatrix}^\T
+        $
     \end{itemize}
 \end{itemize}
 
