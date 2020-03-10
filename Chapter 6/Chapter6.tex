@@ -2229,7 +2229,7 @@
                 0 &  &  & \lambda_n\\
             \end{bmatrix}
         $
-        \item You are only allowed to have some 1s directly above the principal diagonal.
+        \item Has some 1s directly above the principal diagonal, notably above missing eigenvectors.
         \item Example: $
             J =
             \begin{bmatrix}
@@ -2672,10 +2672,10 @@
         \item Let $x$ be a power vector of degree $p$.
     \end{itemize}
     \begin{equation*}
-        (A-\lambda I)^nx = \lambda^nIx+n\lambda^{n-1}(A-\lambda I)x+\cdots+\binom{n}{p-1}\lambda^{n-(p-1)}(A-\lambda I)^{p-1}
+        (A-\lambda I)^nx = \lambda^nIx+n\lambda^{n-1}(A-\lambda I)x+\cdots+\binom{n}{p-1}\lambda^{n-(p-1)}(A-\lambda I)^{p-1}x
     \end{equation*}
     \item Basically, the higher the degree of the power vector, the harder it is to compute the JCF.
-    \item Note: $\e^{(A-\lambda I+\lambda I)t}=\e^{\lambda It}\e^{(A-\lambda I)t}$.
+    \item Note: $\e^{(A-\lambda I+\lambda I)t} = \e^{\lambda It}\e^{(A-\lambda I)t} = \e^{\lambda t}\left( \sum_{n=0}^\infty\frac{(A-\lambda I)^nt^n}{n!} \right)$.
 \end{itemize}
 
 
@@ -2944,6 +2944,143 @@
                 0 & 1 & 0\\
             \end{bmatrix}^\T
         $
+    \end{itemize}
+\end{itemize}
+
+
+\subsection*{Matrix Approximations / Correlations}
+\begin{itemize}
+    \item \marginnote{3/10:}The importance of SVD:
+    \begin{itemize}
+        \item $A=U\Sigma V^\T$
+        \begin{equation*}
+            \begin{bmatrix}
+                {\color{red!50!blue}|} & & {\color{red}|} & & |\\
+                {\color{red!50!blue}u_1} & {\color{red!50!blue}\cdots} & {\color{red}u_m} & \cdots & u_n\\
+                {\color{red!50!blue}|} & & {\color{red}|} & & |\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                {\color{red!50!blue}\sigma_1} & & &\\
+                & {\color{red!50!blue}\ddots} & & 0\\
+                & & {\color{red}\sigma_m} &\\
+                & 0 & & 0\\ 
+            \end{bmatrix}
+            \begin{bmatrix}
+                {\color{red!50!blue}\text{---}} & {\color{red!50!blue}v_1^\T} & {\color{red!50!blue}\text{---}}\\
+                & {\color{red!50!blue}\vdots} & \\
+                {\color{red}\text{---}} & {\color{red}v_m^\T} & {\color{red}\text{---}}\\
+            \end{bmatrix}
+        \end{equation*}
+        \item $\sigma_1\geq\sigma_2\geq\cdots\geq\sigma_m$, so the principal eigenvector corresponds to the largest singular value, and then on and on down the list.
+        \begin{align*}
+            A &= \sigma_1u_1v_1^\T+\sigma_2u_2v_2^\T+\cdots+\sigma_mu_mv_m^\T+0+\cdots+0\\
+            &= \sigma_1
+            \begin{bmatrix}
+                |\\
+                u_1\\
+                |\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                \text{---} & v_1^\T & \text{---}
+            \end{bmatrix}
+            +
+            \sigma_2
+            \begin{bmatrix}
+                |\\
+                u_2\\
+                |\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                \text{---} & v_2^\T & \text{---}
+            \end{bmatrix}
+            +\cdots
+        \end{align*}
+        \item From a data science perspective:
+        \item Each term above is a rank 1 matrix.
+        \item The SVD is nothing more than a sum of rank 1 matrices.
+        \item We order it $\sigma_1\geq\sigma_2\geq\cdots\geq\sigma_m$ because this way, we add on less and less the farther along the sum we go. In other words, we can slowly build an approximation of $A$ from rank 1 matrices via a sum. The terms at the end are not of any real importance. You can truncate the sum at a certain point, yielding an approximation from just a couple of sums.
+        \item From an SVD, you can see the most important and strongest building blocks of $A$.
+        \item This approximation is denoted $A= \hat{U}\hat{\Sigma}V^\T$ --- an \textcolor{red}{economy SVD}.
+        \item \textbf{Economy SVD}s ignore the extra eigenvectors in $U$.
+        \begin{itemize}
+            \item First $m$ columns of $U$.
+            \item First $m$ singular values.
+            \item All of $V^\T$
+            \item Not an approximation (all other eigenvectors in $u$ are multiplied by 0s in $\Sigma$ initially).
+        \end{itemize}
+        \item To \textcolor{blue}{approximate}, let $A\approx \tilde{U}\tilde{\Sigma}\tilde{V}^\T$.
+        \begin{itemize}
+            \item Choose $r$ singular values based upon dominance.
+        \end{itemize}
+    \end{itemize}
+    \item Consider the correlation between the vectors of $A$:
+    \begin{itemize}
+        \item $A$ is tall and skinny.
+        \item Let $A = U\Sigma V^\T$.
+        \begin{align*}
+            A^\T A &= V\Sigma U^\T U\Sigma V^\T\\
+            &= V\Sigma^2V^\T\\
+            A^\T A &= V\Lambda V^\T\\
+            A^\T AV &= V\Lambda
+        \end{align*}
+        \item $
+            A^\T A =
+            \begin{bmatrix}
+                \text{---} & a_1^\T & \text{---}\\
+                 & \vdots & \\
+                \text{---} & a_m^\T & \text{---}\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                | &  & |\\
+                a_1 & \cdots & a_m\\
+                | &  & |\\
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+                a_1^\T a_1 & \cdots & a_1^\T a_m\\
+                \vdots & \ddots & \\
+                a_m^\T a_1 &  & a_m^\T a_m\\
+            \end{bmatrix}
+        $
+        \item $u^\T v = \cos(\theta)\cdot||u||\cdot||v||$
+        \item The larger the dot product, the greater the correlation.
+        \begin{figure}[H]
+            \centering
+            \begin{subfigure}[b]{0.3\linewidth}
+                \centering
+                \begin{tikzpicture}
+                    \draw (-2,0) -- (2,0);
+                    \draw (0,-2) -- (0,2);
+
+                    \draw [thick,->] (0,0) -- (1.6,1.8);
+                    \draw [thick,->] (0,0) -- (1.6,1.6);
+                \end{tikzpicture}
+            \end{subfigure}
+            \begin{subfigure}[b]{0.3\linewidth}
+                \centering
+                \begin{tikzpicture}
+                    \draw (-2,0) -- (2,0);
+                    \draw (0,-2) -- (0,2);
+
+                    \draw [thick,->] (0,0) -- (1.6,1.8);
+                    \draw [thick,->] (0,0) -- (-0.7,-0.4);
+                \end{tikzpicture}
+            \end{subfigure}\begin{subfigure}[b]{0.3\linewidth}
+                \centering
+                \begin{tikzpicture}[
+                    point/.style={circle,fill,inner sep=1.5pt}
+                ]
+                    \draw (-2,0) -- (2,0);
+                    \draw (0,-2) -- (0,2);
+
+                    \node [point,label={below:$0$},label={above right:$(1,0)$}] at (0:1.5) {};
+                    \node [point,label={left:$\frac{\pi}{2}$},label={right:$(0,1)$}] at (90:1.5) {};
+                    \node [point,label={above left:$\pi$},label={above right:$(-1,0)$}] at (180:1.5) {};
+                \end{tikzpicture}
+            \end{subfigure}
+        \end{figure}
+        \item $U$ tells us how related all vectors in $A$ are.
+        \item $V$ tells us how unrelated all vectors in $A$ are.
     \end{itemize}
 \end{itemize}
 
