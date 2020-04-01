@@ -225,8 +225,8 @@
             B &= S^{-1}AS\\
             |B-\lambda I| &= |S^{-1}AS-\lambda I|\\
             &= |S^{-1}AS-\lambda S^{-1}IS|\\
-            &= |S^{-1}S(A-\lambda I)|\\
-            &= |I(A-\lambda I)|\\
+            &= |S^{-1}(A-\lambda I)S|\\
+            &= \frac{1}{|S|}|A-\lambda I||S|\\
             |B-\lambda I| &= |A-\lambda I|
         \end{align*}
         \begin{itemize}
@@ -468,7 +468,7 @@
             \text{CLE}\\
         \end{bmatrix}
     \end{align*}
-    \item $A$ is a \textbf{Markov matrix}, where all columns and rows add to 1.
+    \item $A$ is a \textbf{Markov matrix}, where all columns add to 1.
     \item $
         Au_0 =
         \begin{bmatrix}
@@ -3081,6 +3081,83 @@
         \end{figure}
         \item $U$ tells us how related all vectors in $A$ are.
         \item $V$ tells us how unrelated all vectors in $A$ are.
+    \end{itemize}
+    \item Consider a real world example. Let's imagine Netflix users 1-7 have ranked 5 films on a 0-5 scale, producing the following matrix.
+    \begin{center}
+        \begin{tikzpicture}[
+            node distance=1.5mm,
+            every left delimiter/.style={xshift=2.5mm},
+            every right delimiter/.style={xshift=-2.5mm}
+        ]
+            \matrix (M) [
+                matrix of math nodes,
+                left delimiter={[},right delimiter={]},
+                outer ysep=-1mm
+            ]
+            {
+                1 & 1 & 1 & 0 & 0\\
+                3 & 3 & 3 & 0 & 0\\
+                4 & 4 & 4 & 0 & 0\\
+                5 & 5 & 5 & 0 & 0\\
+                0 & 2 & 0 & 4 & 4\\
+                0 & 0 & 0 & 5 & 5\\
+                0 & 1 & 0 & 2 & 2\\
+            };
+
+            \node [left=of M,xshift=2mm] {$M =$};
+            \node [above=of M-1-1,anchor=west,rotate=90] {LOTR};
+            \node [above=of M-1-2,anchor=west,rotate=90] {HP};
+            \node [above=of M-1-3,anchor=west,rotate=90] {Hobbit};
+            \node [above=of M-1-4,anchor=west,rotate=90] {Spiderman};
+            \node [above=of M-1-5,anchor=west,rotate=90] {Avengers};
+            \foreach \row in {1,...,7} {
+                \node [right=of M-\row-5,anchor=west] {User \row};
+            }
+        \end{tikzpicture}
+    \end{center}
+    \begin{itemize}
+        \item The matrices $U$, $\Sigma$, and $V$ for the SVD of $M$ can be found to be approximately the following.
+    \end{itemize}
+    \begin{align*}
+        U &=
+        \begin{bmatrix}
+            \color{red} 0.137599 & -0.0236115 & 0.0108085 & 0 & -0.980591 & -0.121046 & -0.0649204\\
+            \color{red} 0.412696 & -0.0708344 & 0.0324254 & 0 & 0 & 0 & 0.907495\\
+            \color{red} 0.550397 & -0.0944458 & 0.0432339 & 0 & 0 & 0.786796 & -0.259281\\
+            \color{red} 0.687996 & -0.118057 & 0.0540424 & 0 & 0.196116 & =0.605228 & -0.324102\\
+            0.152775 & \color{blue} 0.591101 & -0.653651 & -0.447214 & 0 & 0 & 0\\
+            0.0722165 & \color{blue}0.731312 & 0.678209 & 0 & 0 & 0 & 0\\
+            0.763875 & \color{blue}0.29555 & -0.326825 & 0.894427 & 0 & 0 & 0\\
+        \end{bmatrix}\\
+        \Sigma &=
+        \begin{bmatrix}
+            \color{red} 12.481 & 0 & 0 & 0 & 0\\
+            0 & \color{blue} 9.50861 & 0 & 0 & 0\\
+            0 & 0 & 1.34556 & 0 & 0\\
+            0 & 0 & 0 & 0 & 0\\
+            0 & 0 & 0 & 0 & 0\\
+            0 & 0 & 0 & 0 & 0\\
+            0 & 0 & 0 & 0 & 0\\
+        \end{bmatrix}\\
+        V &=
+        \begin{bmatrix}
+            \color{red} 0.562258 & -0.126641 & 0.40967 & 0 & -0.707107\\
+            \color{red} 0.59286 & 0.0287706 & -0.804792 & 0 & 0\\
+            \color{red} 0.562258 & -0.126641 & 0.409667 & 0 & 0.707107\\
+            0.0901335 & \color{blue} 0.695376 & 0.0912571 & -0.707107 & 0\\
+            0.0901335 & \color{blue} 0.695376 & 0.0912571 & 0.707107 & 0\\
+        \end{bmatrix}
+    \end{align*}
+    \begin{itemize}
+        \item The \textcolor{red}{red} entries in $U$ show that users 1-4 liked the fantasy genre (Lord of the Rings, Harry Potter, and The Hobbit) more. On the other hand, the \textcolor{blue}{blue} entries in $U$ show that users 5-7 liked the superhero genre (Spiderman and The Avengers) more.
+        \begin{itemize}
+            \item $U$ correlates users with genres.
+        \end{itemize}
+        \item The \textcolor{red}{red} entries in $V$ show that LOTR, HP, and Hobbit represent the fantasy genre better than the others, with HP being the most well received representative. On the other hand, the \textcolor{blue}{blue} entries in $V$ show that Spiderman and Avengers represent the superhero genre better than the others; both do so equally well.
+        \begin{itemize}
+            \item $V$ correlates films with genres.
+        \end{itemize}
+        \item The \textcolor{red}{red} entry in $\Sigma$ represents the fantasy genre (which is liked the most). The \textcolor{blue}{blue} entry in $\Sigma$ represents the superhero genre (which is still well liked). The last nonzero entry in $\Sigma$ is low enough, comparatively, to be insignificant, and is just a meaningless leftover of the SVD process.
     \end{itemize}
 \end{itemize}
 
