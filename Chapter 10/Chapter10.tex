@@ -1,0 +1,267 @@
+\documentclass{article}
+
+\input{../preamble.tex}
+
+\begin{document}
+
+
+
+
+\lhead{Chapter 10: Complex Vectors and Matrices}
+\section*{Complex Linear Independence: Decomplexification}
+\begin{itemize}
+    \item \marginnote{4/7:}When given a complex system of equations, it is necessary to \textbf{decomplexify} it.
+    \item \textbf{Decomplexify}: To model a complex system of equations with a strictly real system for the purpose of applying the tenets of real linear algebra to it.
+    \item Consider the following complex system of equations.
+    \begin{align*}
+        (2+i)x_1+(1+i)x_2 &= 3+6i\\
+        (3-i)x_1+(2-2i)x_2 &= 7-i
+    \end{align*}
+    \begin{itemize}
+        \item The solutions will be complex numbers: $x_1=a_1+ib_1$ and $x_2=a_2+ib_2$, where $a_1,a_2,b_1,b_2\in\R$.
+    \end{itemize}
+    \item Transform it into a matrix system of equations. Separate the real and complex parts, and factor out all instances of the imaginary number $i$ so that it is a coefficient to any complex matrix.
+    \begin{align*}
+        \begin{bmatrix}
+            2+i & 1+i\\
+            3-i & 2-2i\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            a_1+ib_1\\
+            a_2+ib_2\\
+        \end{bmatrix}
+        &=
+        \begin{bmatrix}
+            3+6i\\
+            7-i\\
+        \end{bmatrix}\\
+        \left(
+            \begin{bmatrix}
+                2 & 1\\
+                3 & 2\\
+            \end{bmatrix}
+            +
+            \begin{bmatrix}
+                i & i\\
+                -i & -2i\\
+            \end{bmatrix}
+        \right)\left(
+            \begin{bmatrix}
+                a_1\\
+                a_2\\
+            \end{bmatrix}
+            +
+            \begin{bmatrix}
+                ib_1\\
+                ib_2\\
+            \end{bmatrix}
+        \right) &= \left(
+            \begin{bmatrix}
+                3\\
+                7\\
+            \end{bmatrix}
+            +
+            \begin{bmatrix}
+                6i\\
+                -i\\
+            \end{bmatrix}
+        \right)\\
+        \underbrace{\left(
+            \begin{bmatrix}
+                2 & 1\\
+                3 & 2\\
+            \end{bmatrix}
+            +i
+            \begin{bmatrix}
+                1 & 1\\
+                -1 & -2\\
+            \end{bmatrix}
+        \right)}_A \underbrace{\left(
+            \begin{bmatrix}
+                a_1\\
+                a_2\\
+            \end{bmatrix}
+            +i
+            \begin{bmatrix}
+                b_1\\
+                b_2\\
+            \end{bmatrix}
+        \right)}_x &= \underbrace{\left(
+            \begin{bmatrix}
+                3\\
+                7\\
+            \end{bmatrix}
+            +i
+            \begin{bmatrix}
+                6\\
+                -1\\
+            \end{bmatrix}
+        \right)}_b
+    \end{align*}
+    \item Foil the left side of the above equation\footnote{Note that the minus sign appears in the real component because, when multiplying the two "last" parts, $i^2=-1$.Note that the minus sign appears in the real component because, when multiplying the two "last" parts, $i^2=-1$.}.
+    \begin{equation*}
+        \left(
+            \begin{bmatrix}
+                2 & 1\\
+                3 & 2\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                a_1\\
+                a_2\\
+            \end{bmatrix}
+            -
+            \begin{bmatrix}
+                1 & 1\\
+                -1 & -2\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                b_1\\
+                b_2\\
+            \end{bmatrix}
+        \right)+i\left(
+            \begin{bmatrix}
+                2 & 1\\
+                3 & 2\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                b_1\\
+                b_2\\
+            \end{bmatrix}
+            +
+            \begin{bmatrix}
+                1 & 1\\
+                -1 & -2\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                a_1\\
+                a_2\\
+            \end{bmatrix}
+        \right) =
+        \begin{bmatrix}
+            3\\
+            7\\
+        \end{bmatrix}
+        +i
+        \begin{bmatrix}
+            6\\
+            -1\\
+        \end{bmatrix}
+    \end{equation*}
+    \item Split the above system of equations into a real system of equations and a complex system of equations by setting equal to each other the real components of each side and the imaginary components of each side.
+    \begin{align*}
+        \begin{bmatrix}
+            2 & 1\\
+            3 & 2\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            a_1\\
+            a_2\\
+        \end{bmatrix}
+        -
+        \begin{bmatrix}
+            1 & 1\\
+            -1 & -2\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            b_1\\
+            b_2\\
+        \end{bmatrix}
+        &=
+        \begin{bmatrix}
+            3\\
+            7\\
+        \end{bmatrix}\\
+        \begin{bmatrix}
+            2 & 1\\
+            3 & 2\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            b_1\\
+            b_2\\
+        \end{bmatrix}
+        +
+        \begin{bmatrix}
+            1 & 1\\
+            -1 & -2\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            a_1\\
+            a_2\\
+        \end{bmatrix}
+        &=
+        \begin{bmatrix}
+            6\\
+            -1\\
+        \end{bmatrix}
+    \end{align*}
+    \item Multiply out the matrices above to yield a system of four equations.
+    \begin{align*}
+        2a_1+a_2-b_1-b_2 &= 3\\
+        3a_1+2a_2+b_1+2b_2 &= 7\\
+        a_1+a_2+2b_1+b_2 &= 6\\
+        -a_1-2a_2+3B_1+2B_2 &= -1
+    \end{align*}
+    \item Condense the above system of equations into a single matrix system of equations.
+    \begin{align*}
+        \begin{bmatrix}
+            2 & 1 & -1 & -1\\
+            3 & 2 & 1 & 2\\
+            1 & 1 & 2 & 1\\
+            -1 & -2 & 3 & 2\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            a_1\\
+            a_2\\
+            b_1\\
+            b_2\\
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            3\\
+            7\\
+            6\\
+            -1\\
+        \end{bmatrix}
+    \end{align*}
+    \item Solve for $a_1$, $a_2$, $b_1$, and $b_2$ using an augmented matrix and Gauss-Jordan elimination.
+    \begin{equation*}
+        \begin{amatrix}{4}
+            2 & 1 & -1 & -1 & 3\\
+            3 & 2 & 1 & 2 & 7\\
+            1 & 1 & 2 & 1 & 6\\
+            -1 & -2 & 3 & 2 & -1\\
+        \end{amatrix}
+        \rightarrow
+        \begin{amatrix}{4}
+            1 & 0 & 0 & 0 & 1\\
+            0 & 1 & 0 & 0 & 2\\
+            0 & 0 & 1 & 0 & 2\\
+            0 & 0 & 0 & 1 & -1\\
+        \end{amatrix}
+    \end{equation*}
+    \begin{equation*}
+        \begin{bmatrix}
+            a_1\\
+            a_2\\
+            b_1\\
+            b_2\\
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            1\\
+            2\\
+            2\\
+            -1\\
+        \end{bmatrix}
+    \end{equation*}
+    \item From these four values, the original solutions $x_1=a_1+ib_1$ and $x_2=a_2+ib_2$ can be found.
+    \begin{align*}
+        x_1 &= 1+2i\\
+        x_2 &= 2-i
+    \end{align*}
+\end{itemize}
+
+
+
+
+\end{document}
