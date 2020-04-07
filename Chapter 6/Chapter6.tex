@@ -61,7 +61,7 @@
         Ax-\lambda Ix &= 0\\
         (A-\lambda I)x &= 0
     \end{align*}
-    \item $(A-\lambda I)x=0 \Rightarrow x\in N(A-\lambda I)^[$\footnote{To have a null space, $A-\lambda I$ has free columns.}$^] \Rightarrow |A-\lambda I|=0$
+    \item $(A-\lambda I)x=0 \Rightarrow x\in N(A-\lambda I)\footnote{To have a null space, $A-\lambda I$ has free columns.}\Rightarrow |A-\lambda I|=0$
     \item $
         \begin{bmatrix}
             3 & 1\\
@@ -210,7 +210,7 @@
 
 \section*{Similarity}
 \begin{itemize}
-    \item \marginnote{1/30:}$A\sim B$$^[$\footnote{$A$ "is similar to" $B$}$^]$ iff $\exists\ S:A=SBS^{-1},\ B=S^{-1}AS$.
+    \item \marginnote{1/30:}$A\sim B$\footnote{$A$ "is similar to" $B$} iff $\exists\ S:A=SBS^{-1},\ B=S^{-1}AS$.
     \begin{enumerate}
         \item If $A\sim B$, then $|A|=|B|$.
         \begin{align*}
@@ -425,7 +425,7 @@
                 9\\
             \end{bmatrix}
         $
-        \item $S$ would be $3\times 2$ and, thus, not square, so $\nexists\ S^{-1}$$^[$\footnote{At a later date, we will look at an analogy of projections to diagonalization that finds the "best possible" diagonalization (which may not be perfectly diagonal).}$^]$.
+        \item $S$ would be $3\times 2$ and, thus, not square, so $\nexists\ S^{-1}$\footnote{At a later date, we will look at an analogy of projections to diagonalization that finds the "best possible" diagonalization (which may not be perfectly diagonal).}.
     \end{itemize}
     \item \textbf{Canonical} (form): An accepted way of expressing something.
 \end{itemize}
@@ -590,7 +590,7 @@
 \subsection*{Explicit Formula for the Fibonacci Sequence}
 \begin{itemize}
     \item \marginnote{2/4:}1, 1, 2, 3, 5, 8, \dots
-    \item Recursively defined formula: $F_n$$^[$\footnote{The $n$-th Fibonacci number.}$^]$$=F_{n-1}+F_{n-2}$.
+    \item Recursively defined formula: $F_n\footnote{The $n$-th Fibonacci number.}=F_{n-1}+F_{n-2}$.
     \begin{align*}
         F_n &= F_{n-1}+F_{n-2}\\
         F_{n-1} &= F_{n-1}\\
@@ -619,7 +619,7 @@
         &= -\lambda(1-\lambda)-1\\
         &= \lambda^2-\lambda-1
     \end{align*}
-    \item $\lambda = \frac{1\pm\sqrt{5}}{2}$$^[$\footnote{This is the Golden ratio!}$^]$.
+    \item $\lambda = \frac{1\pm\sqrt{5}}{2}$\footnote{This is the Golden ratio!}.
     \item $\lambda_1 = \frac{1+\sqrt{5}}{2}$.
     \begin{align*}
         N(A-\lambda_1I) &= N\left(
@@ -851,7 +851,7 @@
         \item Start with $y'=Ay$.
         \item Substitute $y=Su$.
         \begin{itemize}
-            \item Note that $y=Su\Rightarrow y'=Su'$$^[$\footnote{Think about differentiating both sides: $y\rightarrow y'$ is obvious, $S$ will be unchanged because it's just coefficients, and the functions of $u$ will be differentiated.}$^]$.
+            \item Note that $y=Su\Rightarrow y'=Su'$\footnote{Think about differentiating both sides: $y\rightarrow y'$ is obvious, $S$ will be unchanged because it's just coefficients, and the functions of $u$ will be differentiated.}.
             \item If we can find $u'$ in terms of a diagonal matrix and $u$, we can solve for $y$.
         \end{itemize}
         \begin{center}
@@ -2218,7 +2218,7 @@
             \end{bmatrix}
         $
     \end{itemize}
-    \item If $A$ is nondiagonalizable, $A=MJM^{-1}$$^[$\footnote{$J$ for Jordan matrix.}$^]$.
+    \item If $A$ is nondiagonalizable, $A=MJM^{-1}$\footnote{$J$ for Jordan matrix.}.
     \begin{itemize}
         \item $
             J=
@@ -2707,7 +2707,7 @@
         \item All eigenvectors ($(A-\lambda I)x=0$) can be chosen orthonormally.
         \item All $\lambda$'s are positive (shown by the following).
     \end{itemize}
-    \item Let $x$ be a unit$^[$\footnote{Note that we are guaranteed that $x$ can have $||x||=1$ because we are guaranteed orthonormal eigenvectors.}$^]$ eigenvector of $A^\T A$ with corresponding eigenvalue $\lambda$.
+    \item Let $x$ be a unit\footnote{Note that we are guaranteed that $x$ can have $||x||=1$ because we are guaranteed orthonormal eigenvectors.} eigenvector of $A^\T A$ with corresponding eigenvalue $\lambda$.
     \begin{itemize}
         \item Symbolically, $A^\T Ax=\lambda x$.
     \end{itemize}
@@ -3124,7 +3124,7 @@
             \color{red} 0.137599 & -0.0236115 & 0.0108085 & 0 & -0.980591 & -0.121046 & -0.0649204\\
             \color{red} 0.412696 & -0.0708344 & 0.0324254 & 0 & 0 & 0 & 0.907495\\
             \color{red} 0.550397 & -0.0944458 & 0.0432339 & 0 & 0 & 0.786796 & -0.259281\\
-            \color{red} 0.687996 & -0.118057 & 0.0540424 & 0 & 0.196116 & =0.605228 & -0.324102\\
+            \color{red} 0.687996 & -0.118057 & 0.0540424 & 0 & 0.196116 & -0.605228 & -0.324102\\
             0.152775 & \color{blue} 0.591101 & -0.653651 & -0.447214 & 0 & 0 & 0\\
             0.0722165 & \color{blue}0.731312 & 0.678209 & 0 & 0 & 0 & 0\\
             0.763875 & \color{blue}0.29555 & -0.326825 & 0.894427 & 0 & 0 & 0\\

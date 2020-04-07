@@ -10,12 +10,16 @@
 \usepackage{pdfpages}
 \usepackage{subcaption}
 \usepackage{float}
+\usepackage{scrextend}
 
 \MakeOuterQuote{"}
 
 \colorlet{grx}{green!50!black}
 
 \usetikzlibrary{matrix,calc,positioning}
+
+\deffootnotemark{\textsuperscript{[\thefootnotemark]}}
+\deffootnote[1.6em]{0em}{2em}{\textsuperscript{\thefootnotemark}}
 
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\T}{\text{T}}
