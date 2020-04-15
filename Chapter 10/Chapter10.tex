@@ -320,6 +320,7 @@
         \item Typically defined for $A\in\C^n$, but holds for $A\in\R^n$, too.
         \item Parallel to how if $A\in\R^n$ and $A=A^\T$, $A$ is symmetrical.
         \item Also note that if $A^\He A=A^2=AA^\He$, $A$ is Hermitian.
+        \item A Hermitian matrix has to have real values on the principal diagonal. When $A$ is transposed and conjugated, the diagonal entries are the only values that don't move. Thus, their conjugates must equal themselves, so they must be real\footnote{\label{fnt:realConjugate}Recall that only real quantities can be their own conjugates because $a+0i=a-0i$.}.
     \end{itemize}
     \item \textbf{Unitary} (matrix): A matrix $A$ such that $A^{-1}=A^\He$.
     \begin{itemize}
@@ -349,7 +350,7 @@
         v^\He Av = \left( v^\He Av \right)^\He = v^\He Av
     \end{equation*}
     \begin{itemize}
-        \item The above proves that $v^\He Av\in\R$ because it's its own conjugate\footnote{Recall that only real quantities can be their own conjugates because $a+0i=a-0i$.}.
+        \item The above proves that $v^\He Av\in\R$ because it's its own conjugate\cref{fnt:realConjugate}.
         \begin{align*}
             Av &= \lambda v\\
             v^\He Av &= \lambda v^\He v
@@ -375,16 +376,20 @@
         \begin{align*}
             A &=
             \begin{bmatrix}
-                a_1 & a_2\\
-                a_3 & a_4\\
+                a_{11} & a_{12} & \cdots & a_{1n}\\
+                a_{21} & a_{22} & \cdots & a_{2n}\\
+                \vdots & \vdots & \ddots & \vdots\\
+                a_{n1} & a_{n2} & \cdots & a_{nn}\\
             \end{bmatrix}&
                 A^\He &=
                 \begin{bmatrix}
-                    a_1 & \bar{a}_3\\
-                    \bar{a}_2 & a_4\\
+                    a_{11} & \bar{a}_{21} & \cdots & \bar{a}_{n1}\\
+                    \bar{a}_{12} & a_{22} & \cdots & \bar{a}_{n2}\\
+                    \vdots & \vdots & \ddots & \vdots\\
+                    \bar{a}_{1n} & \bar{a}_{2n} & \cdots & a_{nn}\\
                 \end{bmatrix}
         \end{align*}
-        \item Define an arbitrary vector $x_i$ and matrix $A$, along with their conjugate transposes (or Hermitian versions).
+        \item Define an arbitrary vector $x_i$ and matrix $A$, along with their conjugate transposes (or Hermitian versions). Note that the diagonal entries of $A^\He$ aren't shown as conjugated because their conjugates equal themselves.
         \begin{align*}
             Ax_1 &= \lambda_1x_1\\
             {\color{blue}x_2^\He Ax_1} &= {\color{red}\lambda_1x_2^\He x_1}
