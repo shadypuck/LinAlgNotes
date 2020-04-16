@@ -406,5 +406,122 @@
 
 
 
+\section*{Complex Diagonalization}
+\begin{itemize}
+    \item \marginnote{4/15:}Diagonalize the following matrix $A$.
+    \begin{equation*}
+        \begin{bmatrix}
+            0.9 & -0.4\\
+            0.1 & 0.9\\
+        \end{bmatrix}
+    \end{equation*}
+    \begin{itemize}
+        \item Find the characteristic polynomial.
+        \begin{align*}
+            0 &=
+            \begin{vmatrix}
+                0.9-\lambda & -0.4\\
+                0.1 & 0.9-\lambda\\
+            \end{vmatrix}\\
+            &= (0.9-\lambda)^2-(-0.4)(0.1)\\
+            &= 0.81-1.8\lambda+\lambda^2+0.04\\
+            &= \lambda^2-1.8\lambda+0.85
+        \end{align*}
+        \item Find the eigenvalues.
+        \begin{align*}
+            \lambda &= \frac{-(-1.8)\pm\sqrt{(-1.8)^2-4(1)(0.85)}}{2(1)}\\
+            &= 0.9\pm\frac{\sqrt{-0.16}}{2}\\
+            &= 0.9\pm\frac{\sqrt{-1}\sqrt{0.16}}{2}\\
+            &= 0.9\pm\frac{0.4i}{2}\\
+            &= 0.9\pm 0.2i
+        \end{align*}
+        \begin{align*}
+            \lambda_1 &= 0.9+0.2i&
+                \lambda_2 &= 0.9-0.2i
+        \end{align*}
+        \item Find the eigenvectors.
+        \begin{align*}
+            (A-(0.9+0.2i))x_1 &=
+            \begin{bmatrix}
+                0.9-(0.9+0.2i) & -0.4\\
+                0.1 & 0.9-(0.9+0.2i)\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                x_{1_1}\\
+                x_{1_2}\\
+            \end{bmatrix}\\
+            &=
+            \begin{bmatrix}
+                -0.2i & -0.4\\
+                0.1 & -0.2i\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                2i\\
+                1\\
+            \end{bmatrix}\\
+            &=
+            \begin{bmatrix}
+                0\\
+                0\\
+            \end{bmatrix}
+        \end{align*}
+        \begin{align*}
+            (A-(0.9-0.2i))x_1 &=
+            \begin{bmatrix}
+                0.9-(0.9-0.2i) & -0.4\\
+                0.1 & 0.9-(0.9-0.2i)\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                x_{1_1}\\
+                x_{1_2}\\
+            \end{bmatrix}\\
+            &=
+            \begin{bmatrix}
+                0.2i & -0.4\\
+                0.1 & 0.2i\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                -2i\\
+                1\\
+            \end{bmatrix}\\
+            &=
+            \begin{bmatrix}
+                0\\
+                0\\
+            \end{bmatrix}
+        \end{align*}
+        \begin{align*}
+            x_1 &=
+            \begin{bmatrix}
+                2i\\
+                1\\
+            \end{bmatrix}&
+                x_2 &=
+                \begin{bmatrix}
+                    -2i\\
+                    1\\
+                \end{bmatrix}
+        \end{align*}
+        \item Compile the diagonalization.
+        \begin{equation*}
+            A = \frac{1}{4i}
+            \begin{bmatrix}
+                2i & -2i\\
+                1 & 1\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                0.9+0.2i & 0\\
+                0 & 0.9-0.2i\\
+            \end{bmatrix}
+            \begin{bmatrix}
+                1 & 2i\\
+                -1 & 2i\\
+            \end{bmatrix}
+        \end{equation*}
+    \end{itemize}
+\end{itemize}
+
+
+
 
 \end{document}
