@@ -523,5 +523,31 @@
 
 
 
+\section*{Real versus Complex}
+\marginnote{4/16:}
+
+\noindent
+\begin{tchart}{1.4}{Real}{Complex}
+    $\R^n$: vectors with $n$ real components               & $\C^n$: vectors with $n$ complex components\\
+    length: $||x||^2 = x_1^2+\cdots+x_n^2$                 & length: $||z||^2 = |z_1|^2+\cdots+|z_n|^2$\\
+    transpose: $\left( A^\T \right)_{ij} = A_{ji}$         & conjugate transpose: $\left( A^\He \right)_{ij} = \overline{A_{ji}}$\\
+    product rule: $(AB)^\T = B^\T A^\T$                    & product rule: $(AB)^\He = B^\He A^\He$\\[3mm]
+
+    dot product: $x^\T y = x_1y_1+\cdots+x_ny_n$           & inner product: $u^\He v = \bar{u}_1u_1+\cdots+\bar{u}_nv_n$\\
+    reason for $A^\T$: $(Ax)^\T y = x^\T(A^\T y)$          & reason for $A^\He$: $(Au)^\He v = u^\He(A^\He v)$\\
+    orthogonality: $x^\T y = 0$                            & orthogonality: $u^\He v = 0$.\\
+    symmetric matrices: $A = A^\T$                         & Hermitian matrices: $A = A^\He$\\
+    $A = Q\Lambda Q^{-1} = Q\Lambda Q^\T$ (real $\Lambda$) & $A = U\Lambda U^{-1} = U\Lambda U^\He$ (real $\Lambda$)\\
+    skew-symmetric matrices: $k^\T = -K$                   & skew-Hermitian matrices: $K^\He = -K$\\
+    orthogonal matrices: $Q^\T = Q^{-1}$                   & unitary matrices: $U^\He = U^{-1}$\\
+    orthonormal columns: $Q^\T Q = I$                      & orthonormal columns: $U^\He = U^{-1}$\\
+    $(Qx)^\T(Qy) = x^\T y$ and $||Qx|| = ||x||$            & $(Ux)^\He(Uy) = x^\He y$ and $||Uz|| = ||z||$
+\end{tchart}
+\begin{itemize}
+    \item Note that the columns and eigenvectors of $Q$ and $U$ are orthonormal, and all of their eigenvalues $\lambda$ satisfy $|\lambda| = 1$.
+\end{itemize}
+
+
+
 
 \end{document}
