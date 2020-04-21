@@ -410,6 +410,7 @@
 \begin{itemize}
     \item \marginnote{4/15:}Diagonalize the following matrix $A$.
     \begin{equation*}
+        A =
         \begin{bmatrix}
             0.9 & -0.4\\
             0.1 & 0.9\\
@@ -427,7 +428,7 @@
             &= 0.81-1.8\lambda+\lambda^2+0.04\\
             &= \lambda^2-1.8\lambda+0.85
         \end{align*}
-        \item Find the eigenvalues.
+        \item Find the eigenvalues\footnote{It is interesting that the eigenvalues are complex conjugates of each other.}.
         \begin{align*}
             \lambda &= \frac{-(-1.8)\pm\sqrt{(-1.8)^2-4(1)(0.85)}}{2(1)}\\
             &= 0.9\pm\frac{\sqrt{-0.16}}{2}\\
@@ -439,7 +440,7 @@
             \lambda_1 &= 0.9+0.2i&
                 \lambda_2 &= 0.9-0.2i
         \end{align*}
-        \item Find the eigenvectors.
+        \item Find the eigenvectors\footnote{It is interesting that the eigenvectors are \emph{also} complex conjugates of each other.}.
         \begin{align*}
             (A-(0.9+0.2i))x_1 &=
             \begin{bmatrix}
@@ -545,6 +546,146 @@
 \end{tchart}
 \begin{itemize}
     \item Note that the columns and eigenvectors of $Q$ and $U$ are orthonormal, and all of their eigenvalues $\lambda$ satisfy $|\lambda| = 1$.
+\end{itemize}
+
+
+
+\section*{Fourier Series}
+\begin{itemize}
+    \item \marginnote{4/21:}Consider the square wave $f(t)$.
+    \begin{center}
+        \begin{tikzpicture}
+            \draw [->] (-2.5,0) -- (5.5,0) node[right]{$t(s)$};
+            \draw [->] (0,-1) -- (0,1.5) node[above]{$y$};
+            \foreach \x in {-2,2,4} {
+                \draw (\x,-0.1) node[below]{$\x\pi$} -- (\x,0.1);
+            }
+
+            \draw [yellow!70!black,thick] (-2,0) -- (-2,1) -- (-1,1) -- (-1,0)
+                \foreach \x in {0,2,4} {
+                    -- (\x,0) -- (\x,1) -- ({\x+1},1) -- ({\x+1},0)
+                }
+            ;
+        \end{tikzpicture}
+    \end{center}
+    \item Its period is $2\pi\frac{\text{sec}}{\text{cycle}}$, and its frequency is $\frac{1}{2\pi} \text{Hz}$.
+    \item Can we write $f(t)$ as a sum of sines and cosines?
+    \begin{equation*}
+        f(t) = a_0+{\color{red}a_1\cos(t)}+{\color{blue}b_1\sin(t)}+{\color{red}a_2\cos(2t)}+{\color{blue}b_2\sin(2t)}+{\color{red}a_3\cos(3t)}+{\color{blue}b_3\sin(3t)}+\cdots
+    \end{equation*}
+    \begin{itemize}
+        \item Be general.
+        \item Since $T=2\pi$, it makes sense to use some functions with $T=2\pi$ to model it.
+        \item The weighting coefficients account for how much each function contributes to the whole.
+    \end{itemize}
+    \item Historically studied by Fourier, who studied differential equations. Differential equations were often easy to solve for sines and cosines, so if a function could be modeled by a sum of sines and cosines, a related differential equation would be easier to solve.
+    \item Fourier series, transforms, and analysis also tell us how much of each frequency a function contains (as measured by the weight coefficients).
+\end{itemize}
+
+
+\subsection*{Wave Type Sketches}
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.7\linewidth}
+        \centering
+        \begin{tikzpicture}
+            \draw [->] (-2.5,0) -- (5.5,0) node[right]{$t$};
+            \draw [->] (0,-1.5) -- (0,1.5) node[above]{$y$};
+            \foreach \x in {-2,-1,1,2,3,4,5} {
+                \draw (\x,-0.1) -- (\x,0.1);
+            }
+            \foreach \y in {-1,1} {
+                \draw (-0.1,\y) -- (0.1,\y);
+            }
+
+            \draw [grx,thick] (-2,-1) -- (-2,1) -- (-1,1) -- (-1,-1)
+                \foreach \x in {0,2,4} {
+                    -- (\x,-1) -- (\x,1) -- ({\x+1},1) -- ({\x+1},-1)
+                }
+            ;
+
+            \foreach \x in {-2,-1,1,2,3,4,5} {
+                \node [below,fill=white] at (\x,-0.1) {$\x\pi$};
+            }
+            \foreach \y in {-1,1} {
+                \node [left,fill=white] at (-0.1,\y) {$\y$};
+            }
+        \end{tikzpicture}
+        \caption{Square wave.}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.7\linewidth}
+        \centering
+        \begin{tikzpicture}[yscale=0.6]
+            \draw [->] (-2.5,0) -- (5.5,0) node[right]{$t$};
+            \draw [->] (0,-1) -- (0,5) node[above]{$y$};
+            \foreach \x in {-2,-1,1,2,3,4,5} {
+                \draw (\x,-0.1) -- (\x,0.1);
+            }
+            \foreach \y in {1,2,3,4} {
+                \draw (-0.1,\y) -- (0.1,\y);
+            }
+
+            \draw [grx,thick] (-2,0)
+                \foreach \x in {0,2,4} {
+                    -- (\x,4) -- (\x,0)
+                }
+                -- (5,2)
+            ;
+
+            \foreach \x in {-2,-1,1,2,3,4,5} {
+                \node [below,fill=white] at (\x,-0.1) {$\x$};
+            }
+            \foreach \y in {1,2,3,4} {
+                \node [left,fill=white,inner sep=1pt] at (-0.1,\y) {$\y$};
+            }
+        \end{tikzpicture}
+        \caption{Sawtooth wave.}
+    \end{subfigure}
+\end{figure}
+\begin{figure}[H]
+    \ContinuedFloat
+    \centering
+    \begin{subfigure}[b]{0.7\linewidth}
+        \centering
+        \begin{tikzpicture}
+            \draw [->] (-4.5,0) -- (4.5,0) node[right]{$t$};
+            \draw [->] (0,-0.5) -- (0,2.5) node[above]{$y$};
+            \foreach \x in {-4,-3,-2,-1,1,2,3,4} {
+                \draw (\x,-0.1) -- (\x,0.1);
+            }
+            \foreach \y in {1,2} {
+                \draw (-0.1,\y) -- (0.1,\y);
+            }
+
+            \draw [grx,thick] (-4,0)
+                \foreach \x in {-4,-2} {
+                    -- (\x,2) -- ({\x+2},0)
+                }
+                \foreach \x in {2,4} {
+                    -- (\x,2) -- (\x,0)
+                }
+            ;
+
+            \foreach \x in {-4,-3,-2,-1,1,2,3,4} {
+                \node [below,fill=white] at (\x,-0.1) {$\x\pi$};
+            }
+            \foreach \y in {1,2} {
+                \node [left,fill=white] at (-0.1,\y) {$\y\pi$};
+            }
+        \end{tikzpicture}
+        \caption{Triangular wave.}
+    \end{subfigure}
+\end{figure}
+\begin{itemize}
+    \item Square wave: $
+        f(t) =
+        \begin{cases}
+            1  &\quad 0<t<\pi\\
+            -1 &\quad \pi<t<2\pi
+        \end{cases}
+    $ where periodicity is defined by $f(t+2\pi)=f(t)$.
+    \item Sawtooth wave: $f(t) = 2t\qquad 0<t<2$ where periodicity is defined by $f(t+2)=f(t)$.
+    \item Triangular wave: $f(t) = |t|\qquad 0<t<2\pi$ where periodicity is defined by $f(t+2\pi)=f(t)$.
 \end{itemize}
 
 
