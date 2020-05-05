@@ -550,7 +550,7 @@
 
 
 
-\section*{Fourier Series}
+\section*{Real Fourier Series}
 \begin{itemize}
     \item \marginnote{4/21:}Consider the square wave $f(t)$.
     \begin{center}
@@ -846,6 +846,90 @@
     \begin{equation*}
         f(t) = \frac{1}{2} + \sum_{n=1}^\infty \left( \left( -\frac{2}{n^2\pi^2}+(-1)^n\frac{2}{n^2\pi^2} \right)\cos\left( \frac{n\pi t}{2} \right)+\left( (-1)^{n+1}\frac{2}{n\pi} \right)\sin\left( \frac{n\pi t}{2} \right) \right)
     \end{equation*}
+\end{itemize}
+
+
+
+\section*{Complex Fourier Series}
+\begin{itemize}
+    \item \marginnote{5/4:}\textbf{Euler's formula}: $\e[i\theta] = \cos\theta+i\sin\theta$.
+    \item Using Euler's Formula, we can replace the trigonometric functions in Fourier series with complex exponential functions. By combining the Fourier coefficients $a_n$ and $b_n$ into one complex coefficient $c_n$, we find that, for a given periodic signal, both sets of constants can be found in one operation.
+    \item Let's derive sine and cosine in terms of complex exponentials.
+    \begin{itemize}
+        \item For this to work, we will need Euler's formula, and a second, negative version of Euler's formula: $\e[-i\theta] = \cos\theta-i\sin\theta$.
+    \end{itemize}
+    \begin{align*}
+        (\cos\theta+i\sin\theta)+(\cos\theta-i\sin\theta) &= \e[i\theta]+\e[-i\theta]&
+            (\cos\theta+i\sin\theta)-(\cos\theta-i\sin\theta) &= \e[i\theta]-\e[-i\theta]\\
+        2\cos\theta &= \e[i\theta]+\e[-i\theta]&
+            2i\sin\theta &= \e[i\theta]-\e[-i\theta]\\
+        \Aboxed{\cos\theta &= \frac{1}{2}\left( \e[i\theta]+\e[-i\theta] \right)}&
+            \Aboxed{\sin\theta &= \frac{1}{2i}\left( \e[i\theta]-\e[-i\theta] \right)}
+    \end{align*}
+    \item We can use the above results to express $a_n\cos(n\omega_0\theta)+b_n\sin(n\omega_0\theta)$, where $\omega_0 = \frac{2\pi}{P}$, in terms of complex exponentials.
+    \begin{align*}
+        a_n\cos(n\omega_0\theta)+b_n\sin(n\omega_0\theta) &= \frac{a_n}{2}\left( \e[in\omega_0\theta]+\e[-in\omega_0\theta] \right)+\frac{b_n}{2i}\left( \e[in\omega_0\theta]-\e[-in\omega_0\theta] \right)\\
+        &= \frac{a_n}{2}\e[in\omega_0\theta]+\frac{a_n}{2}\e[-in\omega_0\theta]+\frac{b_n}{2i}\e[in\omega_0\theta]-\frac{b_n}{2i}\e[-in\omega_0\theta]\\
+        &= \left( \frac{a_n}{2}+\frac{b_n}{2i} \right)\e[in\omega_0\theta] + \left( \frac{a_n}{2}-\frac{b_n}{2i} \right)\e[-in\omega_0\theta]\\
+        &= \frac{1}{2}\left( a_n+\frac{b_n}{i} \right)\e[in\omega_0\theta] + \frac{1}{2}\left( a_n-\frac{b_n}{i} \right)\e[-in\omega_0\theta]\\
+        &= \frac{1}{2}\left( a_n+\left( \frac{b_n}{i} \right)(1) \right)\e[in\omega_0\theta] + \frac{1}{2}\left( a_n-\left( \frac{b_n}{i} \right)(1) \right)\e[-in\omega_0\theta]\\
+        &= \frac{1}{2}\left( a_n+\left( \frac{b_n}{i} \right)\left( i^4 \right) \right)\e[in\omega_0\theta] + \frac{1}{2}\left( a_n-\left( \frac{b_n}{i} \right)\left( i^4 \right) \right)\e[-in\omega_0\theta]\\
+        &= \frac{1}{2}\left( a_n+i^3b_n \right)\e[in\omega_0\theta] + \frac{1}{2}\left( a_n-i^3b_n \right)\e[-in\omega_0\theta]\\
+        &= \frac{1}{2}(a_n+(-i)b_n)\e[in\omega_0\theta] + \frac{1}{2}(a_n-(-i)b_n)\e[-in\omega_0\theta]\\
+        &= \frac{1}{2}(a_n-ib_n)\e[in\omega_0\theta]+\frac{1}{2}(a_n+ib_n)\e[-in\omega_0\theta]
+    \end{align*}
+    \begin{itemize}
+        \item Define $c_n = \frac{1}{2}\left( a_n-ib_n \right)$ and complex conjugate $\bar{c}_n = \frac{1}{2}\left( a_n+ib_n \right)$. Now we have the following.
+        \begin{equation*}
+            a_n\cos(n\omega_0\theta)+b_n\sin(n\omega_0\theta) = c_n\e[in\omega_0\theta]+\bar{c}_n\e[-in\omega_0\theta]
+        \end{equation*}
+        \item Substitution into the Fourier series sum gives the following.
+        \begin{equation}\label{eqn:complexFourierUnsimplified}
+            f(t) = \frac{a_0}{2}+\sum_{n=1}^\infty\left( c_n\e[in\omega_0\theta]+\bar{c}_n\e[-in\omega_0\theta] \right)
+        \end{equation}
+    \end{itemize}
+    \item Equation \ref{eqn:complexFourierUnsimplified} can become still neater and more concise through the following steps.
+    \begin{enumerate}
+        \item Define $c_0=\frac{a_0}{2}$\footnote{Note that this is consistent with the general definition of $c_n$ since $b_0=0$.}.
+        \item Define $c_{-n} = \bar{c}_n$. This permits the following.
+        \begin{equation*}
+            \sum_{n=1}^\infty \bar{c}_n\e[-in\omega_0t]
+            = \bar{c}_1\e[-i\omega_0t]+\bar{c}_2\e[-2i\omega_0t]+\cdots
+            = c_{-1}\e[-i\omega_0t]+c_{-2}\e[-2i\omega_0t]+\cdots
+            = \sum_{n=-1}^{-\infty} c_n\e[in\omega_0t]
+        \end{equation*}
+        \item Using the new definitions of $c_n$ for $n\in(-\infty,0]$, it is possible to write Equation \ref{eqn:complexFourierUnsimplified} as follows.
+        \begin{align*}
+            f(t) &= c_0+\sum_{n=1}^\infty c_n\e[in\omega_0t] + \sum_{n=1}^\infty c_{-n}\e[-in\omega_0t]\\
+            &= c_0+\sum_{n=1}^\infty c_n\e[in\omega_0t] + \sum_{n=-\infty}^{-1} c_n\e[in\omega_0t]\\
+            \Aboxed{f(t) &= \sum_{n=-\infty}^\infty c_n\e[in\omega_0t]}
+        \end{align*}
+    \end{enumerate}
+    \pagebreak
+    \item We now tackle how to solve for the complex coefficients $c_n$\footnote{Note that this can also be derived in an analogous method to how the original $a_n$ and $b_n$ expressions were derived.}.
+    \begin{enumerate}
+        \item For $n=0$, $
+            c_0
+            = \frac{a_0}{2}
+            = \frac{1}{P}\int_{-P/2}^{P/2} f(t)\D{t}
+        $.
+        \item For $n\in\Z^+$, $
+            c_n
+            = \frac{1}{2}\left( a_n-ib_n \right)
+            = \frac{1}{P}\int_{-P/2}^{P/2}f(t)\left( \cos\left( n\omega_0t \right)-i\sin\left( n\omega_0t \right) \right)\D{t}
+            = \frac{1}{P}\int_{-P/2}^{P/2}f(t)\e[-in\omega_0t]\D{t}
+        $.
+        \item For $n\in\Z^-$, $
+            c_n =
+            \frac{1}{2}\left( a_n+ib_n \right)
+            = \frac{1}{P}\int_{-P/2}^{P/2}f(t)\e[-in\omega_0t]\D{t}\footnotemark
+        $.
+        \footnotetext{The negative exponential, when multiplied by a negative $n$, generates the $+$ expansion of Euler's formula, as desired.}
+        \item The above three results can be condensed into the following expression for all $n\in\Z$.
+        \begin{equation*}
+            \boxed{c_n = \frac{1}{P}\int_{-P/2}^{P/2} f(t)\e[-in\omega_0t]\D{t}}
+        \end{equation*}
+    \end{enumerate}
 \end{itemize}
 
 
