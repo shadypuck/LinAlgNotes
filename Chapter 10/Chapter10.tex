@@ -933,6 +933,60 @@
 \end{itemize}
 
 
+\subsection*{Generalized Sawtooth Wave}
+\begin{itemize}
+    \item \marginnote{5/6:}Generalized sawtooth wave (period $P$, amplitude $A$): $f(t) = \frac{At}{P}$ and $f(t+P)=f(t)$.
+    \begin{center}
+        \begin{tikzpicture}
+            \draw [->] (-2.5,0) -- (4.5,0);
+            \draw [->] (0,-1) -- (0,3.5);
+            \foreach \x/\sign in {-2/-,2/,4/2} {
+                \draw (\x,0.1) -- (\x,-0.1) node[below]{$\sign P$};
+            }
+            \draw (-0.1,3) node[left]{$A$} -- (0.1,3);
+
+            \draw [grx,thick] (-2,0)
+                \foreach \x in {0,2,4} {
+                    -- (\x,3) -- (\x,0)
+                }
+            ;
+        \end{tikzpicture}
+    \end{center}
+    \item $c_0 = \frac{A}{2}$.
+    \item $\omega_0 = \frac{2\pi}{P} \Rightarrow {\color{red}\omega_0P} = {\color{blue}2\pi}$.
+    \item Find $c_n$ terms:
+    \begin{align*}
+        c_n &= \frac{1}{P}\int_0^P \frac{At}{P}\e[-in\omega_0t]\D{t}\\
+        &= \frac{A}{P^2}\int_0^P t\e[-in\omega_0t]\D{t}
+        \intertext{
+            \centering
+            $
+            \begin{aligned}
+                u &= t&
+                    \D{v} &= \e[-in\omega_0t]\\
+                \D{u} &= \D{t}&
+                    v &= -\frac{1}{in\omega_0}\e[-in\omega_0t]
+            \end{aligned}
+            $
+        }
+        &= \frac{A}{P^2}\left( \left[ -\frac{t\e[-in\omega_0t]}{in\omega_0} \right]_0^P+\frac{1}{in\omega_0}\int_0^P \e[-in\omega_0t]\D{t} \right)\\
+        &= \frac{A}{P^2}\left( \left( -\frac{P\e[-in\omega_0P]}{in\omega_0}-0 \right)-\frac{1}{(in\omega_0)^2}\left[ \e[-in\omega_0t] \right]_0^P \right)\\
+        &= \frac{A}{P^2}\left( -\frac{P\e[-in{\color{red}\omega_0P}]}{in\omega_0}-\frac{1}{(in\omega_0)^2}\left( \e[-in{\color{red}\omega_0P}]-1 \right) \right)\\
+        &= \frac{A}{P^2}\left( -\frac{P\e[-i{\color{blue}2\pi}n]}{in\omega_0}-\frac{1}{(in\omega_0)^2}\left( \e[-i{\color{blue}2\pi}n]-1 \right) \right)
+        \intertext{}
+        &= \frac{A}{P^2}\left( -\frac{P(1)}{in\omega_0}-\frac{1}{(in\omega_0)^2}\left( (1)-1 \right) \right)\\
+        &= \frac{A}{P^2}\left( -\frac{P}{in\omega_0} \right)\\
+        &= -\frac{A}{in{\color{red}\omega_0P}}\\
+        &= \frac{A}{{\color{blue}2\pi}n(-i)}\\
+        \Aboxed{c_n &= \frac{Ai}{2\pi n}}
+    \end{align*}
+    \item Assemble the Fourier series for this generalized sawtooth wave function.
+    \begin{equation*}
+        f(t) = \frac{Ai}{2\pi}\sum_{n=-\infty}^\infty \frac{\e[in\omega_0t]}{n}
+    \end{equation*}
+\end{itemize}
+
+
 
 
 \end{document}
