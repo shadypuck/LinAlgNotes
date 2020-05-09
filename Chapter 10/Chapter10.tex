@@ -988,5 +988,44 @@
 
 
 
+\section*{Fourier Transform}
+\begin{itemize}
+    \item \marginnote{5/8:}The complex Fourier series can be summarized as one entity as follows.
+    \begin{equation*}
+        f(t) = \sum_{n=-\infty}^\infty \left( \frac{1}{P}\int_{t_0}^{t_0+P} f(t)\e[-in\omega_0t]\D{t} \right)\e[in\omega_0t]
+    \end{equation*}
+    \begin{itemize}
+        \item $t_0$ is an arbitrary $t$, and the above reflects that it is important that we integrate over a full period $P$, but it does not matter what we define to be a single iteration/period of $f(t)$.
+    \end{itemize}
+    \item Substitute $\omega_0 = \frac{2\pi}{P}$.
+    \begin{equation*}
+        f(t) = \sum_{n=-\infty}^\infty \left( {\color{blue}\frac{1}{P}}\int_{t_0}^{t_0+P} f(t)\e[-in2\pi{\color{blue}\frac{1}{P}}t]\D{t} \right)\e[in2\pi{\color{blue}\frac{1}{P}}t]
+    \end{equation*}
+    \item Let $t_0=-\frac{P}{2}$ and let ${\color{blue}\frac{1}{P}} = {\color{blue}\Delta f}$.
+    \begin{equation*}
+        f(t) = \sum_{n=-\infty}^\infty \left( \int_{-P/2}^{P/2} f(t)\e[-in2\pi{\color{blue}\Delta f}t]\D{t} \right)\e[in2\pi{\color{blue}\Delta f}t]{\color{blue}\Delta f}
+    \end{equation*}
+    \item What happens as $P\to\infty$?
+    \begin{itemize}
+        \item Since $\frac{1}{P} = \Delta f$, $\Delta f\to\D{f}$\footnote{A teeny-tiny differential.} (think $\frac{1}{\infty}$).
+        \item Also, define a continuous variable $f$ equivalent to $n\Delta f = \frac{n}{P}$\footnote{As $P$ gets smaller, changes in $\frac{n}{P}$ become less discrete (less like increments) and more continuous.}.
+        \item Now that we have a continuous variable and a differential, the formula's summation is integration!
+    \end{itemize}
+    \begin{align*}
+        f(t) &= \lim_{\color{grx}P\to\infty} \left( {\color{red}\sum_{n=-\infty}^\infty} \left( \int_{{\color{grx}-P/2}}^{\color{grx}P/2} f(t)\e[-i2\pi {\color{cyan}n\Delta f}t]\D{t} \right)\e[i2\pi {\color{cyan}n\Delta f}t]{\color{red!50!blue}\Delta f} \right)\\
+        &= {\color{red}\int_{-\infty}^\infty} \left( \int_{{\color{grx}-\infty}}^{\color{grx}\infty} f(t)\e[-i2\pi {\color{cyan}f}t]\D{t} \right)\e[i2\pi {\color{cyan}f}t]{\color{red!50!blue}\D{f}}
+    \end{align*}
+    \item Let $2\pi f = \omega \Rightarrow \D{f}=\D{\omega}$.
+    \begin{equation}\label{eqn:inverseFourierTransform}
+        f(t) = \int_{-\infty}^\infty \left( \int_{-\infty}^\infty f(t)\e[-i\omega t]\D{t} \right)\e[i\omega t]\D{\omega}
+    \end{equation}
+    \begin{equation}\label{eqn:fourierTransform}
+        F(\omega) = \int_{-\infty}^\infty f(t)\e[-i\omega t]\D{t}
+    \end{equation}
+    \item Equation \ref{eqn:fourierTransform} is the Fourier Transform and Equation \ref{eqn:inverseFourierTransform} is the Inverse Fourier Transform.
+\end{itemize}
+
+
+
 
 \end{document}
