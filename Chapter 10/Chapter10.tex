@@ -1138,6 +1138,83 @@
         &\ \, \vdots\\
         X_{\color{cyan}7} &= (0)\e[-\frac{i2\pi{\color{cyan}(7)}{\color{red}(0)}}{{\color{red}8}}] + \left( \frac{\sqrt{2}}{2} \right)\e[-\frac{i2\pi{\color{cyan}(7)}{\color{red}(1)}}{{\color{red}8}}] + \cdots + \left( -\frac{\sqrt{2}}{2} \right)\e[-\frac{i2\pi{\color{cyan}(7)}{\color{red}(7)}}{{\color{red}8}}]
     \end{align*}
+    \item \marginnote{5/12:}The sums come out to be the following.
+    \begin{table}[h!]
+        \centering
+        \renewcommand{\arraystretch}{1.4}
+        \begin{tabular}{c|cccccccc}
+            \textbf{Sum} & $X_0$ & $X_1$ & $X_2$ & $X_3$ & $X_4$ & $X_5$ & $X_6$ & $X_7$\\
+            \hline
+            \textbf{Value} & 0 & $-4i$ & 0 & 0 & 0 & 0 & 0 & $4i$\\
+        \end{tabular}
+    \end{table}
+    \item Plot the magnitudes of each sum in the following \textbf{Spectrum Plot}.
+    \begin{center}
+        \begin{tikzpicture}
+            \draw [->] (-0.5,0) -- (7.5,0) node[right]{Frequency (Hz)};
+            \draw [->] (0,-0.5) -- (0,1.5);
+            \foreach \x in {1,...,7} {
+                \draw (\x,-0.1) node[below]{$X_\x$} -- (\x,0.1);
+            }
+            \draw (-0.1,1) node[left]{4} -- (0.1,1);
+
+            \path plot [mark=*] coordinates {(0,0) (1,1) (2,0) (3,0) (4,0) (5,0) (6,0) (7,1)};
+        \end{tikzpicture}
+    \end{center}
+    \item Info:
+    \begin{itemize}
+        \item $
+            \text{Frequency Resolution}
+            = \frac{\text{Sampling Frequency}}{N}
+            = \frac{8\text{ Hz}}{8}
+            = 1\text{ Hz}
+        $.
+        \item A non-zero value at $X_1$ corresponds to 1 Hz, and this is a 1 Hz sine wave!
+    \end{itemize}
+    \item \textbf{Nyquist frequency}: Remove values at or above $\frac{\text{Sampling frequency}}{2}$ and double values below.
+    \item Thus, discount values above $\frac{8}{2}=4$ (i.e., $X_4$, $X_5$, $X_6$, and $X_7$) and double the values for $X_0$ through $X_3$.
+    \begin{table}[h!]
+        \centering
+        \renewcommand{\arraystretch}{1.4}
+        \begin{tabular}{c|cccc}
+            \textbf{Sum} & $X_0$ & ${\color{teal}X_1}$ & $X_2$ & $X_3$\\
+            \hline
+            \textbf{Value} & 0 & ${\color{teal}-8i}$ & 0 & 0\\
+        \end{tabular}
+    \end{table}
+    \item Plot the magnitudes below.
+    \begin{center}
+        \begin{tikzpicture}
+            \draw [->] (-0.5,0) -- (7.5,0) node[right]{Frequency (Hz)};
+            \draw [->] (0,-0.5) -- (0,2.5);
+            \foreach \x in {1,...,7} {
+                \draw (\x,-0.1) node[below]{$X_\x$} -- (\x,0.1);
+            }
+            \foreach \y/\val in {1/4,2/8} {
+                \draw (-0.1,\y) node[left]{\val} -- (0.1,\y);
+            }
+
+            \path plot [mark=*] coordinates {(0,0) (1,2) (2,0) (3,0)};
+        \end{tikzpicture}
+    \end{center}
+    \item $
+        \text{amplitude}
+        = \frac{8\text{ (from plot)}}{8\text{ samples}}
+        = {\color{red}1}
+    $.
+    \begin{center}
+        \begin{tikzpicture}
+            \draw [->] (-2,0) -- (2,0) node[right]{Re};
+            \draw [->] (0,-2) -- (0,2) node[above]{Im};
+
+            \draw [thick,teal,-stealth] (0,0) -- node[right]{$-8i$} (0,-1.5);
+            \draw [semithick,teal,-stealth] (0:0.6) arc[start angle=0,end angle=270,radius=0.6];
+            \node [label={above right:${\color{teal}\theta = \frac{3\pi}{2}}$}] at (45:0.5) {};
+        \end{tikzpicture}
+    \end{center}
+    \begin{equation*}
+        {\color{red}1}\cos\left( \theta-{\color{teal}\frac{3\pi}{2}} \right) = \sin\theta
+    \end{equation*}
 \end{itemize}
 
 
