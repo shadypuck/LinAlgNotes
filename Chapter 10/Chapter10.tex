@@ -988,7 +988,7 @@
 
 
 
-\section*{Fourier Transform}
+\section*{Continuous Fourier Transform}
 \begin{itemize}
     \item \marginnote{5/8:}The complex Fourier series can be summarized as one entity as follows.
     \begin{equation*}
@@ -1023,6 +1023,121 @@
         F(\omega) = \int_{-\infty}^\infty f(t)\e[-i\omega t]\D{t}
     \end{equation}
     \item Equation \ref{eqn:fourierTransform} is the Fourier Transform and Equation \ref{eqn:inverseFourierTransform} is the Inverse Fourier Transform.
+\end{itemize}
+
+
+
+\section*{Discrete Fourier Transform}
+\begin{itemize}
+    \item \marginnote{5/11:}Consider Equation \ref{eqn:fourierTransform}, the integral of the product of two functions.
+    \begin{itemize}
+        \item $f(t)$ is the function or periodic signal whose domain we are trying to transform.
+        \item $\e[-i\omega t]$ is the analyzing function, which, as we know from Euler's formula, represents sinusoids.
+        \item Whenever $f(t)$ and $\e[-i\omega t]$ are \emph{similar}, they will multiply and sum to a \emph{large} coefficient\footnote{We're trying to find the most common or largest frequencies in this periodic signal; when $\omega$ (independent variable) gets very close to the frequency of a component sinusoid in $f(t)$, $F(\omega)$ (dependent variable) will get quite big.}.
+        \item Whenever $f(t)$ and $\e[-i\omega t]$ are \emph{dissimilar}, they will multiply and sum to a \emph{small} coefficient.
+    \end{itemize}
+    \item Infinite integral bounds: In the real practice of signal analysis, they doesn't make much sense because you would only be interested in collecting data on a signal within a finite time frame, and sampling can only be done discretely. In reality, a signal sample might look like this:
+    \begin{center}
+        \begin{tikzpicture}
+            \draw [->] (0,-0.5) -- (0,3);
+            \draw [->] (-0.5,0) -- node[yshift=-6mm]{Time} (5,0);
+            \draw [red] (0.2,-0.1) node[below]{$t_0$} -- (0.2,0.1);
+            \draw [red] (4.4,-0.1) node[below]{$t_{N-1}$} -- (4.4,0.1);
+
+            \draw [thick] plot [mark=*,mark options={color=red},smooth] coordinates {(0.2,1.5) (0.5,1.9) (0.8,1.7) (1.1,1.4) (1.4,1.2) (1.7,1.6) (2,1.7) (2.3,1.3) (2.6,1) (2.9,0.8) (3.2,1.2) (3.5,2.6) (3.8,2.2) (4.1,1) (4.4,1.3)};
+        \end{tikzpicture}
+    \end{center}
+    \begin{itemize}
+        \item A discrete number ($N=15$) of evenly spaced samples over a discrete quantity of time.
+        \item Note: $t_0$ to $t_{N-1}$ because computer science canonically counts starting at 0.
+    \end{itemize}
+    \item Change notation (too many $f$'s) and substitute $\omega = 2\pi F$:
+    \begin{equation*}
+        X(F) = \int_{-\infty}^\infty x(t)\e[-i2\pi {\color{red}F}{\color{blue}t}]\D{t}
+    \end{equation*}
+    \item Make the above continuous definition discrete:
+    \begin{equation*}
+        X_{\color{grx}k} = \sum_{{\color{cyan}n=0}}^{{\color{cyan}N-1}} x_n\cdot\e[-\frac{i2\pi {\color{red}k}{\color{blue}n}}{{\color{red}N}}]
+    \end{equation*}
+    \begin{itemize}
+        \item \textcolor{grx}{$k^\text{th}$ frequency.}
+        \item \textcolor{cyan}{Discrete summation to evaluate $N$ samples.}
+    \end{itemize}
+    \item With the Discrete Fourier Transform (DFT), we can no longer look at \textcolor{red}{frequency} and \textcolor{blue}{time} continuously; we instead look at the \textcolor{red}{$k^\text{th}$ frequency} and the \textcolor{blue}{$n^\text{th}$ sample}.
+    \begin{itemize}
+        \item Essentially, ${\color{red}\frac{k}{N}}$ corresponds to \textcolor{red}{frequency} and ${\color{blue}n}$ corresponds to \textcolor{blue}{time}.
+    \end{itemize}
+    \item What happens when you expand the summation?
+    \begin{itemize}
+        \item Let $b_n = \frac{2\pi kn}{N}$.
+        \begin{equation*}
+            X_k = x_0\e[-b_0i]+x_1\e[-b_1i]+\cdots+x_{N-1}\e[-b_{N-1}i]
+        \end{equation*}
+        \item Since $\e[ix] = \cos(x)+i\sin(x)$,
+        \begin{equation*}
+            X_k = x_0\left( \cos(-b_0)+i\sin(-b_0) \right)+\cdots+x_{N-1}\left( \cos(-b_{N-1})+i\sin(-b_{N-1}) \right)
+        \end{equation*}
+        \item Thus, the sum is just some complex number $X_k = A_k+B_ki$.
+        \item Note that the magnitude and angle just correspond to an amplitude and phase displacement from a linear combination of the sine and cosine functions:
+    \end{itemize}
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{scope}[xshift=-4cm]
+                \draw [->] (-2,0) -- (2,0) node[right]{Re};
+                \draw [->] (0,-2) -- (0,2) node[above]{Im};
+
+                \node (X) [fill,circle,inner sep=1.5pt,label={45:$(A_k,B_k)$}] at (1,1.5) {};
+                \draw [thick,-stealth] (0,0) -- node[above,sloped,near end,blue]{$|X_k|$} (X);
+                \draw [semithick,-stealth] (0:0.5) arc[start angle=0,end angle=54,radius=0.5] node[midway,right]{${\color{red}\theta}$};
+            \end{scope}
+            \draw [very thick,-latex] (-0.4,0) -- (0.4,0);
+            \begin{scope}[xshift=2.5cm]
+                \draw [->] (-0.5,0) -- (3.5,0) node[right]{$\theta$};
+                \draw [->] (0,-2) -- (0,2) node[above]{$A$};
+
+                \draw [thick] plot [domain=0:pi,smooth] (\x,{cos(2*\x r)});
+                \node [label={left:${\color{blue}|X_k|}$}] at (0,1) {};
+                \node [circle,fill,red,inner sep=1.5pt,label={45:${\color{red}\theta}$}] at ({pi/12},{3^0.5/2}) {};
+            \end{scope}
+        \end{tikzpicture}
+    \end{center}
+\end{itemize}
+
+
+\subsection*{Simple DFT Example}
+\begin{itemize}
+    \item \textcolor{cyan}{1 Hz} sine wave of amplitude \textcolor{cyan}{1}.
+    \item Sampling frequency of 8 Hz, so ${\color{red}N=8}$.
+    \begin{center}
+        \begin{tikzpicture}
+            \draw [->] (-0.5,0) -- (7,0) node[right]{$t(s)$};
+            \draw [->] (0,-1.5) -- (0,1.5) node[above]{$A$};
+            \draw (-0.1,-1) node[left]{$-1$} -- (0.1,-1);
+            \draw (-0.1,1) node[left]{${\color{cyan}1}$} -- (0.1,1);
+            \draw ({2*pi},-0.1) node[below]{${\color{cyan}1}$} -- ({2*pi},0.1);
+
+            \draw [thick,mark=*,mark indices={1,4,7,10,13,16,19,22},mark options={red},smooth] plot [domain=0:2*pi] (\x,{sin(\x r)});
+        \end{tikzpicture}
+    \end{center}
+    \item Sampled values:
+    \begin{table}[h!]
+        \centering
+        \renewcommand{\arraystretch}{1.4}
+        \begin{tabular}{c|cccccccc}
+            \textbf{\emph{x}\textsubscript{\emph{n}}} & $x_0$ & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ & $x_7$\\
+            \hline
+            \textbf{val} & 0 & $\frac{\sqrt{2}}{2}$ & 1 & $\frac{\sqrt{2}}{2}$ & 0 & $-\frac{\sqrt{2}}{2}$ & $-1$ & $-\frac{\sqrt{2}}{2}$\\
+        \end{tabular}
+    \end{table}
+    \item Now apply the formula to find the Fourier coefficients in the eight "frequency bins."
+    \begin{equation*}
+        X_{\color{cyan}k} = \sum_{{\color{red}n}=0}^{{\color{red}8}-1} x_{\color{red}n}\cdot\e[-\frac{i2\pi {\color{cyan}k}{\color{red}n}}{{\color{red}N}}]
+    \end{equation*}
+    \begin{align*}
+        X_{\color{cyan}0} &= (0)\e[-\frac{i2\pi{\color{cyan}(0)}{\color{red}(0)}}{{\color{red}8}}] + \left( \frac{\sqrt{2}}{2} \right)\e[-\frac{i2\pi{\color{cyan}(0)}{\color{red}(1)}}{{\color{red}8}}] + \cdots + \left( -\frac{\sqrt{2}}{2} \right)\e[-\frac{i2\pi{\color{cyan}(0)}{\color{red}(7)}}{{\color{red}8}}]\\
+        &\ \, \vdots\\
+        X_{\color{cyan}7} &= (0)\e[-\frac{i2\pi{\color{cyan}(7)}{\color{red}(0)}}{{\color{red}8}}] + \left( \frac{\sqrt{2}}{2} \right)\e[-\frac{i2\pi{\color{cyan}(7)}{\color{red}(1)}}{{\color{red}8}}] + \cdots + \left( -\frac{\sqrt{2}}{2} \right)\e[-\frac{i2\pi{\color{cyan}(7)}{\color{red}(7)}}{{\color{red}8}}]
+    \end{align*}
 \end{itemize}
 
 
