@@ -1133,11 +1133,13 @@
     \begin{equation*}
         X_{\color{cyan}k} = \sum_{{\color{red}n}=0}^{{\color{red}8}-1} x_{\color{red}n}\cdot\e[-\frac{i2\pi {\color{cyan}k}{\color{red}n}}{{\color{red}N}}]
     \end{equation*}
-    \begin{align*}
-        X_{\color{cyan}0} &= (0)\e[-\frac{i2\pi{\color{cyan}(0)}{\color{red}(0)}}{{\color{red}8}}] + \left( \frac{\sqrt{2}}{2} \right)\e[-\frac{i2\pi{\color{cyan}(0)}{\color{red}(1)}}{{\color{red}8}}] + \cdots + \left( -\frac{\sqrt{2}}{2} \right)\e[-\frac{i2\pi{\color{cyan}(0)}{\color{red}(7)}}{{\color{red}8}}]\\
-        &\ \, \vdots\\
-        X_{\color{cyan}7} &= (0)\e[-\frac{i2\pi{\color{cyan}(7)}{\color{red}(0)}}{{\color{red}8}}] + \left( \frac{\sqrt{2}}{2} \right)\e[-\frac{i2\pi{\color{cyan}(7)}{\color{red}(1)}}{{\color{red}8}}] + \cdots + \left( -\frac{\sqrt{2}}{2} \right)\e[-\frac{i2\pi{\color{cyan}(7)}{\color{red}(7)}}{{\color{red}8}}]
-    \end{align*}
+    \begin{align}
+        \begin{split}\label{aln:bins}
+            X_{\color{cyan}0} &= (0)\e[-\frac{i2\pi{\color{cyan}(0)}{\color{red}(0)}}{{\color{red}8}}] + \left( \frac{\sqrt{2}}{2} \right)\e[-\frac{i2\pi{\color{cyan}(0)}{\color{red}(1)}}{{\color{red}8}}] + \cdots + \left( -\frac{\sqrt{2}}{2} \right)\e[-\frac{i2\pi{\color{cyan}(0)}{\color{red}(7)}}{{\color{red}8}}]\\
+            &\ \, \vdots\\
+            X_{\color{cyan}7} &= (0)\e[-\frac{i2\pi{\color{cyan}(7)}{\color{red}(0)}}{{\color{red}8}}] + \left( \frac{\sqrt{2}}{2} \right)\e[-\frac{i2\pi{\color{cyan}(7)}{\color{red}(1)}}{{\color{red}8}}] + \cdots + \left( -\frac{\sqrt{2}}{2} \right)\e[-\frac{i2\pi{\color{cyan}(7)}{\color{red}(7)}}{{\color{red}8}}]
+        \end{split}
+    \end{align}
     \item \marginnote{5/12:}The sums come out to be the following.
     \begin{table}[h!]
         \centering
@@ -1215,6 +1217,89 @@
     \begin{equation*}
         {\color{red}1}\cos\left( \theta-{\color{teal}\frac{3\pi}{2}} \right) = \sin\theta
     \end{equation*}
+\end{itemize}
+
+
+\subsection*{Condensing the Bins into a Matrix}
+\begin{itemize}
+    \item \marginnote{5/13:}Look at what is a constant and what is a variable in Equations \ref{aln:bins}.
+    \begin{itemize}
+        \item In each $x_n\cdot\e[-\frac{i2\pi kn}{N}]$ term, $\e[-\frac{i2\pi}{8}]$ is constant, $k$ and $n$ are variables (that happen to correspond to the "row and column location" of the term), and $x_n$ is a scalar.
+    \end{itemize}
+    \item Thus, let $\omega = \e[-\frac{i2\pi}{8}]$.
+    \begin{itemize}
+        \item Under this definition, $\e[-\frac{i2\pi kn}{8}]$ terms become $\omega^{kn}$ terms.
+    \end{itemize}
+    \item Notice that the $X_k$ calculations are just scaling \& adding --- scaling by $x_n$ and adding the terms of the summation!
+    \item Therefore, with the help of our new definition of $\omega$, we can rewrite Equations \ref{aln:bins} in the form $X_k=Fx_n$.
+    \begin{equation*}
+        \begin{bmatrix}
+            X_0\\
+            X_1\\
+            X_2\\
+            X_3\\
+            X_4\\
+            X_5\\
+            X_6\\
+            X_7\\
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            \omega^0 & \omega^0 & \omega^0    & \omega^0    & \omega^0    & \omega^0    & \omega^0    & \omega^0   \\
+            \omega^0 & \omega^1 & \omega^2    & \omega^3    & \omega^4    & \omega^5    & \omega^6    & \omega^7   \\
+            \omega^0 & \omega^2 & \omega^4    & \omega^6    & \omega^8    & \omega^{10} & \omega^{12} & \omega^{14}\\
+            \omega^0 & \omega^3 & \omega^6    & \omega^9    & \omega^{12} & \omega^{15} & \omega^{18} & \omega^{21}\\
+            \omega^0 & \omega^4 & \omega^8    & \omega^{12} & \omega^{16} & \omega^{20} & \omega^{24} & \omega^{28}\\
+            \omega^0 & \omega^5 & \omega^{10} & \omega^{15} & \omega^{20} & \omega^{25} & \omega^{30} & \omega^{35}\\
+            \omega^0 & \omega^6 & \omega^{12} & \omega^{18} & \omega^{24} & \omega^{30} & \omega^{36} & \omega^{42}\\
+            \omega^0 & \omega^7 & \omega^{14} & \omega^{21} & \omega^{28} & \omega^{35} & \omega^{42} & \omega^{49}\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            x_0\\
+            x_1\\
+            x_2\\
+            x_3\\
+            x_4\\
+            x_5\\
+            x_6\\
+            x_7\\
+        \end{bmatrix}
+    \end{equation*}
+    \item Keep in mind --- there are really only 8 distinct entries in this matrix because these powers are periodic.
+    \begin{center}
+        \begin{tikzpicture}[
+            compdot/.style 2 args={circle,fill,blue,inner sep=1.5pt,label={{45-45*#1}:${\color{blue}#2}$}}
+        ]
+            \draw (-2,0) -- (2,0);
+            \draw (0,-2) -- (0,2);
+            \draw [thick] circle (1.5cm);
+
+            \foreach \d/\exp in {0/8,1/9,2/10} {
+                \node [compdot={\d}{\omega^\d=\omega^{\exp}=\cdots}] at ({-45*\d}:1.5) {};
+            }
+            \foreach \d in {3,...,7} {
+                \node [compdot={\d}{\omega^\d}] at ({-45*\d}:1.5) {};
+            }
+        \end{tikzpicture}
+    \end{center}
+    \begin{itemize}
+        \item Thus, $F$ can be written as follows.
+    \end{itemize}
+    \begin{equation*}
+        F
+        =
+        \begin{bmatrix}
+            \omega^0 & \omega^0 & \omega^0 & \omega^0 & \omega^0 & \omega^0 & \omega^0 & \omega^0\\
+            \omega^0 & \omega^1 & \omega^2 & \omega^3 & \omega^4 & \omega^5 & \omega^6 & \omega^7\\
+            \omega^0 & \omega^2 & \omega^4 & \omega^6 & \omega^0 & \omega^2 & \omega^4 & \omega^6\\
+            \omega^0 & \omega^3 & \omega^6 & \omega^1 & \omega^4 & \omega^7 & \omega^2 & \omega^5\\
+            \omega^0 & \omega^4 & \omega^0 & \omega^4 & \omega^0 & \omega^4 & \omega^0 & \omega^4\\
+            \omega^0 & \omega^5 & \omega^2 & \omega^7 & \omega^4 & \omega^1 & \omega^6 & \omega^3\\
+            \omega^0 & \omega^6 & \omega^4 & \omega^2 & \omega^0 & \omega^6 & \omega^4 & \omega^2\\
+            \omega^0 & \omega^7 & \omega^6 & \omega^5 & \omega^4 & \omega^3 & \omega^2 & \omega^1\\
+        \end{bmatrix}
+    \end{equation*}
+    \item NOte that $F$ is symmetric but not Hermitian because the diagonal is not real.
 \end{itemize}
 
 
