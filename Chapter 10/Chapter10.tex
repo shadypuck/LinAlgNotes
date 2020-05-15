@@ -963,7 +963,7 @@
             $
             \begin{aligned}
                 u &= t&
-                    \D{v} &= \e[-in\omega_0t]\\
+                    \D{v} &= \e[-in\omega_0t]\D{t}\\
                 \D{u} &= \D{t}&
                     v &= -\frac{1}{in\omega_0}\e[-in\omega_0t]
             \end{aligned}
@@ -1299,7 +1299,195 @@
             \omega^0 & \omega^7 & \omega^6 & \omega^5 & \omega^4 & \omega^3 & \omega^2 & \omega^1\\
         \end{bmatrix}
     \end{equation*}
-    \item NOte that $F$ is symmetric but not Hermitian because the diagonal is not real.
+    \item Note that $F$ is symmetric but not Hermitian because the diagonal is not real.
+\end{itemize}
+
+
+\subsection*{Fast Fourier Transform}
+\begin{itemize}
+    \item \marginnote{5/15:}Let $F_8$ be an $8\times 8$ Fourier matrix, similar to the first one in the last section. Permute its columns by multiplying by a specific permutation matrix $P$ from the back to yield $F_8P$.
+    \begin{multline*}
+        \underbrace{
+            \begin{bmatrix}
+                1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\
+                1 & \omega^1 & \omega^2    & \omega^3    & \omega^4    & \omega^5    & \omega^6    & \omega^7   \\
+                1 & \omega^2 & \omega^4    & \omega^6    & \omega^8    & \omega^{10} & \omega^{12} & \omega^{14}\\
+                1 & \omega^3 & \omega^6    & \omega^9    & \omega^{12} & \omega^{15} & \omega^{18} & \omega^{21}\\
+                1 & \omega^4 & \omega^8    & \omega^{12} & \omega^{16} & \omega^{20} & \omega^{24} & \omega^{28}\\
+                1 & \omega^5 & \omega^{10} & \omega^{15} & \omega^{20} & \omega^{25} & \omega^{30} & \omega^{35}\\
+                1 & \omega^6 & \omega^{12} & \omega^{18} & \omega^{24} & \omega^{30} & \omega^{36} & \omega^{42}\\
+                1 & \omega^7 & \omega^{14} & \omega^{21} & \omega^{28} & \omega^{35} & \omega^{42} & \omega^{49}\\
+            \end{bmatrix}
+        }_{F_8} \underbrace{
+            \begin{bmatrix}
+                1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+                0 & 0 & 0 & 0 & 1 & 0 & 0 & 0\\
+                0 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\
+                0 & 0 & 0 & 0 & 0 & 1 & 0 & 0\\
+                0 & 0 & 1 & 0 & 0 & 0 & 0 & 0\\
+                0 & 0 & 0 & 0 & 0 & 0 & 1 & 0\\
+                0 & 0 & 0 & 1 & 0 & 0 & 0 & 0\\
+                0 & 0 & 0 & 0 & 0 & 0 & 0 & 1\\
+            \end{bmatrix}
+        }_P =\\ \underbrace{
+            \begin{bmatrix}
+                1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\
+                1 & \omega^2    & \omega^4    & \omega^6    & \omega^1 & \omega^3    & \omega^5    & \omega^7   \\
+                1 & \omega^4    & \omega^8    & \omega^{12} & \omega^2 & \omega^6    & \omega^{10} & \omega^{14}\\
+                1 & \omega^6    & \omega^{12} & \omega^{18} & \omega^3 & \omega^9    & \omega^{15} & \omega^{21}\\
+                1 & \omega^8    & \omega^{16} & \omega^{24} & \omega^4 & \omega^{12} & \omega^{20} & \omega^{28}\\
+                1 & \omega^{10} & \omega^{20} & \omega^{30} & \omega^5 & \omega^{15} & \omega^{25} & \omega^{35}\\
+                1 & \omega^{12} & \omega^{24} & \omega^{36} & \omega^6 & \omega^{18} & \omega^{30} & \omega^{42}\\
+                1 & \omega^{14} & \omega^{28} & \omega^{42} & \omega^7 & \omega^{21} & \omega^{35} & \omega^{49}\\
+            \end{bmatrix}
+        }_{F_8P}
+    \end{multline*}
+    \item Partition $F_8P$ into four $4\times 4$ blocks $
+        \begin{bmatrix}
+            f_1 & f_2\\
+            f_3 & f_4\\
+        \end{bmatrix}
+    $, where, for example, $f_1$ is defined as follows.
+    \begin{equation*}
+        f_1 =
+        \begin{bmatrix}
+            1 & 1 & 1 & 1\\
+            1 & \omega^2 & \omega^4    & \omega^6   \\
+            1 & \omega^4 & \omega^8    & \omega^{12}\\
+            1 & \omega^6 & \omega^{12} & \omega^{18}\\
+        \end{bmatrix}
+    \end{equation*}
+    \item Although it may not appear as such at first, $f_1$ is a $4\times 4$ Fourier matrix in $\omega^2 = \e[-\frac{i2\pi}{4}]$:
+    \begin{equation*}
+        f_1 =
+        \renewcommand{\arraystretch}{1.5}
+        \begin{bmatrix}
+            1 & 1 & 1 & 1\\
+            1 & \left( \omega^2 \right)^1 & \left( \omega^2 \right)^2 & \left( \omega^2 \right)^3\\
+            1 & \left( \omega^2 \right)^2 & \left( \omega^2 \right)^4 & \left( \omega^2 \right)^6\\
+            1 & \left( \omega^2 \right)^3 & \left( \omega^2 \right)^6 & \left( \omega^2 \right)^9\\
+        \end{bmatrix}
+    \end{equation*}
+    \begin{itemize}
+        \item In fact, $f_1$ is the Fourier matrix that would have resulted if only 4 evenly spaced samples had been used instead of 8. Thus, we can rightfully call it $F_4$. This notation will occasionally be used in the following to keep with the canonical notation.
+    \end{itemize}
+    \item In the same way that the powers of $\omega$ were cyclic, the powers of $\omega^2$ are cyclic. Thus, $f_3$ can be shown to be equal to $f_1$.
+    \begin{equation*}
+        f_3 =
+        \begin{bmatrix}
+            1 & \omega^8    & \omega^{16} & \omega^{24}\\
+            1 & \omega^{10} & \omega^{20} & \omega^{30}\\
+            1 & \omega^{12} & \omega^{24} & \omega^{36}\\
+            1 & \omega^{14} & \omega^{28} & \omega^{42}\\
+        \end{bmatrix}
+        =
+        \renewcommand{\arraystretch}{1.5}
+        \begin{bmatrix}
+            1 & \left( \omega^2 \right)^4 & \left( \omega^2 \right)^8    & \left( \omega^2 \right)^{12}\\
+            1 & \left( \omega^2 \right)^5 & \left( \omega^2 \right)^{10} & \left( \omega^2 \right)^{15}\\
+            1 & \left( \omega^2 \right)^6 & \left( \omega^2 \right)^{12} & \left( \omega^2 \right)^{18}\\
+            1 & \left( \omega^2 \right)^7 & \left( \omega^2 \right)^{14} & \left( \omega^2 \right)^{21}\\
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            1 & 1 & 1 & 1\\
+            1 & \left( \omega^2 \right)^1 & \left( \omega^2 \right)^2 & \left( \omega^2 \right)^3\\
+            1 & \left( \omega^2 \right)^2 & \left( \omega^2 \right)^4 & \left( \omega^2 \right)^6\\
+            1 & \left( \omega^2 \right)^3 & \left( \omega^2 \right)^6 & \left( \omega^2 \right)^9\\
+        \end{bmatrix}
+        = f_1
+    \end{equation*}
+    \item Define diagonal matrix $D$ as follows.
+    \begin{equation*}
+        f_3 =
+        \begin{bmatrix}
+            1 & 0 & 0 & 0\\
+            0 & \omega^1 & 0 & 0\\
+            0 & 0 & \omega^2 & 0\\
+            0 & 0 & 0 & \omega^3\\
+        \end{bmatrix}
+    \end{equation*}
+    \item Thus, we can see observe the following relationships.
+    \begin{equation*}
+        \underbrace{
+            \begin{bmatrix}
+                1 & 1 & 1 & 1\\
+                \omega^1 & \omega^3 & \omega^5    & \omega^7   \\
+                \omega^2 & \omega^6 & \omega^{10} & \omega^{14}\\
+                \omega^3 & \omega^9 & \omega^{15} & \omega^{21}\\
+            \end{bmatrix}
+        }_{f_2} = \underbrace{
+            \begin{bmatrix}
+                1 & 0 & 0 & 0\\
+                0 & \omega^1 & 0 & 0\\
+                0 & 0 & \omega^2 & 0\\
+                0 & 0 & 0 & \omega^3\\
+            \end{bmatrix}
+        }_D \underbrace{
+            \begin{bmatrix}
+                1 & 1 & 1 & 1\\
+                1 & \omega^2 & \omega^4    & \omega^6   \\
+                1 & \omega^4 & \omega^8    & \omega^{12}\\
+                1 & \omega^6 & \omega^{12} & \omega^{18}\\
+            \end{bmatrix}
+        }_{f_1}
+    \end{equation*}
+    \begin{equation*}
+        \underbrace{
+            \begin{bmatrix}
+                \omega^4 & \omega^{12} & \omega^{20} & \omega^{28}\\
+                \omega^5 & \omega^{15} & \omega^{25} & \omega^{35}\\
+                \omega^6 & \omega^{18} & \omega^{30} & \omega^{42}\\
+                \omega^7 & \omega^{21} & \omega^{35} & \omega^{49}\\
+            \end{bmatrix}
+        }_{f_4} = \underbrace{
+            \begin{bmatrix}
+                -1 & 0 & 0 & 0\\
+                0 & -\omega^1 & 0 & 0\\
+                0 & 0 & -\omega^2 & 0\\
+                0 & 0 & 0 & -\omega^3\\
+            \end{bmatrix}
+        }_{-D} \underbrace{
+            \begin{bmatrix}
+                1 & 1 & 1 & 1\\
+                1 & \omega^2 & \omega^4    & \omega^6   \\
+                1 & \omega^4 & \omega^8    & \omega^{12}\\
+                1 & \omega^6 & \omega^{12} & \omega^{18}\\
+            \end{bmatrix}
+        }_{f_1}
+    \end{equation*}
+    \item In summary, $
+        F_8P =
+        \begin{bmatrix}
+            f_1 & Df_1\\
+            f_1 & -Df_1\\
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            I & D\\
+            I & -D\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            F_4 & 0\\
+            0 & F_4\\
+        \end{bmatrix}
+    $.
+    \item This 8-sample case can be generalized to an $n$ sample case in the following, final FFT factorization\footnote{Note that $P$ is removed from the left side of the equation and $P^\T$ is added to the right because $P^{-1}=P^\T$ is multiplied from the back to both sides of the equation (the left case reduces to $PP^\T=I$).}.
+    \begin{equation*}
+        F_n =
+        \begin{bmatrix}
+            I & D\\
+            I & -D\\
+        \end{bmatrix}
+        \begin{bmatrix}
+            F_{n/2} & 0\\
+            0 & F_{n/2}\\
+        \end{bmatrix}
+        P^\T
+    \end{equation*}
+    \begin{itemize}
+        \item Where $I$ is the $\frac{n}{2}$ identity matrix, $D$ is the $\frac{n}{2}$ identity matrix where the elements of row $j$ have been multiplied by $\omega^j$ (the top row being row 0), and $P$ is a permutation matrix that separates even and odd columns.
+    \end{itemize}
 \end{itemize}
 
 
