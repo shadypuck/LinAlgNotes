@@ -1305,7 +1305,13 @@
 
 \subsection*{Fast Fourier Transform}
 \begin{itemize}
-    \item \marginnote{5/15:}Let $F_8$ be an $8\times 8$ Fourier matrix, similar to the first one in the last section. Permute its columns by multiplying by a specific permutation matrix $P$ from the back to yield $F_8P$.
+    \item \marginnote{5/15:} The DFT is an $O(n^2)$ calculation. The FFT is an $O(n\log n)$ calculation, a significant savings.
+    \begin{itemize}
+        \item For 10 seconds of audio at 44 kHz, $n=4.4\times 10^5$. By DFT, $\sim 10^{11}$ calculations; by FFT, $\sim 10^6$ calculations.
+    \end{itemize}
+    \item The FFT can be used to approximate derivatives \& solve PDEs efficiently (scientific computing). It can denoise/analyze data. And it's useful for compression (esp. audio and image).
+    \item The following is concerned with the common case (the case where $n$ is a power of 2, i.e., $n=2^x$, $x\in\N$).
+    \item Let $F_8$ be an $8\times 8$ Fourier matrix, similar to the first one in the last section. Permute its columns by multiplying by a specific permutation matrix $P$ from the back to yield $F_8P$.
     \begin{multline*}
         \underbrace{
             \begin{bmatrix}
@@ -1399,7 +1405,7 @@
     \end{equation*}
     \item Define diagonal matrix $D$ as follows.
     \begin{equation*}
-        f_3 =
+        D =
         \begin{bmatrix}
             1 & 0 & 0 & 0\\
             0 & \omega^1 & 0 & 0\\
@@ -1472,7 +1478,7 @@
             0 & F_4\\
         \end{bmatrix}
     $.
-    \item This 8-sample case can be generalized to an $n$ sample case in the following, final FFT factorization\footnote{Note that $P$ is removed from the left side of the equation and $P^\T$ is added to the right because $P^{-1}=P^\T$ is multiplied from the back to both sides of the equation (the left case reduces to $PP^\T=I$).}.
+    \item This 8-sample case can be generalized to the $n$ sample case in the following, final FFT factorization\footnote{Note that $P$ is removed from the left side of the equation and $P^\T$ is added to the right because $P^{-1}=P^\T$ is multiplied from the back to both sides of the equation (the left case reduces to $PP^\T=I$).}.
     \begin{equation*}
         F_n =
         \begin{bmatrix}
@@ -1486,7 +1492,9 @@
         P^\T
     \end{equation*}
     \begin{itemize}
-        \item Where $I$ is the $\frac{n}{2}$ identity matrix, $D$ is the $\frac{n}{2}$ identity matrix where the elements of row $j$ have been multiplied by $\omega^j$ (the top row being row 0), and $P$ is a permutation matrix that separates even and odd columns.
+        \item Where $I$ is the $\frac{n}{2}\times\frac{n}{2}$ identity matrix, $D$ is the $\frac{n}{2}\times\frac{n}{2}$ identity matrix where the elements of row $j$ have been scaled by $\omega^j$ (the top row being row 0), and $P$ is a permutation matrix that separates even and odd columns.
+        \item Note that the FFT could also be computed by permuting the data vector (the $x$ vector) instead of the Fourier matrix ($F$).
+        \item Also note that that this process could be iterated recursively ($F_{n/2}$ could be factored in the same way as $F_n$ all the way down to $F_2$). In fact, doing this recursive factorization is necessary to achieve $O(n\log n)$ complexity --- doing it just once will not go directly from $O(n^2)$ to $O(n\log n)$.
     \end{itemize}
 \end{itemize}
 
